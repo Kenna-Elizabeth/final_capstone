@@ -9,9 +9,18 @@
 </template>
 <!-- added styles tag --> 
 <style>
-h1 {
-  background-image: linear-gradient(#05BCD9,#9DDAE6);
+header {
+    background-image: linear-gradient(#05BCD9,#9DDAE6);
+    display: flex;
+    padding: 8px;
+    width: 100vw;
+    align-items: center;
+    justify-content: center;
+    
 }
+h1 { color: white;
+}
+
 
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
@@ -25,11 +34,7 @@ h1 {
 
 /* @media(max-width: 1024px){
      {
-        grid-template-columns: 1fr 1fr;
-        grid-template-areas:
-        /* ESTABLISH GRID AREAS
-        */
-        /* /* column-gap: 35px;
+       
     }
 }
 /* @media (max-width: 450px) {

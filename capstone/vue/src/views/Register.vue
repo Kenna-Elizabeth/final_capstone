@@ -1,7 +1,7 @@
 <template>
   <div id="register" class="text-center">
     <form @submit.prevent="register">
-      <h1>Create Account</h1>
+      <header><h1>Create Account</h1></header>
       <div role="alert" v-if="registrationErrors">
         {{ registrationErrorMsg }}
       </div>
