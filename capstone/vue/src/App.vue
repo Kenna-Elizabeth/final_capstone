@@ -1,21 +1,34 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link v-bind:to="{ name: 'home' }">Home</router-link>&nbsp;|&nbsp;
-      <router-link v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''">Logout</router-link>
-    </div>
+  <navigation-bar/>
     <router-view />
   </div>
 </template>
-<!-- added styles tag --> 
+<script>
+  import NavigationBar from "./views/NavigationBar.vue";
+
+  export default {
+    components: {
+      NavigationBar
+    }
+  }
+
+</script>
+
+
 <style>
-h1 {
-  background-image: linear-gradient(#05BCD9,#9DDAE6);
-  margin: 1em; 
-  padding: 1em;
-
-
+header {
+    background-image: linear-gradient(#05BCD9,#9DDAE6);
+    display: flex;
+    padding: 8px;
+    width: 100vw;
+    align-items: center;
+    justify-content: center;
+    
 }
+h1 { color: white;
+}
+
 
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
@@ -29,11 +42,7 @@ h1 {
 
 /* @media(max-width: 1024px){
      {
-        grid-template-columns: 1fr 1fr;
-        grid-template-areas:
-        /* ESTABLISH GRID AREAS
-        */
-        /* /* column-gap: 35px;
+       
     }
 }
 /* @media (max-width: 450px) {
