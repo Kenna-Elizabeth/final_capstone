@@ -1,7 +1,9 @@
 <template>
   <div id="login">
     <form @submit.prevent="login">
-      <h1 >Please Sign In</h1>
+      <img src="../assets/valley-libraries-logo.png">
+      <h1 >Family Reading Tracker</h1>   
+      <h2>Please login</h2> 
       <div role="alert" v-if="invalidCredentials">
         Invalid username and password!
       </div>
@@ -65,7 +67,20 @@ export default {
 .form-input-group {
   margin-bottom: 1rem;
 }
+
+#login{
+  display: flex; 
+}
+
 label {
   margin-right: 0.5rem;
+}
+
+img{
+  width: 200px; 
+}
+
+img:hover {
+  box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
 }
 </style>

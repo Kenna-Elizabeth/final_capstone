@@ -7,3 +7,15 @@
     <router-view />
   </div>
 </template>
+<!-- added styles tag --> 
+<style>
+h1 {
+  background-image: linear-gradient(#05BCD9,#9DDAE6);
+}
+
+#app {
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  text-align: center;
+  display: flex;
+}
+</style>
