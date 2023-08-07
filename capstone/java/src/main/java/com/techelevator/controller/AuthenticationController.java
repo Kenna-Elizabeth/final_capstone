@@ -7,9 +7,11 @@ import com.techelevator.model.*;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +20,8 @@ import org.springframework.web.server.ResponseStatusException;
 import com.techelevator.dao.UserDao;
 import com.techelevator.security.jwt.JWTFilter;
 import com.techelevator.security.jwt.TokenProvider;
+
+import java.security.Principal;
 
 @RestController
 @CrossOrigin
@@ -48,6 +52,30 @@ public class AuthenticationController {
             user = userDao.getUserByUsername(loginDto.getUsername());
         } catch (DaoException e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Username or password is incorrect.");
+        }
+
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.add(JWTFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
+        return new ResponseEntity<>(new LoginResponseDto(jwt, user), httpHeaders, HttpStatus.OK);
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @RequestMapping(path = "/switch", method = RequestMethod.POST)
+    public ResponseEntity<LoginResponseDto> switchUser(@Valid @RequestBody SwitchUserDto switchUserDto, Principal userPrincipal) {
+        //TODO check that the target user is part of the same group as the current user, check PIN if one is set
+
+        Authentication authentication = new UsernamePasswordAuthenticationToken(
+                switchUserDto.getUsername(),
+                null,
+                AuthorityUtils.createAuthorityList("ROLE_USER"));
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        String jwt = tokenProvider.createToken(authentication, false);
+
+        User user;
+        try {
+            user = userDao.getUserByUsername(switchUserDto.getUsername());
+        } catch (DaoException e) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Cannot switch users.");
         }
 
         HttpHeaders httpHeaders = new HttpHeaders();
