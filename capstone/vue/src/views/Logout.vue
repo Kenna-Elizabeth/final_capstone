@@ -1,5 +1,7 @@
 <template>
-  <header><h1>Logout</h1></header>
+  <header>
+    <h1>Logout</h1>
+  </header>
 </template>
 
 <script>

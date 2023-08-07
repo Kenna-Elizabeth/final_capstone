@@ -2,7 +2,9 @@
   <div id="login">
     <form @submit.prevent="login">
       <img src="../assets/valley-libraries-logo.png">
-      <header><h1 >Family Reading Tracker</h1></header>
+      <header>
+        <h1 >Family Reading Tracker</h1>
+      </header>
       <h2>Please login</h2> 
       <div role="alert" v-if="invalidCredentials">
         Invalid username and password!
@@ -20,7 +22,7 @@
       </div>
       <button type="submit">Sign in</button>
       <p>
-      <router-link :to="{ name: 'register' }">Need an account? Sign up.</router-link></p>
+      <router-link :to="{ name: 'register' }">Need an account? Sign up.<br>(Kids, get your parents to set things up!)</router-link></p>
     </form>
   </div>
 </template>
@@ -48,7 +50,13 @@ export default {
           if (response.status == 200) {
             this.$store.commit("SET_AUTH_TOKEN", response.data.token);
             this.$store.commit("SET_USER", response.data.user);
-            this.$router.push("/");
+            if ( response.data.user.authorities[0].name == 'ROLE_USER' ) {
+              this.$router.push("/books");
+            } else if ( response.data.user.authorities[0].name == 'ROLE_ADMIN' ){
+              this.$router.push("/family");
+            } else {
+              alert('Unknown Role!'); //TODO remove this once roles are fully set up
+            }
           }
         })
         .catch(error => {
@@ -68,16 +76,12 @@ export default {
   margin-bottom: 1rem;
 }
 
-#login{
-  display: flex; 
-}
-
 label {
   margin-right: 0.5rem;
 }
 
 img{
-  width: 200px; 
+  height: auto;
 }
 
 img:hover {

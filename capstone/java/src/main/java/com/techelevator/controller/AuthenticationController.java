@@ -66,8 +66,7 @@ public class AuthenticationController {
 
         Authentication authentication = new UsernamePasswordAuthenticationToken(
                 switchUserDto.getUsername(),
-                null,
-                AuthorityUtils.createAuthorityList("ROLE_USER"));
+                null);
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = tokenProvider.createToken(authentication, false);
 
