@@ -11,6 +11,10 @@
 <style>
 h1 {
   background-image: linear-gradient(#05BCD9,#9DDAE6);
+  margin: 1em; 
+  padding: 1em;
+
+
 }
 
 #app {

@@ -2,7 +2,7 @@
   <div id="login">
     <form @submit.prevent="login">
       <img src="../assets/valley-libraries-logo.png">
-      <h1 >Family Reading Tracker</h1>   
+      <h1>Family Reading Tracker</h1>   
       <h2>Please login</h2> 
       <div role="alert" v-if="invalidCredentials">
         Invalid username and password!
@@ -68,16 +68,13 @@ export default {
   margin-bottom: 1rem;
 }
 
-#login{
-  display: flex; 
-}
-
 label {
   margin-right: 0.5rem;
 }
 
 img{
-  width: 200px; 
+  width: 50%; 
+  height: auto;
 }
 
 img:hover {
