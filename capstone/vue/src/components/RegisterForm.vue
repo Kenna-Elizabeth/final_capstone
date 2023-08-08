@@ -4,7 +4,7 @@
       {{ registrationErrorMsg }}
     </div>
     <div class="form-input-group">
-      {{ role }} User
+      New {{ role }} User
     </div>
     <div class="form-input-group">
       <label for="username">Username</label>
@@ -35,6 +35,7 @@ export default {
         password: '',
         confirmPassword: '',
         role: this.role,
+        family: this.family
       },
       registrationErrors: false,
       registrationErrorMsg: 'There were problems registering this user.',

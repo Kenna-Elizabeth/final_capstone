@@ -50,9 +50,9 @@ export default {
           if (response.status == 200) {
             this.$store.commit("SET_AUTH_TOKEN", response.data.token);
             this.$store.commit("SET_USER", response.data.user);
-            if ( response.data.user.authorities[0].name == 'ROLE_USER' ) {
+            if ( response.data.user.authorities[0].name == 'ROLE_CHILD' ) {
               this.$router.push("/books");
-            } else if ( response.data.user.authorities[0].name == 'ROLE_ADMIN' ){
+            } else if ( response.data.user.authorities[0].name == 'ROLE_PARENT' ){
               this.$router.push("/family");
             } else {
               alert('Unknown Role!'); //TODO remove this once roles are fully set up
