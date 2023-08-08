@@ -32,10 +32,6 @@ header h1 { color: white;
 
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 }
 
 

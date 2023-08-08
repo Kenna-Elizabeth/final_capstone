@@ -1,6 +1,6 @@
 <template>
   <div id="nav">
-    <li><img src="../assets/valley-libraries-logo.png" /></li>
+    <img src="../assets/valley-libraries-logo.png" />
     <ul>
       <li><router-link v-bind:to="{ name: 'books' }">Books</router-link> | </li>
       <li><router-link v-bind:to="{ name: 'family' }">Family</router-link></li>
@@ -20,6 +20,15 @@ export default {};
 </script>
 
 <style scoped>
+img{
+  height: auto;
+  display: block;
+}
+
+img:hover {
+  box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
+}
+
 #nav {
   list-style-type: none;
   display: flex;
@@ -36,6 +45,6 @@ ul {
 
 li {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
 }
 </style>
