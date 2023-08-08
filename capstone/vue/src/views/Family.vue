@@ -1,7 +1,7 @@
 <template>
   <main class="family">
     <div class="box">
-    <h1>Family Management Page</h1>
+    <h1>Family Management</h1>
     </div>
     <h3>Family Members</h3>
     <ul>

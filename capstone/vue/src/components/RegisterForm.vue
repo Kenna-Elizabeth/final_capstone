@@ -1,9 +1,5 @@
 <template>
   <form id="register-form" @submit.prevent="register">
-    <div class="form-input-group">
-      New {{ user.role }} User
-      <br>Family Id {{ user.familyId }}
-    </div>
     <div role="alert" v-if="registrationErrors">
       {{ registrationErrorMsg }}
     </div>
