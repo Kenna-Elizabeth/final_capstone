@@ -15,7 +15,7 @@ public class User {
    @JsonIgnore
    private boolean activated;
    private Set<Authority> authorities = new HashSet<>();
-   private int family;
+   private int familyId;
 
    public User() { }
 
@@ -75,12 +75,12 @@ public class User {
       }
    }
 
-   public int getFamily() {
-      return family;
+   public int getFamilyId() {
+      return familyId;
    }
 
-   public void setFamily(int family) {
-      this.family = family;
+   public void setFamilyId(int familyId) {
+      this.familyId = familyId;
    }
 
    @Override
