@@ -1,10 +1,9 @@
 <template>
-  <div id="login">
+  <main id="login">
+    <div class="box">
+      <h1 >Family Reading Tracker</h1>
+      </div>
     <form @submit.prevent="login">
-      
-      <header>
-        <h1 >Family Reading Tracker</h1>
-      </header>
       <h2>Please login</h2> 
       <div role="alert" v-if="invalidCredentials">
         Invalid username and password!
@@ -24,7 +23,7 @@
       <p>
       <router-link :to="{ name: 'register' }">Need an account? Sign up.<br>(Kids, get your parents to set things up!)</router-link></p>
     </form>
-  </div>
+  </main>
 </template>
 
 <script>
@@ -79,6 +78,5 @@ export default {
 label {
   margin-right: 0.5rem;
 }
-
 
 </style>

@@ -17,9 +17,10 @@
 
 
 <style>
-h1 { color: white;
-background-image: linear-gradient(#05BCD9,#9DDAE6);
-    padding: 8px;
+.box { 
+    color: white;
+    background-image: linear-gradient(#05BCD9,#9DDAE6);
+    height: 5em;
     width: 100vw;
     text-align: center;
 }
@@ -27,6 +28,12 @@ background-image: linear-gradient(#05BCD9,#9DDAE6);
 
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 

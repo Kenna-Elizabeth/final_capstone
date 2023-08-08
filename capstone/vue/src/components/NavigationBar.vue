@@ -26,7 +26,7 @@ export default {};
 img{
   height: 5em;
   display: block;
-  padding: 0.5em;
+  padding: 2em;
 }
 
 img:hover {
@@ -38,16 +38,19 @@ header {
   display: flex;
   align-items: center;
   flex-direction: row;
-  justify-content: space-between;
 }
 
 ul {
   list-style-type: none;
   display: flex;
-  justify-content: space-around;
+  justify-content: flex-end;
 }
 
 nav {
   flex-grow: 1;
+}
+
+li {
+  padding-left: 2em;
 }
 </style>

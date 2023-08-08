@@ -1,11 +1,11 @@
 <template>
-  <div id="register" class="text-center">
-    <header>
+  <main id="register" class="text-center">
+    <div class="box">
       <h1>Create Account</h1>
-    </header>
+    </div>
     <register-form :role="'Parent'" :family="'0'" @create-user="onCreateUser()" />
     <p><router-link :to="{ name: 'login' }">Already have an account? Log in.</router-link></p>
-  </div>
+  </main>
 </template>
 
 <script>
