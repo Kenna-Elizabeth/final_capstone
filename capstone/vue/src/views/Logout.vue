@@ -1,7 +1,7 @@
 <template>
-  <header>
+  <main class="logout">
     <h1>Logout</h1>
-  </header>
+  </main>
 </template>
 
 <script>

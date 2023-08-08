@@ -1,10 +1,8 @@
 <template>
-  <div class="home">
-   <header>
+  <main class="home">
      <h1>Home</h1>
-    </header>
     <p>You must be authenticated to see this</p>
-  </div>
+  </main>
 </template>
 
 <script>

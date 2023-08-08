@@ -1,10 +1,10 @@
 <template>
-  <div class="books">
-    <header>
+  <main class="books">
+    <div class="box">
     <h1>Books Page</h1>
-    </header>
+    </div>
     <p>You must be authenticated to see this</p>
-  </div>
+  </main>
 </template>
 
 <script>
