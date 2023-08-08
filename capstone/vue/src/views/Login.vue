@@ -2,7 +2,6 @@
   <div id="login">
     <form @submit.prevent="login">
       
-       <img src="../assets/valley-libraries-logo.png">
       <header>
         <h1 >Family Reading Tracker</h1>
       </header>

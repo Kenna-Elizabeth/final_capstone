@@ -1,8 +1,11 @@
 <template>
 <div id="nav">
-      <router-link v-bind:to="{ name: 'home' }">Home</router-link>&nbsp;|&nbsp;
-      <router-link v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''">Logout</router-link>
-     
+      <img src="../assets/valley-libraries-logo.png">
+      <router-link v-bind:to="{ name: 'books' }">Books</router-link> | 
+      <router-link v-bind:to="{ name: 'family' }">Family</router-link>
+      <span v-if="$store.state.token != ''"> | </span>
+      <router-link v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''">Logout</router-link> 
+    
     </div>
   
 </template>

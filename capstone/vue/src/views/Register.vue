@@ -11,8 +11,11 @@
 <script>
 import RegisterForm from '../components/RegisterForm.vue';
 
+
 export default {
-  components: { RegisterForm },
+  components: { 
+    RegisterForm,
+    },
   name: 'register',
   methods: {
     onCreateUser() {
