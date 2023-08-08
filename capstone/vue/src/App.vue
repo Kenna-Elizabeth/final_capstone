@@ -26,7 +26,7 @@ header {
     justify-content: center;
     
 }
-h1 { color: white;
+header h1 { color: white;
 }
 
 
