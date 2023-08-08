@@ -1,6 +1,8 @@
 <template>
   <div class="family">
+    <header>
     <h1>Family Management Page</h1>
+    </header>
     <p>You must be authenticated to see this</p>
   </div>
 </template>
