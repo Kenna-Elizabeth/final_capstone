@@ -65,7 +65,8 @@ const router = new Router({
       name: "family",
       component: Family, 
       meta: {
-        requiresAuth: true
+        requiresAuth: true,
+        requiresParent: true
       }
     }
     
@@ -81,6 +82,13 @@ router.beforeEach((to, from, next) => {
     next("/login");
   } else {
     // Else let them go to their next destination
+    next();
+  }
+
+  const requiresParent = to.matched.some(x => x.meta.requiresParent);
+  if (requiresParent && store.state.user.authorities[0].name != 'ROLE_PARENT') {
+    next("/books");
+  } else {
     next();
   }
 });

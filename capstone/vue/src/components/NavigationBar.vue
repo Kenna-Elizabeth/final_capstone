@@ -4,8 +4,10 @@
   <nav>
     <ul>
       <li><router-link v-bind:to="{ name: 'books' }">Books</router-link></li>
-      <li> | </li>
-      <li><router-link v-bind:to="{ name: 'family' }">Family</router-link></li>
+      <li v-if="parentLoggedIn"> | </li>
+      <li v-if="parentLoggedIn">
+        <router-link v-bind:to="{ name: 'family' }">Family</router-link>
+      </li>
       <li v-if="$store.state.token != ''"> | </li>
       <li v-if="$store.state.token != ''">
         <router-link
@@ -19,7 +21,13 @@
 </template>
 
 <script>
-export default {};
+export default {
+  computed: {
+    parentLoggedIn() {
+      return this.$store.state.token != '' && this.$store.state.user.authorities[0].name == 'ROLE_PARENT';
+    }
+  }
+};
 </script>
 
 <style scoped>
