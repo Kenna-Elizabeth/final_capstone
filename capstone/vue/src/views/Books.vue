@@ -1,9 +1,9 @@
 <template>
   <main class="books">
     <div class="box">
-    <h1>Books Page</h1>
+    <h1>Books</h1>
     </div>
-    <p>You must be authenticated to see this</p>
+    <p>Page Under Development</p>
   </main>
 </template>
 
