@@ -1,10 +1,17 @@
 <template>
   <form id="register-form" @submit.prevent="register">
+    <div class="form-input-group">
+      New {{ user.role }} User
+      <br>Family Id {{ user.familyId }}
+    </div>
     <div role="alert" v-if="registrationErrors">
       {{ registrationErrorMsg }}
     </div>
-    <div class="form-input-group">
-      New {{ role }} User
+    <div class="form-input-group" v-if="chooseRole">
+      <input type="radio" id="child-radio" value="Child" v-model="user.role">
+      <label for="child-radio">Child</label>
+      <input type="radio" id="parent-radio" value="Parent" v-model="user.role">
+      <label for="parent-radio">Parent</label>
     </div>
     <div class="form-input-group">
       <label for="username">Username</label>
@@ -27,7 +34,7 @@ import authService from '../services/AuthService';
 
 export default {
   name: 'register-form',
-  props: ['role', 'family'],
+  props: ['role', 'familyId', 'chooseRole'],
   data() {
     return {
       user: {
@@ -35,7 +42,7 @@ export default {
         password: '',
         confirmPassword: '',
         role: this.role,
-        family: this.family
+        familyId: this.familyId
       },
       registrationErrors: false,
       registrationErrorMsg: 'There were problems registering this user.',

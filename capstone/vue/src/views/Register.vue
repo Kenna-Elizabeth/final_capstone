@@ -3,7 +3,7 @@
     <header>
       <h1>Create Account</h1>
     </header>
-    <register-form :role="'Parent'" :family="'0'" @create-user="onCreateUser()" />
+    <register-form :role="'Parent'" :familyId="0" :chooseRole="false" @create-user="onCreateUser()" />
     <p><router-link :to="{ name: 'login' }">Already have an account? Log in.</router-link></p>
   </div>
 </template>

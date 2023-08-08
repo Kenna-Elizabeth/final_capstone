@@ -9,12 +9,31 @@
         {{ user.username }} - {{ user.authorities[0].name == "ROLE_PARENT" ? 'Parent' : 'Child' }}
       </li>
     </ul>
+    <div>
+      <button>Add Family Member</button>
+    </div>
+    <register-form 
+      :role="'Child'" 
+      :familyId="this.$store.state.user.familyId == 0 ? this.$store.state.user.id : this.$store.state.user.familyId" 
+      :chooseRole="true"
+      @create-user="$store.dispatch('retrieveFamilyUsers')" 
+    />
   </div>
 </template>
 
 <script>
+import RegisterForm from '../components/RegisterForm.vue';
+
 export default {
+  components: { 
+    RegisterForm
+  },
   name: "family",
+  data() {
+    return {
+      showAddForm: false,
+    };
+  },
   created() {
     this.$store.dispatch('retrieveFamilyUsers');
   }
@@ -25,6 +44,8 @@ export default {
 ul {
   display: inline-block;
   text-align: left;
+  list-style-type: none;
+  padding-inline-start: 0;
 }
 
 </style>
