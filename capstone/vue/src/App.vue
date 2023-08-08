@@ -5,7 +5,7 @@
   </div>
 </template>
 <script>
-  import NavigationBar from "./views/NavigationBar.vue";
+  import NavigationBar from "./components/NavigationBar.vue";
 
   export default {
     components: {
@@ -17,16 +17,11 @@
 
 
 <style>
-header {
-    background-image: linear-gradient(#05BCD9,#9DDAE6);
-    display: flex;
+h1 { color: white;
+background-image: linear-gradient(#05BCD9,#9DDAE6);
     padding: 8px;
     width: 100vw;
-    align-items: center;
-    justify-content: center;
-    
-}
-header h1 { color: white;
+    text-align: center;
 }
 
 

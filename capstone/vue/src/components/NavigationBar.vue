@@ -1,18 +1,21 @@
 <template>
-  <div id="nav">
-    <img src="../assets/valley-libraries-logo.png" />
+  <header>
+  <img src="../assets/valley-libraries-logo.png" />
+  <nav>
     <ul>
-      <li><router-link v-bind:to="{ name: 'books' }">Books</router-link> | </li>
+      <li><router-link v-bind:to="{ name: 'books' }">Books</router-link></li>
+      <li> | </li>
       <li><router-link v-bind:to="{ name: 'family' }">Family</router-link></li>
       <li v-if="$store.state.token != ''"> | </li>
-      <li>
+      <li v-if="$store.state.token != ''">
         <router-link
-          v-bind:to="{ name: 'logout' }"
-          v-if="$store.state.token != ''">Logout</router-link
+        v-bind:to="{ name: 'logout' }"
+          >Logout</router-link
         >
       </li>
     </ul>
-  </div>
+  </nav>
+  </header>
 </template>
 
 <script>
@@ -21,15 +24,16 @@ export default {};
 
 <style scoped>
 img{
-  height: auto;
+  height: 5em;
   display: block;
+  padding: 0.5em;
 }
 
 img:hover {
   box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
 }
 
-#nav {
+header {
   list-style-type: none;
   display: flex;
   align-items: center;
@@ -40,11 +44,10 @@ img:hover {
 ul {
   list-style-type: none;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
 }
 
-li {
-  display: flex;
-  justify-content: space-evenly;
+nav {
+  flex-grow: 1;
 }
 </style>
