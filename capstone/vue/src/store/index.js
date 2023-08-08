@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
+import userService from '../services/UserService'
 
 Vue.use(Vuex)
 
@@ -19,7 +20,8 @@ if(currentToken != null) {
 export default new Vuex.Store({
   state: {
     token: currentToken || '',
-    user: currentUser || {}
+    user: currentUser || {},
+    familyUsers: {}
   },
   mutations: {
     SET_AUTH_TOKEN(state, token) {
@@ -37,6 +39,22 @@ export default new Vuex.Store({
       state.token = '';
       state.user = {};
       axios.defaults.headers.common = {};
+    },
+    SET_FAMILY_USERS(state, users) {
+      state.familyUsers = users;
+    }
+  },
+  actions: {
+    retrieveFamilyUsers(context) {
+      userService.getFamilyUsers().then( response => {
+        if (response.status == 200) {
+          context.commit("SET_FAMILY_USERS", response.data);
+        }
+      }).catch(error => {
+        if (error.response) {
+          this.errorMsg = "Could not load family members.";
+        }
+      });
     }
   }
 })

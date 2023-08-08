@@ -89,6 +89,24 @@ public class JdbcUserDao implements UserDao {
         return newUser;
     }
 
+    @Override
+    public List<User> getFamilyUsers(int familyId) {
+        List<User> users = new ArrayList<>();
+
+        String sql = "SELECT user_id, username, password_hash, role, family_id FROM users WHERE user_id = ? OR family_id = ?;";
+        try {
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, familyId, familyId);
+            while (results.next()) {
+                User user = mapRowToUser(results);
+                users.add(user);
+            }
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        }
+        return users;
+
+    }
+
     private User mapRowToUser(SqlRowSet rs) {
         User user = new User();
         user.setId(rs.getInt("user_id"));
