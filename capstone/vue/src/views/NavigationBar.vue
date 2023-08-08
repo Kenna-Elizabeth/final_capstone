@@ -19,7 +19,7 @@
 export default {};
 </script>
 
-<style>
+<style scoped>
 #nav {
   list-style-type: none;
   display: flex;
