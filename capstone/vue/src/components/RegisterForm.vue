@@ -1,6 +1,6 @@
 <template>
   <form id="register-form" autocomplete="off" @submit.prevent="register">
-    <div role="alert" v-if="registrationErrors">
+    <div class="alert-msg" role="alert" v-if="registrationErrors">
       {{ registrationErrorMsg }}
     </div>
     <div class="form-input-group" v-if="chooseRole">
@@ -9,17 +9,19 @@
       <input type="radio" id="parent-radio" value="Parent" v-model="user.role">
       <label for="parent-radio">Parent</label>
     </div>
-    <div class="form-input-group">
-      <label for="username">Username</label>
-      <input type="text" id="username" v-model="user.username" required ref="usernameInput" />
-    </div>
-    <div class="form-input-group">
-      <label for="password">Password</label>
-      <input type="password" id="password" v-model="user.password" required autocomplete="new-password" />
-    </div>
-    <div class="form-input-group">
-      <label for="confirmPassword">Confirm Password</label>
-      <input type="password" id="confirmPassword" v-model="user.confirmPassword" required />
+    <div class="text-input-block">
+      <div class="form-input-group">
+        <label for="username">Username</label>
+        <input type="text" id="username" v-model="user.username" required ref="usernameInput" />
+      </div>
+      <div class="form-input-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" v-model="user.password" required autocomplete="new-password" />
+      </div>
+      <div class="form-input-group">
+        <label for="confirmPassword">Confirm Password</label>
+        <input type="password" id="confirmPassword" v-model="user.confirmPassword" required />
+      </div>
     </div>
     <button type="submit">Create Account</button>
   </form>
@@ -78,9 +80,21 @@ export default {
 
 </script>
 
-<style>
+<style scoped>
 #register-form {
   margin-top: 1em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.alert-msg {
+  color: firebrick;
+  margin-bottom: 1em;
+}
+.text-input-block {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
 }
 .form-input-group {
   margin-bottom: 1rem;
