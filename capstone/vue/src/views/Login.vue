@@ -1,16 +1,17 @@
 <template>
   <main id="login">
     <div class="box">
-      <h1 >Family Reading Tracker</h1>
-      </div>
-    <form @submit.prevent="login">
-      <h2>Please login</h2> 
-      <div role="alert" v-if="invalidCredentials">
+      <h1>Family Reading Tracker</h1>
+    </div>
+    <form id="login-form" @submit.prevent="login">
+      <h2>Please Log In</h2> 
+      <div class="alert-error" role="alert" v-if="invalidCredentials">
         Invalid username and password!
       </div>
-      <div role="alert" v-if="this.$route.query.registration">
+      <div class="alert-success" role="alert" v-if="$route.query.registration">
         Thank you for registering, please sign in.
       </div>
+      <div class="text-input-block">
       <div class="form-input-group">
         <label for="username">Username</label>
         <input type="text" id="username" v-model="user.username" required autofocus />
@@ -18,6 +19,7 @@
       <div class="form-input-group">
         <label for="password">Password</label>
         <input type="password" id="password" v-model="user.password" required />
+      </div>
       </div>
       <button type="submit">Sign in</button>
       <p>
@@ -53,8 +55,6 @@ export default {
               this.$router.push("/books");
             } else if ( response.data.user.authorities[0].name == 'ROLE_PARENT' ){
               this.$router.push("/family");
-            } else {
-              alert('Unknown Role!'); //TODO remove this once roles are fully set up
             }
           }
         })
@@ -71,10 +71,28 @@ export default {
 </script>
 
 <style scoped>
+#login-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.alert-error {
+  color: firebrick;
+  margin-bottom: 1em;
+}
+.alert-success {
+  color: navy;
+  margin-bottom: 1em;
+}
 .form-input-group {
   margin-bottom: 1rem;
 }
-
+.text-input-block {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
 label {
   margin-right: 0.5rem;
 }

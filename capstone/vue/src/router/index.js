@@ -7,6 +7,8 @@ import Register from '../views/Register.vue'
 import store from '../store/index'
 import Books from '../views/Books.vue'
 import Family from '../views/Family.vue'
+import Book from '../views/Book.vue'
+import Activities from '../views/Activity.vue' 
 
 
 Vue.use(Router)
@@ -65,7 +67,24 @@ const router = new Router({
       name: "family",
       component: Family, 
       meta: {
-        requiresAuth: true
+        requiresAuth: true,
+        requiresParent: true
+      }
+    },
+    {
+      path: "/book",
+      name: "book",
+      component: Book,
+      meta: {
+        requiresParent: true
+      }
+    },
+    {
+      path: "/activites",
+      name: "activity",
+      component: Activities,
+      meta: {
+        requiresParent: true
       }
     }
     
@@ -81,6 +100,13 @@ router.beforeEach((to, from, next) => {
     next("/login");
   } else {
     // Else let them go to their next destination
+    next();
+  }
+
+  const requiresParent = to.matched.some(x => x.meta.requiresParent);
+  if (requiresParent && store.state.user.authorities[0].name != 'ROLE_PARENT') {
+    next("/books");
+  } else {
     next();
   }
 });

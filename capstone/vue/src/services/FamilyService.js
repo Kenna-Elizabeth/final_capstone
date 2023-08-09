@@ -3,7 +3,7 @@ import axios from 'axios';
 export default {
 
   getFamilyUsers() {
-    return axios.get('/user/family/users')
+    return axios.get('/family/users')
   }
 
 }

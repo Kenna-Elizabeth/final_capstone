@@ -93,9 +93,9 @@ public class JdbcUserDao implements UserDao {
     public List<User> getFamilyUsers(int familyId) {
         List<User> users = new ArrayList<>();
 
-        String sql = "SELECT user_id, username, password_hash, role, family_id FROM users WHERE user_id = ? OR family_id = ?;";
+        String sql = "SELECT user_id, username, password_hash, role, family_id FROM users WHERE family_id = ? ORDER BY role DESC, username ASC;";
         try {
-            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, familyId, familyId);
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, familyId);
             while (results.next()) {
                 User user = mapRowToUser(results);
                 users.add(user);

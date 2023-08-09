@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
-import userService from '../services/UserService'
+import familyService from '../services/FamilyService'
 
 Vue.use(Vuex)
 
@@ -46,7 +46,7 @@ export default new Vuex.Store({
   },
   actions: {
     retrieveFamilyUsers(context) {
-      userService.getFamilyUsers().then( response => {
+      familyService.getFamilyUsers().then( response => {
         if (response.status == 200) {
           context.commit("SET_FAMILY_USERS", response.data);
         }
