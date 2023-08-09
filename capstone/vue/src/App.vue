@@ -18,7 +18,9 @@
 
 <style>
 .box { 
+    margin-top: 0.2em;
     color: white;
+    /*background-image: linear-gradient(#9DDAE6,#05BCD9);*/
     background-image: linear-gradient(#05BCD9,#9DDAE6);
     height: 5em;
     width: 100vw;

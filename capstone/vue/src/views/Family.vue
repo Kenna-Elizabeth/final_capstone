@@ -50,8 +50,17 @@ ul {
 }
 li {
   padding: .5em;
-  margin: .2em;
+  margin: .5em;
   border: 1px solid #05BCD9;
   border-radius: 8px;
+  background-color: #05BCD9;
+  font-weight: bold;
+  
 }
+
+li:hover {
+  background-color: #7cd2e4;
+}
+
+
 </style>

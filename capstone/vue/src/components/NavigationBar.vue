@@ -4,7 +4,7 @@
   <nav>
     <ul>
       <li><router-link v-bind:to="{ name: 'books' }">Books</router-link></li>
-      <li v-if="parentLoggedIn"> | </li>
+      <li v-if="parentLoggedIn"> | </li> 
       <li v-if="parentLoggedIn">
         <router-link v-bind:to="{ name: 'family' }">Family</router-link>
       </li>
@@ -46,19 +46,37 @@ header {
   display: flex;
   align-items: center;
   flex-direction: row;
+  
 }
 
 ul {
   list-style-type: none;
   display: flex;
   justify-content: flex-end;
+  
+  
 }
 
 nav {
   flex-grow: 1;
+  margin-right: 20px;
+  
+  
 }
 
 li {
   padding-left: 2em;
+  font-weight: bold;
 }
+
+li a {
+  color: black;
+  text-decoration: none;
+}
+
+li a:hover {
+  color: #05BCD9;
+  text-decoration: underline;
+}
+
 </style>
