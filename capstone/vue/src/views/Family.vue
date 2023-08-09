@@ -10,9 +10,10 @@
       </li>
     </ul>
     <div>
-      <button>Add Family Member</button>
+      <button @click="showAddForm = !showAddForm">{{ showAddForm ? 'Cancel' : 'Add Family Member' }}</button>
     </div>
     <register-form 
+      v-if="showAddForm"
       :role="'Child'" 
       :familyId="$store.state.user.familyId == 0 ? $store.state.user.id : $store.state.user.familyId" 
       :chooseRole="true"
@@ -47,5 +48,10 @@ ul {
   list-style-type: none;
   padding-inline-start: 0;
 }
-
+li {
+  padding: .5em;
+  margin: .2em;
+  border: 1px solid #05BCD9;
+  border-radius: 8px;
+}
 </style>

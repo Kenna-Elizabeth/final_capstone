@@ -1,5 +1,5 @@
 <template>
-  <form id="register-form" @submit.prevent="register">
+  <form id="register-form" autocomplete="off" @submit.prevent="register">
     <div role="alert" v-if="registrationErrors">
       {{ registrationErrorMsg }}
     </div>
@@ -11,11 +11,11 @@
     </div>
     <div class="form-input-group">
       <label for="username">Username</label>
-      <input type="text" id="username" v-model="user.username" required autofocus />
+      <input type="text" id="username" v-model="user.username" required ref="usernameInput" />
     </div>
     <div class="form-input-group">
       <label for="password">Password</label>
-      <input type="password" id="password" v-model="user.password" required />
+      <input type="password" id="password" v-model="user.password" required autocomplete="new-password" />
     </div>
     <div class="form-input-group">
       <label for="confirmPassword">Confirm Password</label>
@@ -71,11 +71,17 @@ export default {
       this.registrationErrorMsg = 'There were problems registering this user.';
     },
   },
+  mounted() {
+    this.$refs.usernameInput.focus();
+  }
 };
 
 </script>
 
 <style>
+#register-form {
+  margin-top: 1em;
+}
 .form-input-group {
   margin-bottom: 1rem;
 }
