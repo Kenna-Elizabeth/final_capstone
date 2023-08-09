@@ -16,7 +16,6 @@ CREATE TABLE users (
 	password_hash varchar(200) NOT NULL,
 	role varchar(50) NOT NULL,
 	family_id int NOT NULL,
-	family_order int NOT NULL DEFAULT 0,
 	CONSTRAINT PK_users PRIMARY KEY (user_id),
 	CONSTRAINT FK_users_families FOREIGN KEY (family_id) REFERENCES families (family_id)
 );

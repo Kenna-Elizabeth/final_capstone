@@ -14,21 +14,21 @@ import java.util.List;
 @RestController
 @CrossOrigin
 @PreAuthorize("isAuthenticated()")
-@RequestMapping("/user")
-public class UserController {
+@RequestMapping("/family")
+public class FamilyController {
 
     private final UserDao userDao;
 
-    public UserController(UserDao userDao) {
+    public FamilyController(UserDao userDao) {
         this.userDao = userDao;
     }
 
-    @RequestMapping(path = "/family/users", method = RequestMethod.GET)
+    @RequestMapping(path = "/users", method = RequestMethod.GET)
     public List<User> familyUsers(Principal userPrincipal) {
         User user = getUserFromPrincipal(userPrincipal);
 
         try {
-            return userDao.getFamilyUsers(user.getFamilyId() == 0 ? user.getId() : user.getFamilyId());
+            return userDao.getFamilyUsers(user.getFamilyId());
         } catch (DaoException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Unable to Find Family Users");
         }
