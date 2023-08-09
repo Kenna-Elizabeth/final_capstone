@@ -7,6 +7,8 @@ import Register from '../views/Register.vue'
 import store from '../store/index'
 import Books from '../views/Books.vue'
 import Family from '../views/Family.vue'
+import Book from '../views/Book.vue'
+import Activities from '../views/Activity.vue' 
 
 
 Vue.use(Router)
@@ -66,6 +68,22 @@ const router = new Router({
       component: Family, 
       meta: {
         requiresAuth: true,
+        requiresParent: true
+      }
+    },
+    {
+      path: "/book",
+      name: "book",
+      component: Book,
+      meta: {
+        requiresParent: true
+      }
+    },
+    {
+      path: "/activites",
+      name: "activity",
+      component: Activities,
+      meta: {
         requiresParent: true
       }
     }
