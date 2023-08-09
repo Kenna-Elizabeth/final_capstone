@@ -1,6 +1,10 @@
 BEGIN TRANSACTION;
 
+DROP TABLE IF EXISTS users_books;
+DROP TABLE IF EXISTS sessions;
+DROP TABLE IF EXISTS books;
 DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS families;
 
 
 CREATE TABLE families (
@@ -27,7 +31,7 @@ CREATE TABLE books (
     cover_url varchar(100),
     author varchar(100),
     title varchar(100),
-    CONSTRAINT PK_books PRIMARY KEY (book_id)
+    CONSTRAINT PK_books PRIMARY KEY (book_id),
     CONSTRAINT FK_books_families FOREIGN KEY (family_id) REFERENCES families (family_id)
 );
 
