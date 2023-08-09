@@ -52,6 +52,7 @@ CREATE TABLE users_books (
     book_id int NOT NULL,
     completed boolean DEFAULT false,
     recommended boolean DEFAULT false,
+    CONSTRAINT PK_user_book PRIMARY KEY (user_id, book_id),
     CONSTRAINT FK_users_books_users FOREIGN KEY (user_id) REFERENCES users (user_id),
     CONSTRAINT FK_users_books_books FOREIGN KEY (book_id) REFERENCES books (book_id)
 );
