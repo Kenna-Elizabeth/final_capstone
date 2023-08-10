@@ -4,26 +4,26 @@
       {{ registrationErrorMsg }}
     </div>
     <div class="form-input-group" v-if="chooseRole">
-      <input type="radio" id="child-radio" value="Child" v-model="user.role">
+      <input type="radio" id="child-radio" value="Child" v-model="user.role" :disabled="disableForm">
       <label for="child-radio">Child</label>
-      <input type="radio" id="parent-radio" value="Parent" v-model="user.role">
+      <input type="radio" id="parent-radio" value="Parent" v-model="user.role" :disabled="disableForm">
       <label for="parent-radio">Parent</label>
     </div>
     <div class="text-input-block">
       <div class="form-input-group">
         <label for="username">Username</label>
-        <input type="text" id="username" v-model="user.username" required ref="usernameInput" />
+        <input type="text" id="username" v-model="user.username" required ref="usernameInput" :disabled="disableForm" />
       </div>
       <div class="form-input-group">
         <label for="password">Password</label>
-        <input type="password" id="password" v-model="user.password" required autocomplete="new-password" />
+        <input type="password" id="password" v-model="user.password" required autocomplete="new-password" :disabled="disableForm" />
       </div>
       <div class="form-input-group">
         <label for="confirmPassword">Confirm Password</label>
-        <input type="password" id="confirmPassword" v-model="user.confirmPassword" required />
+        <input type="password" id="confirmPassword" v-model="user.confirmPassword" required ref="confirmPasswordInput" :disabled="disableForm" />
       </div>
     </div>
-    <button type="submit">Create Account</button>
+    <button type="submit" :disabled="disableForm">Create Account</button>
   </form>
 </template>
 
@@ -42,6 +42,7 @@ export default {
         role: this.role,
         familyId: this.familyId
       },
+      disableForm: false,
       registrationErrors: false,
       registrationErrorMsg: 'There were problems registering this user.',
     };
@@ -51,15 +52,29 @@ export default {
       if (this.user.password != this.user.confirmPassword) {
         this.registrationErrors = true;
         this.registrationErrorMsg = 'Password & Confirm Password do not match.';
+        this.user.confirmPassword = '';
+        this.$refs.confirmPasswordInput.focus();
       } else {
+        this.clearErrors();
+        this.disableForm = true;
         authService
           .register(this.user)
           .then((response) => {
             if (response.status == 201) {
+              //Clear form for next entry
+              this.user = {
+                username: '',
+                password: '',
+                confirmPassword: '',
+                role: this.role,
+                familyId: this.familyId
+              };
+              this.disableForm = false;
               this.$emit('create-user');
             }
           })
           .catch((error) => {
+            this.disableForm = false;
             const response = error.response;
             this.registrationErrors = true;
             if (response.status === 400) {

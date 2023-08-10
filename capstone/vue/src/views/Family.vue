@@ -15,7 +15,7 @@
     <register-form 
       v-if="showAddForm"
       :role="'Child'" 
-      :familyId="$store.state.user.familyId == 0 ? $store.state.user.id : $store.state.user.familyId" 
+      :familyId="$store.state.user.familyId" 
       :chooseRole="true"
       @create-user="$store.dispatch('retrieveFamilyUsers')" 
     />
