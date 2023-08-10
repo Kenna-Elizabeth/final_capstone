@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export default {
 
-  getFamilyUsers() {
+  getBooks() {
     return axios.get('/books')
   }
 
