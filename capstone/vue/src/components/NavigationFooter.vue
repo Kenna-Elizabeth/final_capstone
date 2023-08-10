@@ -22,13 +22,13 @@ export default {};
 
 
 footer {
-  margin-top: 0.5em;
   list-style-type: none;
   display: flex;
   align-items: center;
   flex-direction: row;
   background-image: linear-gradient(#05BCD9,#9DDAE6);
-  position: absolute bottom;
+  margin-top: auto;
+  
 }
 
 ul {
