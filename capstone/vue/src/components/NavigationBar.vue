@@ -19,7 +19,7 @@
       <li v-if="parentLoggedIn"> | </li> 
 
       <li v-if="parentLoggedIn">
-        <router-link v-bind:to="{ name: 'book' }">My Books</router-link>
+        <router-link v-bind:to="{ name: 'book' }">My&nbsp;Books</router-link>
       </li>
 
       <li v-if="$store.state.token != ''"> | </li>
