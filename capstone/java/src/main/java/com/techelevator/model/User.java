@@ -25,6 +25,7 @@ public class User {
       this.password = password;
       if (authorities != null) this.setAuthorities(authorities);
       this.activated = true;
+      this.familyId = 0;
    }
 
    public int getId() {

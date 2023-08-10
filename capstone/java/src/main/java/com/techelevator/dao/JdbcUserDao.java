@@ -74,6 +74,19 @@ public class JdbcUserDao implements UserDao {
     @Override
     public User createUser(RegisterUserDto user) {
         User newUser = null;
+
+        //TODO Refactor this so that it uses FamilyDao methods - but linking DAOs is a bad pattern? Use a Service instead?
+        if ( user.getFamilyId() == 0 ) {
+            String insertFamilySql = "INSERT INTO families (family_name) VALUES (?) RETURNING family_id";
+            try {
+                user.setFamilyId( jdbcTemplate.queryForObject(insertFamilySql, int.class, "") );
+            } catch (CannotGetJdbcConnectionException e) {
+                throw new DaoException("Unable to connect to server or database", e);
+            } catch (DataIntegrityViolationException e) {
+                throw new DaoException("Data integrity violation", e);
+            }
+        }
+
         String insertUserSql = "INSERT INTO users (username, password_hash, role, family_id) values (?, ?, ?, ?) RETURNING user_id";
         String password_hash = new BCryptPasswordEncoder().encode(user.getPassword());
         String ssRole = user.getRole().toUpperCase().startsWith("ROLE_") ? user.getRole().toUpperCase() : "ROLE_" + user.getRole().toUpperCase();
