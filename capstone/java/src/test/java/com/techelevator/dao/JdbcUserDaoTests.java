@@ -100,6 +100,7 @@ public class JdbcUserDaoTests extends BaseDaoTests {
         user.setUsername("new");
         user.setPassword("user");
         user.setRole("ROLE_USER");
+        user.setFamilyId(1);
         User createdUser = sut.createUser(user);
 
         Assert.assertNotNull(createdUser);
