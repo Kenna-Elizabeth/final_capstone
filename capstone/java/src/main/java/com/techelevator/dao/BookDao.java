@@ -8,4 +8,6 @@ public interface BookDao {
 
     List<Book> getBooks(int familyId);
 
+    Book getBookById(int id);
+
 }
