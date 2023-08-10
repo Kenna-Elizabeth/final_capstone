@@ -76,7 +76,7 @@ const router = new Router({
       name: "book",
       component: Book,
       meta: {
-        requiresParent: true
+        requiresAuth: true
       }
     },
     {
@@ -84,7 +84,7 @@ const router = new Router({
       name: "activity",
       component: Activities,
       meta: {
-        requiresParent: true
+        requiresAuth: true
       }
     }
     

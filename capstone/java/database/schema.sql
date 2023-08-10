@@ -27,7 +27,7 @@ CREATE TABLE users (
 CREATE TABLE books (
     book_id SERIAL,
     family_id int,
-    isbn int,
+    isbn varchar(20),
     cover_url varchar(100),
     author varchar(100),
     title varchar(100),
