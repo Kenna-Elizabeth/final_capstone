@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
 import familyService from '../services/FamilyService'
+import booksService from '../services/BooksService'
 
 Vue.use(Vuex)
 
@@ -21,7 +22,9 @@ export default new Vuex.Store({
   state: {
     token: currentToken || '',
     user: currentUser || {},
-    familyUsers: {}
+    familyUsers: {},
+    books: {}
+
   },
   mutations: {
     SET_AUTH_TOKEN(state, token) {
@@ -43,6 +46,9 @@ export default new Vuex.Store({
     },
     SET_FAMILY_USERS(state, users) {
       state.familyUsers = users;
+    },
+    SET_BOOKS(state,books){
+      state.books = books; 
     }
   },
   actions: {
@@ -54,6 +60,17 @@ export default new Vuex.Store({
       }).catch(error => {
         if (error.response) {
           this.errorMsg = "Could not load family members.";
+        }
+      });
+    },
+    retrieveBooks(context){
+      booksService.getBooks().then( response => {
+        if (response.status == 200){
+          context.commit("SET_BOOKS", response.data);
+        }
+      }).catch(error => {
+        if (error.response){
+          this.errorMsg = "Could not load books.";
         }
       });
     }

@@ -7,10 +7,7 @@ import com.techelevator.model.Book;
 import com.techelevator.model.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.security.Principal;
@@ -38,6 +35,21 @@ public class BooksController {
             return bookDao.getBooks(user.getFamilyId());
         } catch (DaoException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Unable to Find Family Users");
+        }
+    }
+
+    @RequestMapping(path = "/{id}", method = RequestMethod.GET)
+    public Book getBookById(@PathVariable int id, Principal userPrincipal) {
+        User user = getUserFromPrincipal(userPrincipal);
+
+        try {
+            Book book = bookDao.getBookById(id);
+            if (book.getFamilyId() != user.getFamilyId()) {
+                throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Book Not In Collection");
+            }
+            return book;
+        } catch (DaoException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Unable to Find Book");
         }
     }
 

@@ -1,14 +1,22 @@
 <template>
   <main class="books">
     <div class="box">
-    <h1>Books</h1>
+      <h1>Books</h1>
     </div>
-    <p>Page Under Development</p>
+      <section id="book-display">
+        <div class="book-panel" v-for="book in $store.state.books" :key="book.id">
+            {{ book.title }}
+        </div>
+      </section>
   </main>
 </template>
 
 <script>
 export default {
-  name: "books"
+  name: "books",
+
+  created() {
+    this.$store.dispatch('retrieveBooks');
+  }
 };
 </script>

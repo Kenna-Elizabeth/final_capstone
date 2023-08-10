@@ -36,6 +36,22 @@ public class JdbcBookDao implements BookDao {
         return books;
     }
 
+    @Override
+    public Book getBookById(int id) {
+        Book book = null;
+
+        String sql = "SELECT book_id, family_id, isbn, title, author, cover_url, note FROM books WHERE book_id = ?;";
+        try {
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, id);
+            if (results.next()) {
+                book = mapRowToBook(results);
+            }
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        }
+        return book;
+    }
+
     private Book mapRowToBook(SqlRowSet rs) {
         Book book = new Book();
         book.setId(rs.getInt("book_id"));
@@ -44,6 +60,7 @@ public class JdbcBookDao implements BookDao {
         book.setTitle(rs.getString("title"));
         book.setAuthor(rs.getString("author"));
         book.setCoverUrl(rs.getString("cover_url"));
+        book.setNote(rs.getString("note"));
         return book;
     }
 
