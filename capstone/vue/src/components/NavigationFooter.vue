@@ -27,8 +27,11 @@ footer {
   align-items: center;
   flex-direction: row;
   background-image: linear-gradient(#05BCD9,#9DDAE6);
-  margin-top: auto;
-  
+  position: fixed;
+  bottom: 0em;
+  margin-top: 0.5em;
+  left: 0em;
+  right: 0em; 
 }
 
 ul {
@@ -47,4 +50,21 @@ li {
   padding-left: 0.5em;
   padding-right: 0.5em;
 }
+ a:link {
+      text-decoration: none;
+}
+
+a:visited {
+      text-decoration: none;
+}
+
+a:hover {
+      text-decoration: none;
+     
+}
+
+a:active {
+      text-decoration: none;
+}
+
 </style>
