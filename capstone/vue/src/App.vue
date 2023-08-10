@@ -40,9 +40,11 @@ main {
   
 }
 
-/*@media(min-width: 1025px){
-
-}
+/* @media only screen and (min-width: 1025px){
+    footer {
+      display:none;
+    }
+} */
 
 /* @media(max-width: 1024px){
      {
