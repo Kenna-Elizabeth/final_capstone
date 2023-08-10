@@ -27,10 +27,11 @@ CREATE TABLE users (
 CREATE TABLE books (
     book_id SERIAL,
     family_id int,
-    isbn int,
-    cover_url varchar(100),
-    author varchar(100),
+    isbn varchar(20),
     title varchar(100),
+    author varchar(100),
+    cover_url varchar(100),
+    note text,
     CONSTRAINT PK_books PRIMARY KEY (book_id),
     CONSTRAINT FK_books_families FOREIGN KEY (family_id) REFERENCES families (family_id)
 );

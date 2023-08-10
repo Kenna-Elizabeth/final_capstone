@@ -29,7 +29,6 @@ import NavigationFooter from './components/NavigationFooter.vue';
     text-align: center;
 }
 
-
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
 }
@@ -38,7 +37,7 @@ main {
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-height: 80vh;
+  
 }
 
 /*@media(min-width: 1025px){
