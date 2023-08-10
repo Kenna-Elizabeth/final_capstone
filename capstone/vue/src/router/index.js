@@ -8,7 +8,7 @@ import store from '../store/index'
 import Books from '../views/Books.vue'
 import Family from '../views/Family.vue'
 import Book from '../views/Book.vue'
-import Activities from '../views/Activity.vue' 
+import Activity from '../views/Activity.vue' 
 
 
 Vue.use(Router)
@@ -80,9 +80,9 @@ const router = new Router({
       }
     },
     {
-      path: "/activites",
+      path: "/activities",
       name: "activity",
-      component: Activities,
+      component: Activity,
       meta: {
         requiresAuth: true
       }

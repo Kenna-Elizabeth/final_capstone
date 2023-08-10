@@ -7,7 +7,7 @@
 </template>
 <script>
   import NavigationBar from "./components/NavigationBar.vue";
-import NavigationFooter from './components/NavigationFooter.vue';
+  import NavigationFooter from './components/NavigationFooter.vue';
 
   export default {
     components: {

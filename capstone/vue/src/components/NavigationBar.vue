@@ -4,11 +4,26 @@
   <nav>
     <ul>
       <li><router-link v-bind:to="{ name: 'books' }">Books</router-link></li>
+
       <li v-if="parentLoggedIn"> | </li> 
+
       <li v-if="parentLoggedIn">
         <router-link v-bind:to="{ name: 'family' }">Family</router-link>
       </li>
+
+      <li v-if="parentLoggedIn"> | </li> 
+       <li v-if="parentLoggedIn">
+        <router-link v-bind:to="{ name: 'activity' }">Activites</router-link>
+      </li>
+
+      <li v-if="parentLoggedIn"> | </li> 
+
+      <li v-if="parentLoggedIn">
+        <router-link v-bind:to="{ name: 'book' }">My Books</router-link>
+      </li>
+
       <li v-if="$store.state.token != ''"> | </li>
+
       <li v-if="$store.state.token != ''">
         <router-link
         v-bind:to="{ name: 'logout' }"

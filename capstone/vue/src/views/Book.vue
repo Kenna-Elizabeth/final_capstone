@@ -1,7 +1,10 @@
 <template>
   <main class="book">
-     <h1>Book View</h1>
+    <div class="box">
+      <h1>My Books</h1>
+    </div>
     <p>Page Under Construction</p>
+    
   </main>
 </template>
 
