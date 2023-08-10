@@ -35,6 +35,7 @@ footer {
 }
 
 ul {
+  line-height: 2em;
   list-style-type: none;
   display: flex;
   justify-content: space-evenly;
@@ -47,23 +48,27 @@ nav {
 li {
   background-color: rgb(184, 237, 250);
   border-radius: 1em;
-  padding-left: 0.5em;
-  padding-right: 0.5em;
+  padding-left: 0.8em;
+  padding-right: 0.8em;
 }
  a:link {
+      font-size: 1.5em;
       text-decoration: none;
 }
 
 a:visited {
+      font-size: 1.5em;
       text-decoration: none;
 }
 
 a:hover {
+      font-size: 1.5em;
       text-decoration: none;
      
 }
 
 a:active {
+      font-size: 1.5em;
       text-decoration: none;
 }
 
