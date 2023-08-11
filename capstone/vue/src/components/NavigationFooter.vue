@@ -27,7 +27,16 @@
 </template>
 
 <script>
-export default {};
+export default {
+  computed: {
+    parentLoggedIn() {
+      return (
+        this.$store.state.token != "" &&
+        this.$store.state.user.authorities[0].name == "ROLE_PARENT"
+      );
+    },
+  },
+};
 </script>
 
 <style scoped>
