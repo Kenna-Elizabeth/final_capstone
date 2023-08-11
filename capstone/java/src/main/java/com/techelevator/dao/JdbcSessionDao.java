@@ -23,7 +23,7 @@ public class JdbcSessionDao implements SessionDao{
     public List<Session> getSessions(int userId) {
         List<Session> sessions = new ArrayList<>();
 
-        String sql = "SELECT session_id, user_id, book_id, minutes, format, note FROM sessions WHERE user_id = ?;";
+        String sql = "SELECT session_id, user_id, book_id, minutes, format, start_date_time, note FROM sessions WHERE user_id = ?;";
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql, userId);
             while (results.next()) {
@@ -44,6 +44,7 @@ public class JdbcSessionDao implements SessionDao{
         session.setBookId(rs.getInt("book_id"));
         session.setMinutes(rs.getInt("minutes"));
         session.setFormat(rs.getString("format"));
+        session.setStartDateTime(rs.getTimestamp("start_date_time"));
         session.setNote(rs.getString("note"));
         return session;
     }

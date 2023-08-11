@@ -48,7 +48,9 @@ export default new Vuex.Store({
       localStorage.removeItem('user');
       state.token = '';
       state.user = {};
-      state.familyUsers = {};
+      state.familyUsers = [];
+      state.books = [];
+      state.activity = [];
       axios.defaults.headers.common = {};
     },
     SET_FAMILY_USERS(state, users) {

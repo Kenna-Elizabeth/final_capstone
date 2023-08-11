@@ -20,12 +20,18 @@ public class JdbcBookDao implements BookDao {
     }
 
     @Override
-    public List<Book> getBooks(int familyId) {
+    public List<Book> getBooks(int userId, int familyId) {
         List<Book> books = new ArrayList<>();
 
-        String sql = "SELECT book_id, family_id, isbn, title, author, cover_url, note FROM books WHERE family_id = ? ORDER BY title ASC;";
+        String sql = "SELECT books.book_id, books.family_id, books.isbn, books.title, books.author, books.cover_url, books.note, " +
+                "COALESCE(ub.completed, false) AS completed, " +
+                "COALESCE(ub.recommended, false) AS recommended " +
+                "FROM books " +
+                "LEFT JOIN users_books AS ub " +
+                "ON books.book_id = ub.book_id AND ub.user_id = ?" +
+                "WHERE books.family_id = ? ORDER BY title ASC;";
         try {
-            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, familyId);
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, userId, familyId);
             while (results.next()) {
                 Book book = mapRowToBook(results);
                 books.add(book);

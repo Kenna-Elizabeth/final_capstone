@@ -32,7 +32,7 @@ public class BooksController {
         User user = getUserFromPrincipal(userPrincipal);
 
         try {
-            return bookDao.getBooks(user.getFamilyId());
+            return bookDao.getBooks(user.getId(), user.getFamilyId());
         } catch (DaoException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Unable to Find Family Users");
         }

@@ -9,6 +9,8 @@ public class Book {
     private String author;
     private String coverUrl;
     private String note;
+    private boolean completed = false;
+    private boolean recommended = false;
 
     public Book() {
     }
@@ -21,6 +23,18 @@ public class Book {
         this.author = author;
         this.coverUrl = coverUrl;
         this.note = note;
+    }
+
+    public Book(int id, int familyId, String isbn, String title, String author, String coverUrl, String note, boolean completed, boolean recommended) {
+        this.id = id;
+        this.familyId = familyId;
+        this.isbn = isbn;
+        this.title = title;
+        this.author = author;
+        this.coverUrl = coverUrl;
+        this.note = note;
+        this.completed = completed;
+        this.recommended = recommended;
     }
 
     public int getId() {
@@ -79,6 +93,22 @@ public class Book {
         this.note = note;
     }
 
+    public boolean isCompleted() {
+        return completed;
+    }
+
+    public void setCompleted(boolean completed) {
+        this.completed = completed;
+    }
+
+    public boolean isRecommended() {
+        return recommended;
+    }
+
+    public void setRecommended(boolean recommended) {
+        this.recommended = recommended;
+    }
+
     @Override
     public String toString() {
         return "Book{" +
@@ -89,6 +119,8 @@ public class Book {
                 ", author='" + author + '\'' +
                 ", coverUrl='" + coverUrl + '\'' +
                 ", note='" + note + '\'' +
+                ", completed=" + completed +
+                ", recommended=" + recommended +
                 '}';
     }
 }
