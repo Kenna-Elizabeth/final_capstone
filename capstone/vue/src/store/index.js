@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import axios from 'axios'
 import familyService from '../services/FamilyService'
 import booksService from '../services/BooksService'
+import activityService from '../services/ActivityService'
 
 Vue.use(Vuex)
 
@@ -23,7 +24,8 @@ export default new Vuex.Store({
     token: currentToken || '',
     user: currentUser || {},
     familyUsers: {},
-    books: {}
+    books: {},
+    activity: []
 
   },
   mutations: {
@@ -49,6 +51,9 @@ export default new Vuex.Store({
     },
     SET_BOOKS(state,books){
       state.books = books; 
+    },
+    SET_ACTIVITY(state,activity){
+      state.activity = activity; 
     }
   },
   actions: {
@@ -71,6 +76,17 @@ export default new Vuex.Store({
       }).catch(error => {
         if (error.response){
           this.errorMsg = "Could not load books.";
+        }
+      });
+    },
+    retrieveActivity(context){
+      activityService.getActivity().then( response => {
+        if(response.status == 200) {
+          context.commit("SET_ACTIVITY", response.data); 
+        }
+      }).catch(error => {
+        if(error.response){
+          this.errorMsg = "Could not load activity."; 
         }
       });
     }

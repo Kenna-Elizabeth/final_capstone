@@ -19,6 +19,7 @@ export default {};
 </script>
 
 <style scoped>
+
 footer{
   display: none;
 }
@@ -28,7 +29,7 @@ footer{
     display: flex;
     align-items: center;
     flex-direction: row;
-    background-image: linear-gradient(#05bcd9, #9ddae6);
+    background-image: linear-gradient(var(--dark-blue),var(--light-blue));
     position: fixed;
     bottom: 0em;
     margin-top: 0.5em;
