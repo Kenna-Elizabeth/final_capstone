@@ -11,6 +11,7 @@ public class Book {
     private String note;
     private boolean completed = false;
     private boolean recommended = false;
+    private boolean progress = false;
 
     public Book() {
     }
@@ -25,7 +26,7 @@ public class Book {
         this.note = note;
     }
 
-    public Book(int id, int familyId, String isbn, String title, String author, String coverUrl, String note, boolean completed, boolean recommended) {
+    public Book(int id, int familyId, String isbn, String title, String author, String coverUrl, String note, boolean completed, boolean recommended, boolean progress) {
         this.id = id;
         this.familyId = familyId;
         this.isbn = isbn;
@@ -35,6 +36,7 @@ public class Book {
         this.note = note;
         this.completed = completed;
         this.recommended = recommended;
+        this.progress = progress;
     }
 
     public int getId() {
@@ -107,6 +109,14 @@ public class Book {
 
     public void setRecommended(boolean recommended) {
         this.recommended = recommended;
+    }
+
+    public boolean isProgress() {
+        return progress;
+    }
+
+    public void setProgress(boolean progress) {
+        this.progress = progress;
     }
 
     @Override

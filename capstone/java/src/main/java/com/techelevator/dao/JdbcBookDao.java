@@ -25,11 +25,13 @@ public class JdbcBookDao implements BookDao {
 
         String sql = "SELECT books.book_id, books.family_id, books.isbn, books.title, books.author, books.cover_url, books.note, " +
                 "COALESCE(ub.completed, false) AS completed, " +
-                "COALESCE(ub.recommended, false) AS recommended " +
+                "COALESCE(ub.recommended, false) AS recommended, " +
+                "EXISTS( SELECT 1 FROM sessions WHERE sessions.book_id = books.book_id AND sessions.user_id = 1 ) AS progress " +
                 "FROM books " +
                 "LEFT JOIN users_books AS ub " +
                 "ON books.book_id = ub.book_id AND ub.user_id = ?" +
-                "WHERE books.family_id = ? ORDER BY title ASC;";
+                "WHERE books.family_id = ? " +
+                "ORDER BY completed ASC, progress DESC, recommended DESC, title ASC;";
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql, userId, familyId);
             while (results.next()) {
@@ -67,6 +69,9 @@ public class JdbcBookDao implements BookDao {
         book.setAuthor(rs.getString("author"));
         book.setCoverUrl(rs.getString("cover_url"));
         book.setNote(rs.getString("note"));
+        book.setCompleted(rs.getBoolean("completed"));
+        book.setRecommended(rs.getBoolean("recommended"));
+        book.setProgress(rs.getBoolean("progress"));
         return book;
     }
 
