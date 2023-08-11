@@ -21,9 +21,14 @@
 
 
 <style>
+:root {
+  --dark-blue: #05BCD9; 
+  --light-blue: #9DDAE6; 
+}
+
 .box { 
     color: white;
-    background-image: linear-gradient(#05BCD9,#9DDAE6);
+    background-image: linear-gradient(var(--dark-blue),var(--light-blue));
     height: 5em;
     width: 100vw;
     text-align: center;
