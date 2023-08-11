@@ -23,10 +23,15 @@ export default new Vuex.Store({
   state: {
     token: currentToken || '',
     user: currentUser || {},
-    familyUsers: {},
-    books: {},
+    familyUsers: [],
+    books: [],
     activity: []
 
+  },
+  getters: {
+    getBookById: (state) => (id) => {
+      return state.books.find(book => book.id == id );
+    }
   },
   mutations: {
     SET_AUTH_TOKEN(state, token) {
