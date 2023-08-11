@@ -1,13 +1,25 @@
 <template>
   <footer>
-    <nav>
+    <nav v-if="$store.state.token != ''">
       <ul>
-        <li><router-link v-bind:to="{ name: 'family' }">👨‍👩‍👧‍👦</router-link></li>
-        <li><router-link v-bind:to="{ name: 'books' }">📚</router-link></li>
-        <li><router-link v-bind:to="{ name: 'activity' }">📋</router-link></li>
-        <li><router-link v-bind:to="{ name: 'book' }">📖</router-link></li>
-        <li v-if="$store.state.token != ''">
-          <router-link v-bind:to="{ name: 'logout' }">🔚</router-link>
+        <li><router-link v-if="parentLoggedIn" v-bind:to="{ name: 'family' }">
+          👨‍👩‍👧‍👦</router-link></li>
+
+        
+        <li><router-link v-bind:to="{ name: 'books' }">
+          📚</router-link></li>
+
+
+        <li><router-link v-bind:to="{ name: 'activity' }">
+          📋</router-link></li>
+
+
+        <li><router-link v-bind:to="{ name: 'book' }">
+          📖</router-link></li>
+
+
+        <li><router-link v-bind:to="{ name: 'logout' }">
+          🔚</router-link>
         </li>
       </ul>
     </nav>
@@ -15,7 +27,16 @@
 </template>
 
 <script>
-export default {};
+export default {
+  computed: {
+    parentLoggedIn() {
+      return (
+        this.$store.state.token != "" &&
+        this.$store.state.user.authorities[0].name == "ROLE_PARENT"
+      );
+    },
+  },
+};
 </script>
 
 <style scoped>
