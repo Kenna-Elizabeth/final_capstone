@@ -3,26 +3,28 @@
   <img src="../assets/valley-libraries-logo.png" />
   <nav>
     <ul class="topNavContainer">
-      <li><router-link v-bind:to="{ name: 'books' }">Books</router-link></li>
+      <li v-if="parentLoggedIn">
+       <router-link v-bind:to="{ name: 'books' }">Books</router-link>
+      </li>
 
-      <li v-if="parentLoggedIn"> | </li> 
+      <!-- <li v-if="parentLoggedIn"> | </li>  -->
 
       <li v-if="parentLoggedIn">
         <router-link v-bind:to="{ name: 'family' }">Family</router-link>
       </li>
 
-      <li v-if="parentLoggedIn"> | </li> 
+      <!-- <li v-if="parentLoggedIn"> | </li>  -->
        <li v-if="parentLoggedIn">
         <router-link v-bind:to="{ name: 'activity' }">Activites</router-link>
       </li>
 
-      <li v-if="parentLoggedIn"> | </li> 
+      <!-- <li v-if="parentLoggedIn"> | </li>  -->
 
       <li v-if="parentLoggedIn">
         <router-link v-bind:to="{ name: 'book' }">My&nbsp;Books</router-link>
       </li>
 
-      <li v-if="$store.state.token != ''"> | </li>
+      <!-- <li v-if="$store.state.token != ''"> | </li> -->
 
       <li v-if="$store.state.token != ''">
         <router-link
@@ -62,19 +64,13 @@ header {
   align-items: center;
   flex-direction: row;
 }
-@media only screen and (max-width: 768px){
-  header {
-  display: flex;
-  align-content: center;
-  justify-content: center;
-  }
-}
 
 .topNavContainer {
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
 }
+
 .topNavContainer > li {
   flex: 1;
 }
@@ -86,11 +82,7 @@ nav {
   justify-content: flex-end;
   
 }
-@media only screen and (max-width: 768px){
-  nav {
-  display: none;
-  }
-}
+
 ul {
   list-style-type: none;
   /* display: flex;
@@ -98,18 +90,38 @@ ul {
 }
 
 li {
-  padding-left: 0.8em;
+
+  padding: 0.2em;
   font-weight: bold;
+  border: 2px solid  rgb(231, 229, 233);
+  border-radius: 10px 10px;
+  margin: 0.2em;
+  
 }
 
 li a {
   color: black;
   text-decoration: none;
+
 }
 
 li a:hover {
   color: #05BCD9;
-  text-decoration: underline;
+  
+}
+
+
+@media only screen and (max-width: 768px){
+  header {
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  }
+}
+@media only screen and (max-width: 768px){
+  nav {
+  display: none;
+  }
 }
 
 </style>
