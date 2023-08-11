@@ -32,7 +32,7 @@ export default {
   margin: 0.5em;
   padding: 0.2em; 
   text-align: center;
-  background-color: #95e2f1;
+  background-color: #b1f1fd;
   box-shadow: 5px 8px #c9c9c9;
 }
 #book-display {
