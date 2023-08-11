@@ -6,6 +6,7 @@
       <section id="book-display">
         <div class="book-panel" v-for="book in $store.state.books" :key="book.id">
             {{ book.title }}
+            <img :src="book.coverUrl" />
         </div>
       </section>
   </main>
@@ -20,3 +21,9 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.book-panel {
+  border: 1px solid black;
+}
+</style>
