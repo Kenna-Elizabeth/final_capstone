@@ -1,39 +1,29 @@
 <template>
   <header>
-  <img src="../assets/valley-libraries-logo.png" />
-  <nav>
-    <ul class="topNavContainer">
-      <li v-if="parentLoggedIn">
-       <router-link v-bind:to="{ name: 'books' }">Books</router-link>
-      </li>
+    <img src="../assets/valley-libraries-logo.png" />
+    <nav v-if="$store.state.token != ''">
+      <ul class="topNavContainer">
+        <router-link v-bind:to="{ name: 'books' }">
+          <li>Books</li>
+        </router-link>
 
-      <!-- <li v-if="parentLoggedIn"> | </li>  -->
+        <router-link v-if="parentLoggedIn" v-bind:to="{ name: 'family' }">
+          <li>Family</li>
+        </router-link>
 
-      <li v-if="parentLoggedIn">
-        <router-link v-bind:to="{ name: 'family' }">Family</router-link>
-      </li>
+        <router-link v-bind:to="{ name: 'activity' }">
+          <li>Activites</li>
+        </router-link>
 
-      <!-- <li v-if="parentLoggedIn"> | </li>  -->
-       <li v-if="parentLoggedIn">
-        <router-link v-bind:to="{ name: 'activity' }">Activites</router-link>
-      </li>
+        <router-link v-bind:to="{ name: 'book' }">
+          <li>My&nbsp;Books</li>
+        </router-link>
 
-      <!-- <li v-if="parentLoggedIn"> | </li>  -->
-
-      <li v-if="parentLoggedIn">
-        <router-link v-bind:to="{ name: 'book' }">My&nbsp;Books</router-link>
-      </li>
-
-      <!-- <li v-if="$store.state.token != ''"> | </li> -->
-
-      <li v-if="$store.state.token != ''">
-        <router-link
-        v-bind:to="{ name: 'logout' }"
-          >Logout</router-link
-        >
-      </li>
-    </ul>
-  </nav>
+        <router-link v-bind:to="{ name: 'logout' }">
+          <li>Logout</li>
+        </router-link>
+      </ul>
+    </nav>
   </header>
 </template>
 
@@ -41,14 +31,17 @@
 export default {
   computed: {
     parentLoggedIn() {
-      return this.$store.state.token != '' && this.$store.state.user.authorities[0].name == 'ROLE_PARENT';
-    }
-  }
+      return (
+        this.$store.state.token != "" &&
+        this.$store.state.user.authorities[0].name == "ROLE_PARENT"
+      );
+    },
+  },
 };
 </script>
 
 <style scoped>
-img{
+img {
   height: 5em;
   display: block;
   padding: 2em;
@@ -63,6 +56,7 @@ header {
   flex: 1;
   align-items: center;
   flex-direction: row;
+  justify-content: center;
 }
 
 .topNavContainer {
@@ -80,48 +74,39 @@ nav {
   flex-direction: row;
   flex: 1;
   justify-content: flex-end;
-  
 }
 
 ul {
   list-style-type: none;
-  /* display: flex;
-  justify-content: flex-end; */
 }
 
 li {
-
   padding: 0.2em;
   font-weight: bold;
-  border: 2px solid  rgb(231, 229, 233);
+  border: 2px solid rgb(231, 229, 233);
   border-radius: 10px 10px;
   margin: 0.2em;
-  
 }
 
-li a {
+ a {
   color: black;
   text-decoration: none;
-
 }
 
-li a:hover {
-  color: #05BCD9;
-  
+ a:hover {
+  color: #05bcd9;
 }
 
-
-@media only screen and (max-width: 768px){
+@media only screen and (max-width: 768px) {
   header {
-  display: flex;
-  align-content: center;
-  justify-content: center;
+    display: flex;
+    align-content: center;
+    justify-content: center;
   }
 }
-@media only screen and (max-width: 768px){
+@media only screen and (max-width: 768px) {
   nav {
-  display: none;
+    display: none;
   }
 }
-
 </style>
