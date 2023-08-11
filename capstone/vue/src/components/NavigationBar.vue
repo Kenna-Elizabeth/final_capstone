@@ -2,7 +2,7 @@
   <header>
   <img src="../assets/valley-libraries-logo.png" />
   <nav>
-    <ul>
+    <ul class="topNavContainer">
       <li><router-link v-bind:to="{ name: 'books' }">Books</router-link></li>
 
       <li v-if="parentLoggedIn"> | </li> 
@@ -57,30 +57,48 @@ img:hover {
 }
 
 header {
-  list-style-type: none;
   display: flex;
+  flex: 1;
   align-items: center;
   flex-direction: row;
-  
+}
+@media only screen and (max-width: 768px){
+  header {
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  }
 }
 
-ul {
-  list-style-type: none;
+.topNavContainer {
   display: flex;
+  flex-direction: row;
   justify-content: flex-end;
-  
-  
+}
+.topNavContainer > li {
+  flex: 1;
 }
 
 nav {
-  flex-grow: 1;
-  margin-right: 20px;
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  justify-content: flex-end;
   
-  
+}
+@media only screen and (max-width: 768px){
+  nav {
+  display: none;
+  }
+}
+ul {
+  list-style-type: none;
+  /* display: flex;
+  justify-content: flex-end; */
 }
 
 li {
-  padding-left: 2em;
+  padding-left: 0.8em;
   font-weight: bold;
 }
 
