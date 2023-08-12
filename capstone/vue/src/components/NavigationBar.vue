@@ -3,20 +3,20 @@
     <img src="../assets/valley-libraries-logo.png" />
     <nav v-if="$store.state.token != ''">
       <ul class="topNavContainer">
+        <router-link v-bind:to="{ name: 'bookRecommended' }">
+          <li>Read!</li>
+        </router-link>
+
         <router-link v-bind:to="{ name: 'books' }">
           <li>Books</li>
         </router-link>
 
+        <router-link v-bind:to="{ name: 'activity' }">
+          <li>Activity</li>
+        </router-link>
+
         <router-link v-if="parentLoggedIn" v-bind:to="{ name: 'family' }">
           <li>Family</li>
-        </router-link>
-
-        <router-link v-bind:to="{ name: 'activity' }">
-          <li>Activites</li>
-        </router-link>
-
-        <router-link v-bind:to="{ name: 'bookRecommended' }">
-          <li>Read!</li>
         </router-link>
 
         <router-link v-bind:to="{ name: 'logout' }">

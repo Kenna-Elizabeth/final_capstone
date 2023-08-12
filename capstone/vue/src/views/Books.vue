@@ -9,19 +9,23 @@
       </button>
     </div>
     <add-book-form v-if="showAddForm" />
-    <div id="book-display">
-      <div class="book-panel" v-for="book in $store.state.books" :key="book.id">
-        <div class="book-title">
-          {{ book.title }}
-        </div>
-        <div class="book-image">
-          <img :src="book.coverUrl" />
-        </div>
-        <div class="author">
-          {{ book.author }}
-        </div>
+    <section id="book-display">
+      <div v-for="book in $store.state.books" :key="book.id">
+        <router-link :to="{ name: 'book', params: { id: book.id } }">
+          <div class="book-panel">
+            <div class="book-title">
+              {{ book.title }}
+            </div>
+            <div class="book-image">
+              <img :src="book.coverUrl" />
+            </div>
+            <div class="author">
+              {{ book.author }}
+            </div>
+          </div>
+        </router-link>
       </div>
-    </div>
+    </section>
   </main>
 </template>
 
@@ -84,5 +88,10 @@ img {
 .author {
   font-size: 0.75em;
   margin: 0.5em;
+}
+
+a {
+  text-decoration: none;
+  color: black;
 }
 </style>
