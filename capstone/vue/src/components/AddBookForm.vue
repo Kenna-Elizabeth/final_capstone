@@ -47,23 +47,30 @@ export default {
       },
       disableForm: false,
       addBookErrors: false,
-      registrationErrorMsg: "",
+      addBookErrorMsg: "",
     };
   },
   methods: {
     submitBook() {
-      this.disableForm = true;
-      booksService.submitBook(this.book).then((response) => {
-        if (response.status == 201) {
-          //Clear form for next entry
-          this.book = {
-            title: "",
-            author: "",
-            isbn: "",
-          };
-          this.disableForm = false;
-        }
-      });
+      if (this.book.title === "") {
+        this.addBookErrors = true;
+        this.addBookErrorMsg = "Please enter book title.";
+      } else {
+        this.addBookErrorMsg = "";
+        this.addBookErrors = false;
+        this.disableForm = true;
+        booksService.submitBook(this.book).then((response) => {
+          if (response.status == 201) {
+            //Clear form for next entry
+            this.book = {
+              title: "",
+              author: "",
+              isbn: "",
+            };
+            this.disableForm = false;
+          }
+        });
+      }
     },
   },
 };
