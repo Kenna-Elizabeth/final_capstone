@@ -16,7 +16,7 @@
         </router-link>
 
         <router-link v-bind:to="{ name: 'book' }">
-          <li>My&nbsp;Books</li>
+          <li>Read!</li>
         </router-link>
 
         <router-link v-bind:to="{ name: 'logout' }">
@@ -45,6 +45,7 @@ img {
   height: 5em;
   display: block;
   padding: 2em;
+  margin: .2em;
 }
 
 img:hover {
@@ -63,11 +64,9 @@ header {
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
+  
 }
 
-.topNavContainer > li {
-  flex: 1;
-}
 
 nav {
   display: flex;
@@ -81,20 +80,31 @@ ul {
 }
 
 li {
-  padding: 0.2em;
+  padding: 0.3em;
   font-weight: bold;
-  border: 2px solid rgb(231, 229, 233);
-  border-radius: 10px 10px;
-  margin: 0.2em;
+  border: 2px solid #9DDAE6;
+  border-radius: 4px 1px;
+  margin: .1em;
+  background-color: #9DDAE6;
 }
 
- a {
+a {
   color: black;
   text-decoration: none;
 }
 
- a:hover {
-  color: #05bcd9;
+
+li:hover {
+  transform: scale(1.1);
+  border: 2px solid black;
+  box-shadow: 3px 3px rgb(139, 139, 139);
+  color: white;
+  background-color: black;
+  
+}
+
+li:active {
+  background-color: #05BCD9;
 }
 
 @media only screen and (max-width: 768px) {
