@@ -70,6 +70,31 @@ public class JdbcBookDao implements BookDao {
     }
 
     @Override
+    public Book getRecommendedBook(int familyId, int userId) {
+        Book book = null;
+
+        String sql = "SELECT books.book_id, books.family_id, books.isbn, books.title, books.author, books.cover_url, books.note, " +
+                "COALESCE(ub.completed, false) AS completed, " +
+                "COALESCE(ub.recommended, false) AS recommended, " +
+                "EXISTS( SELECT 1 FROM sessions WHERE sessions.book_id = books.book_id AND sessions.user_id = ? ) AS progress " +
+                "FROM books " +
+                "LEFT JOIN users_books AS ub " +
+                "ON books.book_id = ub.book_id AND ub.user_id = ?" +
+                "WHERE books.family_id = ? " +
+                "ORDER BY completed ASC, progress DESC, recommended DESC, title ASC " +
+                "LIMIT 1;";
+        try {
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, userId, userId, familyId);
+            if (results.next()) {
+                book = mapRowToBook(results);
+            }
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        }
+        return book;
+    }
+
+    @Override
     public Book addBook(Book book, int familyId, int userId) {
         Book newBook = null;
 

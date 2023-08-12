@@ -32,7 +32,7 @@ public class BooksController {
         User user = getUserFromPrincipal(userPrincipal);
 
         try {
-            return bookDao.getBooks(user.getId(), user.getFamilyId());
+            return bookDao.getBooks(user.getFamilyId(), user.getId());
         } catch (DaoException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Unable to Find Family Users");
         }
@@ -51,6 +51,18 @@ public class BooksController {
         } catch (DaoException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Unable to Find Book");
         }
+    }
+
+    @RequestMapping(path = "/recommended", method = RequestMethod.GET)
+    public Book getRecommendedBook(Principal userPrincipal) {
+        User user = getUserFromPrincipal(userPrincipal);
+
+        try {
+            return bookDao.getRecommendedBook(user.getFamilyId(), user.getId());
+        } catch (DaoException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Unable to Find Book");
+        }
+
     }
 
     @ResponseStatus(HttpStatus.CREATED)
