@@ -44,6 +44,9 @@ public class BooksController {
 
         try {
             Book book = bookDao.getBookById(id, user.getId());
+            if (book == null) {
+                throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Book Not In Collection");
+            }
             if (book.getFamilyId() != user.getFamilyId()) {
                 throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Book Not In Collection");
             }
@@ -58,7 +61,11 @@ public class BooksController {
         User user = getUserFromPrincipal(userPrincipal);
 
         try {
-            return bookDao.getRecommendedBook(user.getFamilyId(), user.getId());
+            Book book = bookDao.getRecommendedBook(user.getFamilyId(), user.getId());
+            if (book == null) {
+                throw new ResponseStatusException(HttpStatus.NO_CONTENT, "No Books In Collection");
+            }
+            return book;
         } catch (DaoException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Unable to Find Book");
         }

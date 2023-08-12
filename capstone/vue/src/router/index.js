@@ -72,7 +72,15 @@ const router = new Router({
       }
     },
     {
-      path: "/book",
+      path: "/books/recommended",
+      name: "bookRecommended",
+      component: Book,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: "/books/:id",
       name: "book",
       component: Book,
       meta: {
