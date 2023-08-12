@@ -2,21 +2,17 @@
   <footer>
     <nav v-if="$store.state.token != ''">
       <ul>
-        <li><router-link v-if="parentLoggedIn" v-bind:to="{ name: 'family' }">
-          👨‍👩‍👧‍👦</router-link></li>
-
+        <li><router-link v-bind:to="{ name: 'bookRecommended' }">
+          📖</router-link></li>
         
         <li><router-link v-bind:to="{ name: 'books' }">
           📚</router-link></li>
 
-
         <li><router-link v-bind:to="{ name: 'activity' }">
           📋</router-link></li>
-
-
-        <li><router-link v-bind:to="{ name: 'bookRecommended' }">
-          📖</router-link></li>
-
+          
+        <li><router-link v-if="parentLoggedIn" v-bind:to="{ name: 'family' }">
+          👨‍👩‍👧‍👦</router-link></li>
 
         <li><router-link v-bind:to="{ name: 'logout' }">
           🔚</router-link>
