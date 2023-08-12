@@ -43,7 +43,7 @@ public class BooksController {
         User user = getUserFromPrincipal(userPrincipal);
 
         try {
-            Book book = bookDao.getBookById(id);
+            Book book = bookDao.getBookById(id, user.getId());
             if (book.getFamilyId() != user.getFamilyId()) {
                 throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Book Not In Collection");
             }
@@ -51,6 +51,20 @@ public class BooksController {
         } catch (DaoException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Unable to Find Book");
         }
+    }
+
+    @ResponseStatus(HttpStatus.CREATED)
+    @RequestMapping(path = "", method = RequestMethod.POST)
+    public Book addBook(@RequestBody Book book, Principal userPrincipal) {
+        User user = getUserFromPrincipal(userPrincipal);
+
+        Book newBook;
+        try {
+            newBook = bookDao.addBook(book, user.getFamilyId(), user.getId());
+        } catch (DaoException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error adding book");
+        }
+        return newBook;
     }
 
     //Private Methods
