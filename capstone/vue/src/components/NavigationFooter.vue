@@ -14,7 +14,7 @@
           📋</router-link></li>
 
 
-        <li><router-link v-bind:to="{ name: 'book' }">
+        <li><router-link v-bind:to="{ name: 'bookRecommended' }">
           📖</router-link></li>
 
 

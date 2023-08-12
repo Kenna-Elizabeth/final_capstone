@@ -15,7 +15,7 @@
           <li>Activites</li>
         </router-link>
 
-        <router-link v-bind:to="{ name: 'book' }">
+        <router-link v-bind:to="{ name: 'bookRecommended' }">
           <li>Read!</li>
         </router-link>
 
