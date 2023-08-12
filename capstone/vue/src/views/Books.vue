@@ -3,6 +3,12 @@
     <div class="box">
       <h1>Books</h1>
     </div>
+      <div>
+      <button @click="showAddForm = !showAddForm">{{ showAddForm ? 'Cancel' : 'Add Book' }}</button>
+      </div>
+      <add-book-form 
+      v-if="showAddForm"
+    />
       <section id="book-display">
         <div class="book-panel" v-for="book in $store.state.books" :key="book.id">
             <p>{{ book.title }}</p> 
@@ -18,8 +24,19 @@
 </template>
 
 <script>
+import AddBookForm from '../components/AddBookForm.vue';
+
 export default {
   name: "books",
+  data() {
+    return {
+      showAddForm: false,
+    };
+  },
+
+  components: {
+    AddBookForm
+  },
 
   created() {
     this.$store.dispatch('retrieveBooks');
