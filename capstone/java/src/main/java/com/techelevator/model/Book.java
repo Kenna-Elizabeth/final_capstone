@@ -4,11 +4,11 @@ public class Book {
 
     private int id;
     private int familyId;
-    private String isbn;
+    private String isbn = "";
     private String title;
-    private String author;
-    private String coverUrl;
-    private String note;
+    private String author = "";
+    private String coverUrl = "";
+    private String note = "";
     private boolean completed = false;
     private boolean recommended = false;
     private boolean progress = false;
