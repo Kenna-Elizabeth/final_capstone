@@ -12,7 +12,7 @@
     <section id="book-display">
       <div v-for="book in $store.state.books" :key="book.id">
         <router-link :to="{ name: 'book', params: { id: book.id } }">
-          <div class="book-panel">
+          <div class="book-panel" :class="{ completed: book.completed }">
             <div class="book-title">
               {{ book.title }}
             </div>
@@ -21,6 +21,9 @@
             </div>
             <div class="author">
               {{ book.author }}
+            </div>
+            <div v-if="book.completed" class="completedText">
+              ✔️ Completed!
             </div>
           </div>
         </router-link>
@@ -73,6 +76,10 @@ export default {
 .book-panel:hover {
   transform: scale(1.05);
   box-shadow: 5px 7px #c9c9c9;
+}
+
+.completed {
+  background-color: palegreen;
 }
 
 img {
