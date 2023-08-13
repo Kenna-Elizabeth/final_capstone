@@ -7,10 +7,7 @@ import com.techelevator.dao.SessionDao;
 import com.techelevator.model.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.security.Principal;
@@ -36,6 +33,17 @@ public class SessionsController {
 
         try {
             return sessionDao.getSessions(user.getId());
+        } catch (DaoException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Unable to Find Sessions");
+        }
+    }
+
+    @RequestMapping(path = "/{id}", method = RequestMethod.GET)
+    public List<Session> getSessionsByBookId(@PathVariable int id, Principal userPrincipal) {
+        User user = getUserFromPrincipal(userPrincipal);
+
+        try {
+            return sessionDao.getSessionsByBookId(id, user.getId());
         } catch (DaoException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Unable to Find Sessions");
         }

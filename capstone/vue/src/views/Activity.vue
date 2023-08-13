@@ -1,12 +1,13 @@
 <template>
   <main class="activity">
     <div class="box">
-     <h1>Activities</h1>
+     <h1>Activity</h1>
     </div>
     <ul>
-    <section id ="activity-display"> 
-        <div v-for="activity in  $store.state.activity" :key="activity.id"> 
-            <li>{{ $store.getters.getBookById(activity.bookId).title }}: {{ activity.minutes }} Minutes
+    <section id ="session-display"> 
+        <div v-for="session in  $store.state.sessions" :key="session.id"> 
+            <li>
+              {{ $store.getters.getBookById(session.bookId).title }}: {{ session.minutes }} Minutes
             </li>
         </div>
     </section>
@@ -19,14 +20,14 @@ export default {
   name: "activity",
 
   created() {
-    this.$store.dispatch('retrieveActivity');
     this.$store.dispatch('retrieveBooks');
+    this.$store.dispatch('retrieveSessions');
   }
 };
 </script>
 
 <style scoped>
-.activity-display {
+.session-display {
   display: flex;
   flex-wrap: wrap;
 }

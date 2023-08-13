@@ -3,7 +3,7 @@ import Vuex from 'vuex'
 import axios from 'axios'
 import familyService from '../services/FamilyService'
 import booksService from '../services/BooksService'
-import activityService from '../services/ActivityService'
+import sessionsService from '../services/SessionsService'
 
 Vue.use(Vuex)
 
@@ -25,7 +25,7 @@ export default new Vuex.Store({
     user: currentUser || {},
     familyUsers: [],
     books: [],
-    activity: []
+    sessions: []
 
   },
   getters: {
@@ -50,17 +50,17 @@ export default new Vuex.Store({
       state.user = {};
       state.familyUsers = [];
       state.books = [];
-      state.activity = [];
+      state.sessions = [];
       axios.defaults.headers.common = {};
     },
     SET_FAMILY_USERS(state, users) {
       state.familyUsers = users;
     },
-    SET_BOOKS(state,books){
+    SET_BOOKS(state, books){
       state.books = books; 
     },
-    SET_ACTIVITY(state,activity){
-      state.activity = activity; 
+    SET_SESSIONS(state, sessions){
+      state.sessions = sessions; 
     }
   },
   actions: {
@@ -86,14 +86,14 @@ export default new Vuex.Store({
         }
       });
     },
-    retrieveActivity(context){
-      activityService.getActivity().then( response => {
+    retrieveSessions(context){
+      sessionsService.getSessions().then( response => {
         if(response.status == 200) {
-          context.commit("SET_ACTIVITY", response.data); 
+          context.commit("SET_SESSIONS", response.data); 
         }
       }).catch(error => {
         if(error.response){
-          this.errorMsg = "Could not load activity."; 
+          this.errorMsg = "Could not load sessions."; 
         }
       });
     }

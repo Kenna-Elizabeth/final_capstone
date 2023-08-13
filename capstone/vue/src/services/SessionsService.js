@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export default {
 
-  getActivity() {
+  getSessions() {
     return axios.get('/sessions')
   }
 

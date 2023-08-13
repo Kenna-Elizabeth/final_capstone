@@ -24,11 +24,32 @@ public class JdbcSessionDao implements SessionDao{
         List<Session> sessions = new ArrayList<>();
 
         String sql = "SELECT session_id, user_id, book_id, minutes, format, start_date_time, note " +
-                "FROM sessions " + "" +
-                "WHERE user_id = ? " + "" +
+                "FROM sessions " +
+                "WHERE user_id = ? " +
                 "ORDER BY start_date_time DESC;";
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql, userId);
+            while (results.next()) {
+                Session session = mapRowToSession(results);
+                sessions.add(session);
+            }
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        }
+
+        return sessions;
+    }
+
+    @Override
+    public List<Session> getSessionsByBookId(int bookId, int userId) {
+        List<Session> sessions = new ArrayList<>();
+
+        String sql = "SELECT session_id, user_id, book_id, minutes, format, start_date_time, note " +
+                "FROM sessions " +
+                "WHERE book_id = ? AND user_id = ? " +
+                "ORDER BY start_date_time DESC;";
+        try {
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, bookId, userId);
             while (results.next()) {
                 Session session = mapRowToSession(results);
                 sessions.add(session);

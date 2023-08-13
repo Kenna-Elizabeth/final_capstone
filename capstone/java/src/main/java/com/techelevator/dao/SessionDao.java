@@ -8,4 +8,6 @@ public interface SessionDao {
 
     List<Session> getSessions(int userId);
 
+    List<Session> getSessionsByBookId(int bookId, int userId);
+
 }
