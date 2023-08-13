@@ -54,13 +54,13 @@ export default {
     timestampDate( timestamp ) {
       const parts = timestamp.split(/[T .]/);
       return parts[0];
-    }
-  },
-  /* ------- */
-  setCompleted(value) {
+    },
+    /* ------- */
+    setCompleted(value) {
     this.$store.commit('SET_COMPLETED_STATUS' , { book: this.book, value: value});
+    },
   },
-
+ 
   components: {
     AddBookForm,
   },
@@ -95,8 +95,6 @@ export default {
   transform: scale(1.05);
   box-shadow: 5px 7px #c9c9c9;
 }
-
-
 
 .in-progress {
   background-color: paleturquoise;
