@@ -1,5 +1,7 @@
 package com.techelevator.model;
 
+import java.sql.Timestamp;
+
 public class Book {
 
     private int id;
@@ -11,7 +13,7 @@ public class Book {
     private String note = "";
     private boolean completed = false;
     private boolean recommended = false;
-    private boolean progress = false;
+    private Timestamp lastRead;
 
     public Book() {
     }
@@ -26,7 +28,7 @@ public class Book {
         this.note = note;
     }
 
-    public Book(int id, int familyId, String isbn, String title, String author, String coverUrl, String note, boolean completed, boolean recommended, boolean progress) {
+    public Book(int id, int familyId, String isbn, String title, String author, String coverUrl, String note, boolean completed, boolean recommended, Timestamp lastRead) {
         this.id = id;
         this.familyId = familyId;
         this.isbn = isbn;
@@ -36,7 +38,7 @@ public class Book {
         this.note = note;
         this.completed = completed;
         this.recommended = recommended;
-        this.progress = progress;
+        this.lastRead = lastRead;
     }
 
     public int getId() {
@@ -111,12 +113,12 @@ public class Book {
         this.recommended = recommended;
     }
 
-    public boolean isProgress() {
-        return progress;
+    public Timestamp getLastRead() {
+        return lastRead;
     }
 
-    public void setProgress(boolean progress) {
-        this.progress = progress;
+    public void setLastRead(Timestamp lastRead) {
+        this.lastRead = lastRead;
     }
 
     @Override
@@ -131,6 +133,7 @@ public class Book {
                 ", note='" + note + '\'' +
                 ", completed=" + completed +
                 ", recommended=" + recommended +
+                ", lastRead=" + lastRead +
                 '}';
     }
 }
