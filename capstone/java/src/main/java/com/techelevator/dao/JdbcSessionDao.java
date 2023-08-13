@@ -2,6 +2,7 @@ package com.techelevator.dao;
 
 import com.techelevator.exception.DaoException;
 import com.techelevator.model.Session;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
@@ -59,6 +60,46 @@ public class JdbcSessionDao implements SessionDao{
         }
 
         return sessions;
+    }
+
+    @Override
+    public Session addSession(Session session) {
+        Session newSession = null;
+
+        String sql = "INSERT INTO sessions (user_id, book_id, minutes, start_date_time, format, note) " +
+                "VALUES (?, ?, ?, COALESCE( ?, CURRENT_TIMESTAMP(0) ) , ?, ?) RETURNING session_id;";
+        try {
+            int newSessionId = jdbcTemplate.queryForObject(sql, int.class, session.getUserId(), session.getBookId(),
+                session.getMinutes(), session.getStartDateTime(), session.getFormat(), session.getNote());
+            newSession = getLastAddedSession(session.getUserId());
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        } catch (DataIntegrityViolationException e) {
+            throw new DaoException("Data Integrity Violation", e);
+        }
+        return newSession;
+    }
+
+    //Private methods
+
+    private Session getLastAddedSession(int userId) {
+        Session session = null;
+
+        String sql = "SELECT session_id, user_id, book_id, minutes, format, start_date_time, note " +
+                "FROM sessions " +
+                "WHERE user_id = ? " +
+                "ORDER BY session_id DESC " + "" +
+                "LIMIT 1;";
+        try {
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, userId);
+            if (results.next()) {
+                session = mapRowToSession(results);
+            }
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        }
+
+        return session;
     }
 
     private Session mapRowToSession(SqlRowSet rs) {

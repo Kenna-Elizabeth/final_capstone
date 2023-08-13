@@ -26,7 +26,7 @@
               ✔️ Completed!
             </div>
             <div v-if="book.lastRead != null" class="in-progress-text">
-              Last Read: {{ timestampDateFormat(book.lastRead) }}
+              Last Read: {{ timestampDate(book.lastRead) }}
             </div>
           </div>
         </router-link>
@@ -46,8 +46,8 @@ export default {
     };
   },
   methods: {
-    timestampDateFormat( dateTime ) {
-      const parts = dateTime.split(/[T .]/);
+    timestampDate( timestamp ) {
+      const parts = timestamp.split(/[T .]/);
       return parts[0];
     }
   },

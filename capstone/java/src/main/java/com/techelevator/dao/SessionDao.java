@@ -10,4 +10,6 @@ public interface SessionDao {
 
     List<Session> getSessionsByBookId(int bookId, int userId);
 
+    Session addSession(Session session);
+
 }
