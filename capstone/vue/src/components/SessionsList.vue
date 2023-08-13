@@ -3,13 +3,16 @@
     <ul>
       <div v-for="session in sessions" :key="session.id">
         <li class="session-entry">
-          <div class="first-row">
+          <div>
             📅{{ timestampFormat(session.startDateTime) }}
             ⏱️{{ session.minutes }} Minutes
           </div>
-          <div class="second-row">
+          <div>
             📖{{ $store.getters.getBookById(session.bookId).title }}:
             {{ session.format }}
+          </div>
+          <div v-if="session.note != ''">
+            📝{{ session.note }}
           </div>
         </li>
       </div>
