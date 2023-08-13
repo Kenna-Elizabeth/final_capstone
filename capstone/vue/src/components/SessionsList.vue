@@ -25,7 +25,7 @@ export default {
     timestampFormat(dateTime) {
       const parts = dateTime.split(/[T .]/);
       return parts[0] + " " + parts[1];
-    },
+    }
   },
 };
 </script>

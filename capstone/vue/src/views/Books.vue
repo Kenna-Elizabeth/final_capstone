@@ -12,7 +12,7 @@
     <section id="book-display">
       <div v-for="book in $store.state.books" :key="book.id">
         <router-link :to="{ name: 'book', params: { id: book.id } }">
-          <div class="book-panel" :class="{ completed: book.completed }">
+          <div class="book-panel" :class="{ completed: book.completed, 'in-progress': book.lastRead != null }">
             <div class="book-title">
               {{ book.title }}
             </div>
@@ -22,8 +22,11 @@
             <div class="author">
               {{ book.author }}
             </div>
-            <div v-if="book.completed" class="completedText">
+            <div v-if="book.completed" class="completed-text">
               ✔️ Completed!
+            </div>
+            <div v-if="book.lastRead != null" class="in-progress-text">
+              Last Read: {{ timestampDateFormat(book.lastRead) }}
             </div>
           </div>
         </router-link>
@@ -41,6 +44,12 @@ export default {
     return {
       showAddForm: false,
     };
+  },
+  methods: {
+    timestampDateFormat( dateTime ) {
+      const parts = dateTime.split(/[T .]/);
+      return parts[0];
+    }
   },
 
   components: {
@@ -76,6 +85,10 @@ export default {
 .book-panel:hover {
   transform: scale(1.05);
   box-shadow: 5px 7px #c9c9c9;
+}
+
+.in-progress {
+  background-color: paleturquoise;
 }
 
 .completed {
