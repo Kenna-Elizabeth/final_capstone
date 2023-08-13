@@ -61,6 +61,10 @@ export default new Vuex.Store({
     },
     SET_SESSIONS(state, sessions){
       state.sessions = sessions; 
+    },
+    /*--- completed button ---*/
+    SET_COMPLETED_STATUS(state, payload) {
+      payload.books.completed = payload.value;
     }
   },
   actions: {
