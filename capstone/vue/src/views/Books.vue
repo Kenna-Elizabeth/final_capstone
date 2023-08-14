@@ -94,7 +94,7 @@ button:hover {
   box-shadow: 2px 3px #c9c9c9;
   font-weight: bold;
   width: 14em;
-  height: auto;
+  height: 25em;
 }
 
 .book-panel:hover {

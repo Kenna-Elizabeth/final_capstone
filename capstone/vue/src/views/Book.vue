@@ -215,3 +215,43 @@ export default {
   },
 };
 </script>
+<style scoped>
+.completed-text {
+  margin: 0.5em;
+}
+
+.button-container {
+  margin: 0.5em;
+}
+
+.mark-complete{
+  border-radius: 8px;
+  font-size: 1em;
+  font-weight: bold;
+}
+.mark-complete:hover {
+  background-color: rgb(233, 255, 230);
+}
+
+.mark-incomplete {
+  border-radius: 8px;
+  font-size: 1em;
+  font-weight: bold;
+  
+}
+
+.mark-incomplete:hover {
+  background-color: rgb(212, 144, 144);
+}
+
+.form-input-group{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0.5em;
+}
+
+label {
+  margin-top: 0.5em;
+}
+</style>
