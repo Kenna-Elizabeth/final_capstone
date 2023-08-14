@@ -4,7 +4,27 @@
       <h1>{{ book.title }}</h1>
     </div>
     <p>By {{ book.author }}</p>
-    <img :src="book.coverUrl" alt="Book Cover Art" />
+    <img :src="'http://covers.openlibrary.org/b/isbn/' + book.isbn + '-M.jpg'" alt="Book Cover Art" />
+
+    <div v-if="book.completed" class="completed-text">✔️ Completed!</div>
+
+    <div class="button-container">
+      <button
+        class="mark-complete"
+        v-on:click.prevent="setCompleted(true)"
+        v-if="!book.completed"
+      >
+        Mark Complete
+      </button>
+      <button
+        class="mark-incomplete"
+        v-on:click.prevent="setCompleted(false)"
+        v-if="book.completed"
+      >
+        Mark Incomplete
+      </button>
+    </div>
+
     <p>Record a Reading Session:</p>
     <form id="session-form" @submit.prevent="submitSession()">
       <div class="alert-msg" role="alert" v-if="formErrors">
@@ -50,7 +70,9 @@
         <input type="submit" value="Submit" />
       </div>
     </form>
+
     <sessions-list :sessions="bookSessions" />
+
     <router-link :to="{ name: 'books' }">
       <p>Back to Book Collection</p>
     </router-link>
@@ -144,7 +166,8 @@ export default {
         this.newSession.bookId == undefined
       ) {
         this.formErrors = true;
-        this.formErrorMsg = "Error submitting reading session for user or book.";
+        this.formErrorMsg =
+          "Error submitting reading session for user or book.";
       } else {
         if (this.newSession.startDateTime == "") {
           this.newSession.startDateTime = undefined;
@@ -163,6 +186,31 @@ export default {
             }
           });
       }
+    },
+    setCompleted(completion) {
+      booksService
+        .setBookCompletion(this.book.id, completion, this.$store.state.user.id)
+        .then((response) => {
+          if (response.status == 200) {
+            booksService
+              .getBookById(this.book.id)
+              .then((response) => {
+                if (response.status == 200) {
+                  this.book = response.data;
+                }
+              })
+              .catch((error) => {
+                if (error.response) {
+                  this.errorMsg = "Error reloading book data.";
+                }
+              });
+          }
+        })
+        .catch((error) => {
+          if (error.response) {
+            this.errorMsg = "Error setting book completion.";
+          }
+        });
     },
   },
 };
