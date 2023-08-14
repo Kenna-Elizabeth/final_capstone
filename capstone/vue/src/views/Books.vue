@@ -73,12 +73,11 @@ export default {
   justify-content: space-evenly;
   flex-wrap: wrap;
 }
-login-display {
+.login-display {
   display: flex;
   margin: 10px;
   padding-bottom: 10px;
   font-weight: bold;
-
 }
 button {
   margin-top: 1em;
@@ -104,7 +103,7 @@ button:hover {
   box-shadow: 2px 3px #c9c9c9;
   font-weight: bold;
   width: 14em;
-  height: 25em;
+  height: auto;
 }
 
 .book-panel:hover {
