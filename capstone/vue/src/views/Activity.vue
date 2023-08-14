@@ -36,4 +36,15 @@ export default {
 </script>
 
 <style scoped>
+h2 {
+  margin-top: 1em;
+  padding: 0.6em;
+  padding-left: 1.5em;
+  padding-right: 1.5em;
+  border: 2px solid black;
+  border-radius: 8px;
+  background-color: #8be1f5;
+  font-weight: 800;
+  background-image: linear-gradient(var(--dark-blue),var(--light-blue));
+}
 </style>
