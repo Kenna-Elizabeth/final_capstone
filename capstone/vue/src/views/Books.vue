@@ -22,11 +22,16 @@
             <div class="author">
               {{ book.author }}
             </div>
+            <!-- testing --> 
+            <div class="button-container"> 
+              <button class="mark-complete" v-on:click.prevent="setCompleted(true)" v-if=" ! book.completed"> Mark Complete </button>
+              <button class="mark-incomplete" v-on:click.prevent="setCompleted(false)" v-if="book.completed">Mark Incomplete</button>
+            </div>
             <div v-if="book.completed" class="completed-text">
               ✔️ Completed!
             </div>
             <div v-if="book.lastRead != null" class="in-progress-text">
-              Last Read: {{ timestampDateFormat(book.lastRead) }}
+              Last Read: {{ timestampDate(book.lastRead) }}
             </div>
           </div>
         </router-link>
@@ -46,12 +51,16 @@ export default {
     };
   },
   methods: {
-    timestampDateFormat( dateTime ) {
-      const parts = dateTime.split(/[T .]/);
+    timestampDate( timestamp ) {
+      const parts = timestamp.split(/[T .]/);
       return parts[0];
-    }
+    },
+    /* ------- */
+    setCompleted(value) {
+    this.$store.commit('SET_COMPLETED_STATUS' , { book: this.book, value: value});
+    },
   },
-
+ 
   components: {
     AddBookForm,
   },

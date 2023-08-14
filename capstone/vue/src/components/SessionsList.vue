@@ -4,7 +4,7 @@
       <div v-for="session in sessions" :key="session.id">
         <li class="session-entry">
           <div>
-            📅{{ timestampFormat(session.startDateTime) }}
+            📅{{ timestampDateTime(session.startDateTime) }}
             ⏱️{{ session.minutes }} Minutes
           </div>
           <div>
@@ -25,8 +25,8 @@ export default {
   name: "sessionsList",
   props: ["sessions"],
   methods: {
-    timestampFormat(dateTime) {
-      const parts = dateTime.split(/[T .]/);
+    timestampDateTime(timestamp) {
+      const parts = timestamp.split(/[T .]/);
       return parts[0] + " " + parts[1];
     }
   },

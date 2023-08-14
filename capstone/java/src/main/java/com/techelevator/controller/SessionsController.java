@@ -49,6 +49,32 @@ public class SessionsController {
         }
     }
 
+    @ResponseStatus(HttpStatus.CREATED)
+    @RequestMapping(path = "", method = RequestMethod.POST)
+    public Session addSession(@RequestBody Session session, Principal userPrincipal) {
+        User user = getUserFromPrincipal(userPrincipal);
+
+        if (user.getId() != session.getUserId()) {
+            try {
+                User targetUser = userDao.getUserById(session.getUserId());
+                if (user.getFamilyId() != targetUser.getFamilyId()) {
+                    throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Session User Not In Current Family");
+                }
+            } catch (DaoException e) {
+                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Unable to Confirm User in Family");
+            }
+        }
+
+        Session newSession;
+        try {
+            newSession = sessionDao.addSession(session);
+        } catch (DaoException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error Adding Session");
+        }
+        return newSession;
+
+    }
+
     //TODO instead of making a Dao call for user details, add info to Principal by extending User
     //https://stackoverflow.com/questions/20349594/adding-additional-details-to-principal-object-stored-in-spring-security-context
     private User getUserFromPrincipal(Principal userPrincipal) {

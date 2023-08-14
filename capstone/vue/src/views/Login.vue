@@ -70,7 +70,6 @@ export default {
               this.$router.push("/books");
             } else if (
               response.data.user.authorities[0].name == "ROLE_PARENT") {
-              this.$store.dispatch("retrieveBooks");
               this.$router.push("/family");
             }
           }

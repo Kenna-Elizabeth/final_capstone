@@ -30,7 +30,12 @@ export default new Vuex.Store({
   },
   getters: {
     getBookById: (state) => (id) => {
-      return state.books.find(book => book.id == id );
+      const book = state.books.find(book => book.id == id );
+      if (book == undefined) {
+        return { id: 0, familyId: 0, title: '', author: '', isbn: '', coverUrl: '', note: '', 
+          completed: false, recommended: false, lastRead: null };
+      }
+      return book;
     }
   },
   mutations: {
@@ -61,6 +66,10 @@ export default new Vuex.Store({
     },
     SET_SESSIONS(state, sessions){
       state.sessions = sessions; 
+    },
+    /*--- completed button ---*/
+    SET_COMPLETED_STATUS(state, payload) {
+      payload.books.completed = payload.value;
     }
   },
   actions: {
