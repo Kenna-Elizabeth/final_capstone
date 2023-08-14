@@ -3,6 +3,7 @@
     <div class="box">
       <h1>Books</h1>
     </div>
+    <login-display />
     <div>
       <button @click="showAddForm = !showAddForm">
         {{ showAddForm ? 'Cancel' : 'Add Book' }}
@@ -39,6 +40,7 @@
 
 <script>
 import AddBookForm from '../components/AddBookForm.vue';
+import LoginDisplay from '../components/LoginDisplay.vue';
 
 export default {
   name: "books",
@@ -56,6 +58,7 @@ export default {
  
   components: {
     AddBookForm,
+    LoginDisplay,
   },
 
   created() {
