@@ -16,5 +16,9 @@ export default {
 
   getRecommendedBook() {
     return axios.get('/books/recommended')
+  },
+
+  setBookCompletion(bookId, completed, userId) {
+    return axios.patch(`/books/${bookId}?completed=${completed}&userId=${userId}`)
   }
 }

@@ -24,11 +24,6 @@
             <div class="author">
               {{ book.author }}
             </div>
-            <!-- testing --> 
-            <div class="button-container"> 
-              <button class="mark-complete" v-on:click.prevent="setCompleted(true)" v-if=" ! book.completed"> Mark Complete </button>
-              <button class="mark-incomplete" v-on:click.prevent="setCompleted(false)" v-if="book.completed">Mark Incomplete</button>
-            </div>
             <div v-if="book.completed" class="completed-text">
               ✔️ Completed!
             </div>
@@ -56,11 +51,7 @@ export default {
     timestampDate( timestamp ) {
       const parts = timestamp.split(/[T .]/);
       return parts[0];
-    },
-    /* ------- */
-    setCompleted(value) {
-    this.$store.commit('SET_COMPLETED_STATUS' , { book: this.book, value: value});
-    },
+    }
   },
  
   components: {
