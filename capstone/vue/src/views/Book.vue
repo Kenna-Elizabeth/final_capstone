@@ -1,5 +1,6 @@
 <template>
   <main class="book">
+    <login-display />
     <div class="box">
       <h1>{{ book.title }}</h1>
     </div>
@@ -83,10 +84,12 @@
 import booksService from "../services/BooksService";
 import sessionsService from "../services/SessionsService";
 import sessionsList from "../components/SessionsList.vue";
+import LoginDisplay from '../components/LoginDisplay.vue';
 
 export default {
   components: {
     sessionsList,
+    LoginDisplay,
   },
   name: "book",
   data() {
@@ -215,3 +218,43 @@ export default {
   },
 };
 </script>
+<style scoped>
+.completed-text {
+  margin: 0.5em;
+}
+
+.button-container {
+  margin: 0.5em;
+}
+
+.mark-complete{
+  border-radius: 8px;
+  font-size: 1em;
+  font-weight: bold;
+}
+.mark-complete:hover {
+  background-color: rgb(233, 255, 230);
+}
+
+.mark-incomplete {
+  border-radius: 8px;
+  font-size: 1em;
+  font-weight: bold;
+  
+}
+
+.mark-incomplete:hover {
+  background-color: rgb(212, 144, 144);
+}
+
+.form-input-group{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0.5em;
+}
+
+label {
+  margin-top: 0.5em;
+}
+</style>
