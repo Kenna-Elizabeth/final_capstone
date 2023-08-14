@@ -26,7 +26,7 @@
       </button>
     </div>
 
-    <p>Record a Reading Session:</p>
+    <div class="record-a-reading-session">Record a Reading Session:</div>
     <form id="session-form" @submit.prevent="submitSession()">
       <div class="alert-msg" role="alert" v-if="formErrors">
         {{ formErrorMsg }}
@@ -253,15 +253,30 @@ export default {
 .mark-incomplete:hover {
   background-color: rgb(212, 144, 144);
 }
+.record-a-reading-session{
+  margin: 0.5em;
+  margin-top: 1em;
+  font-weight: bold;
+  font-size: 1.2em;
+  border: 2px solid #05BCD9;
+  padding: 0.6em;
+  padding-left: 7em;
+  padding-right: 7em;
+  background-color: #7cd2e4;
+  border-radius: .2em;
 
+}
 .form-input-group{
   display: flex;
   flex-direction: column;
   align-items: center;
   margin: 0.5em;
+  margin-bottom: 1em;
+  font-weight: bold;
 }
 
 label {
   margin-top: 0.5em;
+  margin-bottom: 0.4em;
 }
 </style>
