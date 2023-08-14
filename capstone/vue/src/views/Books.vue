@@ -75,9 +75,10 @@ export default {
 }
 .login-display {
   display: flex;
-  margin: 10px;
-  padding-bottom: 10px;
+  flex-wrap: wrap;
+  margin: 1em;
   font-weight: bold;
+  color: #0799af;
 }
 button {
   margin-top: 1em;
@@ -88,6 +89,7 @@ button {
   border-radius: 8px;
   background-color: #8be1f5;
   font-weight: 800;
+  font-display: color white;
 }
 button:hover {
   background-color: #44b8ca;
