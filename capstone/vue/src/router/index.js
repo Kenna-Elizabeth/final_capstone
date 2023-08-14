@@ -9,6 +9,7 @@ import Books from '../views/Books.vue'
 import Family from '../views/Family.vue'
 import Book from '../views/Book.vue'
 import Activity from '../views/Activity.vue' 
+import Prizes from '../views/Prizes.vue'
 
 
 Vue.use(Router)
@@ -91,6 +92,14 @@ const router = new Router({
       path: "/activities",
       name: "activity",
       component: Activity,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: "/prizes",
+      name: "prizes",
+      component: Prizes,
       meta: {
         requiresAuth: true
       }

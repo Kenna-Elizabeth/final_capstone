@@ -14,6 +14,9 @@
         <li><router-link v-if="parentLoggedIn" v-bind:to="{ name: 'family' }">
           👨‍👩‍👧‍👦</router-link></li>
 
+        <li><router-link v-bind:to="{ name: 'prizes' }">
+          🏆</router-link></li>
+
         <li><router-link v-bind:to="{ name: 'logout' }">
           🔚</router-link>
         </li>
