@@ -5,7 +5,7 @@
     </div>
     <div>
       <button @click="showAddForm = !showAddForm">
-        {{ showAddForm ? "Cancel" : "Add Book" }}
+        {{ showAddForm ? 'Cancel' : 'Add Book' }}
       </button>
     </div>
     <add-book-form v-if="showAddForm" />
@@ -36,7 +36,7 @@
 </template>
 
 <script>
-import AddBookForm from "../components/AddBookForm.vue";
+import AddBookForm from '../components/AddBookForm.vue';
 
 export default {
   name: "books",
@@ -67,6 +67,19 @@ export default {
   display: flex;
   justify-content: space-evenly;
   flex-wrap: wrap;
+}
+button {
+  margin-top: 1em;
+  padding: 0.6em;
+  padding-left: 1.5em;
+  padding-right: 1.5em;
+  border: 2px solid black;
+  border-radius: 8px;
+  background-color: #8be1f5;
+  font-weight: 800;
+}
+button:hover {
+  background-color: #44b8ca;
 }
 
 .book-panel {

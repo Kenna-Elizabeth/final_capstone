@@ -3,33 +3,19 @@
     <div class="alert-msg" role="alert" v-if="addBookErrors">
       {{ addBookErrorMsg }}
     </div>
+    
     <div class="form-input-group">
       <label for="title">Book Title</label>
-      <input
-        type="title"
-        id="title"
-        v-model="book.title"
-        :disabled="disableForm"
-      />
+      <input type="text" id="title" v-model="book.title" :disabled="disableForm"/>
     </div>
     <div class="form-input-group">
       <label for="author">Author</label>
-      <input
-        type="author"
-        id="author"
-        v-model="book.author"
-        :disabled="disableForm"
-      />
-    </div>
+      <input type="author" id="author" v-model="book.author" :disabled="disableForm"/>
+      </div>
     <div class="form-input-group">
       <label for="isbn">ISBN</label>
-      <input
-        type="isbn"
-        id="isbn"
-        v-model="book.isbn"
-        :disabled="disableForm"
-      />
-    </div>
+      <input type="isbn" id="isbn" v-model="book.isbn" :disabled="disableForm"/>
+      </div>
     <button type="submit" :disabled="disableForm">Submit Book</button>
   </form>
 </template>
@@ -76,5 +62,24 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+#add-book-form {
+  margin-top: 0.5em;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-items: flex-end;
+  font-weight: bold;
+}
+.form-input-group {
+  margin: 0.3em;
+  display: flex;
+  align-items: center;
+  margin-bottom: 1em;
+  border: black 2px;
+
+}
+label {
+  margin-right: 0.5em;
+}
 </style>
