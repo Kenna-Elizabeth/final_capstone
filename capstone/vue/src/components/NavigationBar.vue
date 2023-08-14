@@ -15,6 +15,10 @@
           <li>Activity</li>
         </router-link>
 
+        <router-link v-bind:to="{ name: 'prizes' }">
+          <li>Prizes</li>
+        </router-link>
+
         <router-link v-if="parentLoggedIn" v-bind:to="{ name: 'family' }">
           <li>Family</li>
         </router-link>
