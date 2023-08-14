@@ -9,7 +9,7 @@
       </button>
     </div>
     <add-book-form v-if="showAddForm" 
-      v-on:create-book="$store.dispatch('retrieveBooks')"
+    @create-book="$store.dispatch('retrieveBooks')" 
     />
     <section id="book-display">
       <div v-for="book in $store.state.books" :key="book.id">
@@ -68,7 +68,7 @@ export default {
   },
 
   created() {
-    this.$store.dispatch("retrieveBooks");
+    this.$store.dispatch('retrieveBooks');
   },
 };
 </script>
