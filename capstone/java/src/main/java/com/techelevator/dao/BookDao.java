@@ -14,4 +14,6 @@ public interface BookDao {
     Book getRecommendedBook(int familyId, int userId);
 
     Book addBook(Book book, int familyId, int userId);
+
+    void setBookCompleted(int bookId, boolean completed, int userId);
 }

@@ -86,6 +86,34 @@ public class BooksController {
         return newBook;
     }
 
+    @RequestMapping(path = "/{bookId}", method = RequestMethod.PATCH)
+    public void modifyBookStatus(@PathVariable int bookId,
+                                 @RequestParam(required = false) Boolean completed,
+                                 @RequestParam(defaultValue = "0") int userId,
+                                 Principal userPrincipal) {
+        User currentUser = getUserFromPrincipal(userPrincipal);
+        if (userId == 0) {
+            userId = currentUser.getId();
+        } else if (currentUser.getId() != userId) {
+            try {
+                User targetUser = userDao.getUserById(userId);
+                if (currentUser.getFamilyId() != targetUser.getFamilyId()) {
+                    throw new ResponseStatusException(HttpStatus.FORBIDDEN, "User Not In Current Family");
+                }
+            } catch (DaoException e) {
+                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Unable to Confirm User in Family");
+            }
+        }
+
+        if (completed != null) {
+            try {
+                bookDao.setBookCompleted(bookId, completed, userId);
+            } catch (DaoException e) {
+                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error updating book");
+            }
+        }
+    }
+
     //Private Methods
 
     //TODO instead of making a Dao call for user details, add info to Principal by extending User

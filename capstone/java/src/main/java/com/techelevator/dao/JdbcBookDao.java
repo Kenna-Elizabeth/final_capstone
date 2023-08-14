@@ -112,6 +112,21 @@ public class JdbcBookDao implements BookDao {
         return newBook;
     }
 
+    @Override
+    public void setBookCompleted(int bookId, boolean completed, int userId) {
+        String sql = "INSERT INTO users_books (user_id, book_id, completed) " +
+                "VALUES (?, ?, ?) " +
+                "ON CONFLICT (user_id, book_id) " +
+                "DO UPDATE SET completed = ?;";
+        try {
+            jdbcTemplate.update(sql, userId, bookId, completed, completed);
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        } catch (DataIntegrityViolationException e) {
+            throw new DaoException("Data Integrity Violation", e);
+        }
+    }
+
     private Book mapRowToBook(SqlRowSet rs) {
         Book book = new Book();
         book.setId(rs.getInt("book_id"));
