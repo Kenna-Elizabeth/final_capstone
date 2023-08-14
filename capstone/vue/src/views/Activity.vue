@@ -1,9 +1,9 @@
 <template>
   <main class="activity">
+    <login-display />
     <div class="box">
       <h1>Activity</h1>
     </div>
-    <login-display />
     <h2>Books Completed: {{ completedCount }}</h2>
     <h2>Total Reading Minutes: {{ minutesReading }}</h2>
     <sessions-list :sessions="$store.state.sessions" />

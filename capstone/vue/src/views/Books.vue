@@ -1,9 +1,9 @@
 <template>
   <main class="books">
+    <login-display />
     <div class="box">
       <h1>Books</h1>
     </div>
-    <login-display />
     <div>
       <button @click="showAddForm = !showAddForm">
         {{ showAddForm ? 'Cancel' : 'Add Book' }}
@@ -72,6 +72,13 @@ export default {
   display: flex;
   justify-content: space-evenly;
   flex-wrap: wrap;
+}
+login-display {
+  display: flex;
+  margin: 10px;
+  padding-bottom: 10px;
+  font-weight: bold;
+
 }
 button {
   margin-top: 1em;
