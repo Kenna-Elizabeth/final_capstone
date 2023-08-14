@@ -3,7 +3,7 @@
     <div class="box">
     <h1>Family Management</h1>
     </div>
-    <h2>Logged In</h2>
+    <h2>Logged In as {{ $store.state.user.username }}</h2>
     <h3>Family Members</h3>
     <ul>
       <li v-for="user in $store.state.familyUsers" :key="user.username">

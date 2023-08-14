@@ -1,5 +1,6 @@
 <template>
   <main class="book">
+    <login-display />
     <div class="box">
       <h1>{{ book.title }}</h1>
     </div>
@@ -83,10 +84,12 @@
 import booksService from "../services/BooksService";
 import sessionsService from "../services/SessionsService";
 import sessionsList from "../components/SessionsList.vue";
+import LoginDisplay from '../components/LoginDisplay.vue';
 
 export default {
   components: {
     sessionsList,
+    LoginDisplay,
   },
   name: "book",
   data() {

@@ -3,13 +3,14 @@
     <div class="box">
       <h1>Books</h1>
     </div>
+    <login-display />
     <div>
       <button @click="showAddForm = !showAddForm">
         {{ showAddForm ? 'Cancel' : 'Add Book' }}
       </button>
     </div>
     <add-book-form v-if="showAddForm" 
-      v-on:create-book="$store.dispatch('retrieveBooks')"
+    @create-book="$store.dispatch('retrieveBooks')" 
     />
     <section id="book-display">
       <div v-for="book in $store.state.books" :key="book.id">
@@ -39,6 +40,7 @@
 
 <script>
 import AddBookForm from '../components/AddBookForm.vue';
+import LoginDisplay from '../components/LoginDisplay.vue';
 
 export default {
   name: "books",
@@ -56,10 +58,11 @@ export default {
  
   components: {
     AddBookForm,
+    LoginDisplay,
   },
 
   created() {
-    this.$store.dispatch("retrieveBooks");
+    this.$store.dispatch('retrieveBooks');
   },
 };
 </script>

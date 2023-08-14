@@ -54,6 +54,7 @@ export default {
               isbn: "",
             };
             this.disableForm = false;
+            this.$emit('create-book');
           }
         });
       }
