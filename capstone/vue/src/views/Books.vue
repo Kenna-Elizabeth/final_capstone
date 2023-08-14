@@ -8,7 +8,9 @@
         {{ showAddForm ? 'Cancel' : 'Add Book' }}
       </button>
     </div>
-    <add-book-form v-if="showAddForm" />
+    <add-book-form v-if="showAddForm" 
+      v-on:create-book="$store.dispatch('retrieveBooks')"
+    />
     <section id="book-display">
       <div v-for="book in $store.state.books" :key="book.id">
         <router-link :to="{ name: 'book', params: { id: book.id } }">
