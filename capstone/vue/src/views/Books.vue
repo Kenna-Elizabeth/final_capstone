@@ -19,7 +19,7 @@
               {{ book.title }}
             </div>
             <div class="book-image">
-              <img :src="book.coverUrl" />
+              <img :src="'http://covers.openlibrary.org/b/isbn/' + book.isbn + '-M.jpg'" />
             </div>
             <div class="author">
               {{ book.author }}

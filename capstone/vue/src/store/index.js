@@ -32,7 +32,7 @@ export default new Vuex.Store({
     getBookById: (state) => (id) => {
       const book = state.books.find(book => book.id == id );
       if (book == undefined) {
-        return { id: 0, familyId: 0, title: '', author: '', isbn: '', coverUrl: '', note: '', 
+        return { id: 0, familyId: 0, title: '', author: '', isbn: '', note: '', 
           completed: false, recommended: false, lastRead: null };
       }
       return book;

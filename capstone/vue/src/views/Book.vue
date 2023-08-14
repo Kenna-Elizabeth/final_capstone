@@ -4,7 +4,7 @@
       <h1>{{ book.title }}</h1>
     </div>
     <p>By {{ book.author }}</p>
-    <img :src="book.coverUrl" alt="Book Cover Art" />
+    <img :src="'http://covers.openlibrary.org/b/isbn/' + book.isbn + '-M.jpg'" alt="Book Cover Art" />
 
     <div v-if="book.completed" class="completed-text">✔️ Completed!</div>
 
