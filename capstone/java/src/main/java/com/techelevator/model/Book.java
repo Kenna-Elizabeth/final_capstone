@@ -14,11 +14,12 @@ public class Book {
     private boolean completed = false;
     private boolean recommended = false;
     private Timestamp lastRead;
+    private boolean forChildren = true;
 
     public Book() {
     }
 
-    public Book(int id, int familyId, String isbn, String title, String author, String coverUrl, String note) {
+    public Book(int id, int familyId, String isbn, String title, String author, String coverUrl, String note, boolean forChildren) {
         this.id = id;
         this.familyId = familyId;
         this.isbn = isbn;
@@ -26,9 +27,10 @@ public class Book {
         this.author = author;
         this.coverUrl = coverUrl;
         this.note = note;
+        this.forChildren = forChildren;
     }
 
-    public Book(int id, int familyId, String isbn, String title, String author, String coverUrl, String note, boolean completed, boolean recommended, Timestamp lastRead) {
+    public Book(int id, int familyId, String isbn, String title, String author, String coverUrl, String note, boolean forChildren, boolean completed, boolean recommended, Timestamp lastRead) {
         this.id = id;
         this.familyId = familyId;
         this.isbn = isbn;
@@ -36,6 +38,7 @@ public class Book {
         this.author = author;
         this.coverUrl = coverUrl;
         this.note = note;
+        this.forChildren = forChildren;
         this.completed = completed;
         this.recommended = recommended;
         this.lastRead = lastRead;
@@ -121,6 +124,14 @@ public class Book {
         this.lastRead = lastRead;
     }
 
+    public boolean isForChildren() {
+        return forChildren;
+    }
+
+    public void setForChildren(boolean forChildren) {
+        this.forChildren = forChildren;
+    }
+
     @Override
     public String toString() {
         return "Book{" +
@@ -134,6 +145,7 @@ public class Book {
                 ", completed=" + completed +
                 ", recommended=" + recommended +
                 ", lastRead=" + lastRead +
+                ", forChildren=" + forChildren +
                 '}';
     }
 }

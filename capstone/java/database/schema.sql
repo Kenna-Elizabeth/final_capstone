@@ -32,6 +32,7 @@ CREATE TABLE books (
     author varchar(100),
     cover_url varchar(100),
     note text,
+    for_children boolean DEFAULT true,
     CONSTRAINT PK_books PRIMARY KEY (book_id),
     CONSTRAINT FK_books_families FOREIGN KEY (family_id) REFERENCES families (family_id)
 );
