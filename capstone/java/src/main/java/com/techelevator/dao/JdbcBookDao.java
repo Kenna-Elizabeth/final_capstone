@@ -22,18 +22,21 @@ public class JdbcBookDao implements BookDao {
     }
 
     @Override
-    public List<Book> getBooks(int familyId, int userId) {
+    public List<Book> getBooks(int familyId, int userId, boolean isChild) {
         List<Book> books = new ArrayList<>();
 
-        String sql = "SELECT books.book_id, books.family_id, books.isbn, books.title, books.author, books.cover_url, books.note, " +
+        String sql = "SELECT books.book_id, books.family_id, books.isbn, books.title, books.author, books.cover_url, books.note, books.for_children, " +
                 "COALESCE(ub.completed, false) AS completed, " +
                 "COALESCE(ub.recommended, false) AS recommended, " +
                 "( SELECT MAX(start_date_time) FROM sessions WHERE sessions.book_id = books.book_id AND sessions.user_id = ? ) AS last_read " +
                 "FROM books " +
                 "LEFT JOIN users_books AS ub " +
                 "ON books.book_id = ub.book_id AND ub.user_id = ?" +
-                "WHERE books.family_id = ? " +
-                "ORDER BY completed ASC, last_read DESC NULLS LAST, recommended DESC, title ASC;";
+                "WHERE books.family_id = ? ";
+        if (isChild) {
+            sql += "AND books.for_children = true ";
+        }
+        sql +=  "ORDER BY completed ASC, last_read DESC NULLS LAST, recommended DESC, title ASC;";
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql, userId, userId, familyId);
             while (results.next()) {
@@ -50,7 +53,7 @@ public class JdbcBookDao implements BookDao {
     public Book getBookById(int id, int userId) {
         Book book = null;
 
-        String sql = "SELECT books.book_id, books.family_id, books.isbn, books.title, books.author, books.cover_url, books.note, " +
+        String sql = "SELECT books.book_id, books.family_id, books.isbn, books.title, books.author, books.cover_url, books.note, books.for_children, " +
                 "COALESCE(ub.completed, false) AS completed, " +
                 "COALESCE(ub.recommended, false) AS recommended, " +
                 "( SELECT MAX(start_date_time) FROM sessions WHERE sessions.book_id = books.book_id AND sessions.user_id = ? ) AS last_read " +
@@ -70,18 +73,21 @@ public class JdbcBookDao implements BookDao {
     }
 
     @Override
-    public Book getRecommendedBook(int familyId, int userId) {
+    public Book getRecommendedBook(int familyId, int userId, boolean isChild) {
         Book book = null;
 
-        String sql = "SELECT books.book_id, books.family_id, books.isbn, books.title, books.author, books.cover_url, books.note, " +
+        String sql = "SELECT books.book_id, books.family_id, books.isbn, books.title, books.author, books.cover_url, books.note, books.for_children, " +
                 "COALESCE(ub.completed, false) AS completed, " +
                 "COALESCE(ub.recommended, false) AS recommended, " +
                 "( SELECT MAX(start_date_time) FROM sessions WHERE sessions.book_id = books.book_id AND sessions.user_id = ? ) AS last_read " +
                 "FROM books " +
                 "LEFT JOIN users_books AS ub " +
                 "ON books.book_id = ub.book_id AND ub.user_id = ?" +
-                "WHERE books.family_id = ? " +
-                "ORDER BY completed ASC, last_read DESC NULLS LAST, recommended DESC, title ASC " +
+                "WHERE books.family_id = ? ";
+        if (isChild) {
+            sql += "AND books.for_children = true ";
+        }
+        sql +=  "ORDER BY completed ASC, last_read DESC NULLS LAST, recommended DESC, title ASC " +
                 "LIMIT 1;";
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql, userId, userId, familyId);
@@ -98,11 +104,11 @@ public class JdbcBookDao implements BookDao {
     public Book addBook(Book book, int familyId, int userId) {
         Book newBook = null;
 
-        String sql = "INSERT INTO books (family_id, isbn, title, author, cover_url, note) " +
-                "VALUES (?, ?, ?, ?, ?, ?) RETURNING book_id;";
+        String sql = "INSERT INTO books (family_id, isbn, title, author, cover_url, note, for_children) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?) RETURNING book_id;";
         try {
             int newBookId = jdbcTemplate.queryForObject(sql, int.class, familyId, book.getIsbn(), book.getTitle(),
-                    book.getAuthor(), book.getCoverUrl(), book.getNote());
+                    book.getAuthor(), book.getCoverUrl(), book.getNote(), book.isForChildren());
             newBook = getBookById(newBookId, userId);
         } catch (CannotGetJdbcConnectionException e) {
             throw new DaoException("Unable to connect to server or database", e);
@@ -136,6 +142,7 @@ public class JdbcBookDao implements BookDao {
         book.setAuthor(rs.getString("author"));
         book.setCoverUrl(rs.getString("cover_url"));
         book.setNote(rs.getString("note"));
+        book.setForChildren(rs.getBoolean("for_children"));
         book.setCompleted(rs.getBoolean("completed"));
         book.setRecommended(rs.getBoolean("recommended"));
         book.setLastRead(rs.getTimestamp("last_read"));

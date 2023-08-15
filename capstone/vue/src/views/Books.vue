@@ -25,6 +25,9 @@
             <div class="author">
               {{ book.author }}
             </div>
+            <div v-if="$store.state.user.authorities[0].name == 'ROLE_PARENT' && book.forChildren == false">
+              🔞 For Adults Only
+            </div>
             <div v-if="book.completed" class="completed-text">
               ✔️ Completed!
             </div>
