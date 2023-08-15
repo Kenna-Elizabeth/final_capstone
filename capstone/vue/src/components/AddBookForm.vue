@@ -5,17 +5,21 @@
     </div>
     
     <div class="form-input-group">
+      <label for="isbn">ISBN</label>
+      <input type="text" id="isbn" v-model="book.isbn" :disabled="disableForm"/>
+    </div>
+    <div class="form-input-group">
       <label for="title">Book Title</label>
       <input type="text" id="title" v-model="book.title" :disabled="disableForm"/>
     </div>
     <div class="form-input-group">
       <label for="author">Author</label>
       <input type="text" id="author" v-model="book.author" :disabled="disableForm"/>
-      </div>
-    <div class="form-input-group">
-      <label for="isbn">ISBN</label>
-      <input type="text" id="isbn" v-model="book.isbn" :disabled="disableForm"/>
-      </div>
+    </div>
+    <div class="form-input-group" v-if="$store.state.user.authorities[0].name == 'ROLE_PARENT'">
+      <label for="parent-only">Acceptable For Children</label>
+      <input type="checkbox" id="parent-only" v-model="book.forChildren" :disabled="disableForm"/>
+    </div>
     <button type="submit" :disabled="disableForm">Submit Book</button>
   </form>
 </template>
@@ -30,6 +34,7 @@ export default {
         title: "",
         author: "",
         isbn: "",
+        forChildren: true
       },
       disableForm: false,
       addBookErrors: false,
@@ -52,6 +57,7 @@ export default {
               title: "",
               author: "",
               isbn: "",
+              forChildren: true
             };
             this.disableForm = false;
             this.$emit('create-book');
