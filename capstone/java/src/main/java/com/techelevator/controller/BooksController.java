@@ -32,7 +32,7 @@ public class BooksController {
         User user = getUserFromPrincipal(userPrincipal);
 
         try {
-            return bookDao.getBooks(user.getFamilyId(), user.getId());
+            return bookDao.getBooks(user.getFamilyId(), user.getId(), user.isChild());
         } catch (DaoException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Unable to Find Family Users");
         }
@@ -61,7 +61,7 @@ public class BooksController {
         User user = getUserFromPrincipal(userPrincipal);
 
         try {
-            Book book = bookDao.getRecommendedBook(user.getFamilyId(), user.getId());
+            Book book = bookDao.getRecommendedBook(user.getFamilyId(), user.getId(), user.isChild());
             if (book == null) {
                 throw new ResponseStatusException(HttpStatus.NO_CONTENT, "No Books In Collection");
             }
