@@ -9,6 +9,9 @@
       <input type="text" id="isbn" v-model="book.isbn" :disabled="disableForm"/>
     </div>
     <div class="form-input-group">
+      <button type="button" @click.prevent="isbnLookup()" :disabled="disableForm">Look Up Title and Author By ISBN</button>
+    </div>
+    <div class="form-input-group">
       <label for="title">Book Title</label>
       <input type="text" id="title" v-model="book.title" :disabled="disableForm"/>
     </div>
@@ -43,9 +46,13 @@ export default {
   },
   methods: {
     submitBook() {
+      this.formatIsbn();
       if (this.book.title === "") {
         this.addBookErrors = true;
         this.addBookErrorMsg = "Please enter book title.";
+      } else if ( !(this.book.isbn.length == 0 || this.book.isbn.length == 10 || this.book.isbn.length == 13 )) {
+        this.addBookErrors = true;
+        this.addBookErrorMsg = "ISBNs are 10 or 13 digits long.";
       } else {
         this.addBookErrorMsg = "";
         this.addBookErrors = false;
@@ -65,6 +72,18 @@ export default {
         });
       }
     },
+    isbnLookup() {
+      this.formatIsbn();
+      if (this.book.isbn.length == 10 || this.book.isbn.length == 13) {
+        //TOTO stuff
+      } else {
+        this.addBookErrors = true;
+        this.addBookErrorMsg = "ISBNs are 10 or 13 digits long.";
+      }
+    },
+    formatIsbn() {
+      this.book.isbn = this.book.isbn.replace(/\D/g, '');
+    }
   },
 };
 </script>
