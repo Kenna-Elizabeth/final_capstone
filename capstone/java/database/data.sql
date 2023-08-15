@@ -21,5 +21,8 @@ INSERT INTO sessions (user_id, book_id, minutes, format, note, start_date_time) 
 INSERT INTO sessions (user_id, book_id, minutes, format, note) VALUES (2, 2, 60, 'Read-Aloud (Listener)', '');
 
 INSERT INTO prizes (family_id, prize_name, description) VALUES (1, 'Example Prize', 'Read for ten hours in two weeks!');
+INSERT INTO prizes (family_id, prize_name, milestone, description) VALUES (1, 'Another Prize', 300, 'User parent has completed this one!');
+
+INSERT INTO users_prizes (user_id, prize_id, completed) VALUES (1, 2, true);
 
 COMMIT TRANSACTION;

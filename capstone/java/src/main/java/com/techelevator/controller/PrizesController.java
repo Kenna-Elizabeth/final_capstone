@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.security.Principal;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -39,6 +38,77 @@ public class PrizesController {
         }
     }
 
+    @RequestMapping(path = "/{id}", method = RequestMethod.GET)
+    public Prize getPrizeById(@PathVariable int id, Principal userPrincipal) {
+        User user = getUserFromPrincipal(userPrincipal);
+
+        try {
+            Prize prize = prizeDao.getPrizeById(id, user.getId());
+            if (prize == null) {
+                throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Book Not In Collection");
+            }
+            if (prize.getFamilyId() != user.getFamilyId()) {
+                throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Book Not In Collection");
+            }
+            return prize;
+        } catch (DaoException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Unable to Find Book");
+        }
+    }
+
+    @RequestMapping(path = "", method = RequestMethod.POST)
+    public Prize addPrize(@RequestBody Prize prize, Principal userPrincipal) {
+        User user = getUserFromPrincipal(userPrincipal);
+
+        try {
+            return prizeDao.addPrize(prize, user.getFamilyId(), user.getId());
+        } catch (DaoException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error adding prize");
+        }
+    }
+
+    @RequestMapping(path = "", method = RequestMethod.PUT)
+    public Prize updatePrize(@RequestBody Prize prize, Principal userPrincipal) {
+        User user = getUserFromPrincipal(userPrincipal);
+        Prize prizeToUpdate;
+
+        try {
+            prizeToUpdate = prizeDao.getPrizeById(prize.getId(), user.getId());
+        } catch (DaoException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Could not find prize to update");
+        }
+        if (user.getFamilyId() != prizeToUpdate.getFamilyId()) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Prize Not In Family");
+        }
+
+        try {
+            return prizeDao.updatePrize(prize, user.getId());
+        } catch (DaoException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error updating prize");
+        }
+    }
+
+    @RequestMapping(path = "/{id}", method = RequestMethod.DELETE)
+    public void deletePrize(@PathVariable int id, Principal userPrincipal) {
+        User user = getUserFromPrincipal(userPrincipal);
+        Prize prizeToDelete;
+
+        try {
+            prizeToDelete = prizeDao.getPrizeById(id, user.getId());
+        } catch (DaoException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Could not find prize to update");
+        }
+        if (user.getFamilyId() != prizeToDelete.getFamilyId()) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Prize Not In Family");
+        }
+
+        try {
+            prizeDao.deletePrize(id);
+        } catch (DaoException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error deleting prize");
+        }
+
+    }
     //Private Methods
 
     //TODO instead of making a Dao call for user details, add info to Principal by extending User

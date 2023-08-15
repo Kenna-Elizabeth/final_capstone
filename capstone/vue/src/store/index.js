@@ -4,6 +4,7 @@ import axios from 'axios'
 import familyService from '../services/FamilyService'
 import booksService from '../services/BooksService'
 import sessionsService from '../services/SessionsService'
+import prizesService from '../services/PrizesService'
 
 Vue.use(Vuex)
 
@@ -25,7 +26,8 @@ export default new Vuex.Store({
     user: currentUser || {},
     familyUsers: [],
     books: [],
-    sessions: []
+    sessions: [],
+    prizes: []
 
   },
   getters: {
@@ -70,6 +72,9 @@ export default new Vuex.Store({
     /*--- completed button ---*/
     SET_COMPLETED_STATUS(state, payload) {
       payload.books.completed = payload.value;
+    },
+    SET_PRIZES(state, prizes){
+      state.prizes = prizes; 
     }
   },
   actions: {
@@ -103,6 +108,17 @@ export default new Vuex.Store({
       }).catch(error => {
         if(error.response){
           this.errorMsg = "Could not load sessions."; 
+        }
+      });
+    },
+    retrievePrizes(context){
+      prizesService.getPrizes().then( response => {
+        if (response.status == 200){
+          context.commit("SET_PRIZES", response.data);
+        }
+      }).catch(error => {
+        if (error.response){
+          this.errorMsg = "Could not load prizes.";
         }
       });
     }

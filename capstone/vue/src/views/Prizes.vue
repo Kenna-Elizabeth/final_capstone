@@ -1,10 +1,7 @@
 <template>
-  <main class="prizes">
-    <div class="box">
-     <h1>Prizes</h1>
-    </div>
+  <div class="prizes">
      <prizes-form/>
-  </main>
+  </div>
 </template>
 
 <script>
@@ -21,16 +18,12 @@ export default {
       
     };
   },
+   created() {
+    this.$store.dispatch('retrievePrizes');
+  },
 };
 </script>
 
 <style scoped>
-main {
-    color: white;
-    background-image: linear-gradient(var(--dark-blue),var(--light-blue));
-    height: 5em;
-    width: 100vw;
-    text-align: center;
-}
 
 </style>
