@@ -56,6 +56,7 @@ public class PrizesController {
         }
     }
 
+    @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping(path = "", method = RequestMethod.POST)
     public Prize addPrize(@RequestBody Prize prize, Principal userPrincipal) {
         User user = getUserFromPrincipal(userPrincipal);
