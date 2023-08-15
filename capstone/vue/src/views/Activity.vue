@@ -38,6 +38,7 @@ export default {
 </script>
 
 <style scoped>
+
 .login-display {
   display: flex;
   flex-wrap: wrap;

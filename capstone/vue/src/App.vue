@@ -44,6 +44,8 @@ main {
   flex-direction: column;
   align-items: center;
   overflow: hidden;
+  margin-bottom: 3.5em;
 }
+
 
 </style>
