@@ -11,7 +11,7 @@
         <li><router-link v-bind:to="{ name: 'activity' }">
           📋</router-link></li>
           
-        <li><router-link v-if="parentLoggedIn" v-bind:to="{ name: 'family' }">
+        <li v-if="parentLoggedIn"><router-link v-bind:to="{ name: 'family' }">
           👨‍👩‍👧‍👦</router-link></li>
 
         <li><router-link v-bind:to="{ name: 'prizes' }">
