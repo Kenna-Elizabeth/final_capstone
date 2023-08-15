@@ -1,5 +1,8 @@
 <template>
   <main class="prizes">
+    <div class="box">
+     <h1>Prizes</h1>
+    </div>
      <prizes-form/>
   </main>
 </template>

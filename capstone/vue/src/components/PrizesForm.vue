@@ -1,6 +1,6 @@
 <template>
   <main class="prizes-form">
-     <h1>Prizes</h1>
+    
      <div>
         <button @click="showAddForm = !showAddForm">
         {{ showAddForm ? 'Cancel' : 'Add Prize' }} 
