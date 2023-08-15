@@ -4,6 +4,9 @@
     <div class="box">
       <h1>Books</h1>
     </div>
+    <div class="loading" v-if="isLoading">
+      <img src="../assets/book-image.png" />
+    </div>
     <div>
       <button @click="showAddForm = !showAddForm">
         {{ showAddForm ? 'Cancel' : 'Add Book' }}
