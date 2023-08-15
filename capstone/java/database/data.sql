@@ -22,7 +22,9 @@ INSERT INTO sessions (user_id, book_id, minutes, format, note) VALUES (2, 2, 60,
 
 INSERT INTO prizes (family_id, prize_name, description) VALUES (1, 'Example Prize', 'Read for ten hours in two weeks!');
 INSERT INTO prizes (family_id, prize_name, milestone, description) VALUES (1, 'Another Prize', 300, 'User parent has completed this one!');
+INSERT INTO prizes (family_id, prize_name, description) VALUES (1, 'Fresh Prize', 'Nobody has made progress on this one!');
 
-INSERT INTO users_prizes (user_id, prize_id, completed) VALUES (1, 2, true);
+INSERT INTO users_prizes (user_id, prize_id, progress_minutes, completed) VALUES (1, 1, 200, false);
+INSERT INTO users_prizes (user_id, prize_id, progress_minutes, completed, completion_timestamp) VALUES (1, 2, 450, true, '2023-8-1');
 
 COMMIT TRANSACTION;

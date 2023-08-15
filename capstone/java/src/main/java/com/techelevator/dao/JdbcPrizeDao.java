@@ -25,6 +25,7 @@ public class JdbcPrizeDao implements PrizeDao {
         List<Prize> prizes = new ArrayList<>();
 
         String sql = "SELECT p.prize_id, p.family_id, p.prize_name, p.description, p.milestone, p.for_parents, p.for_children, p.max_prizes, p.start_date, p.end_date, " +
+                "COALESCE(up.progress_minutes, 0) AS progress_minutes, " +
                 "COALESCE(up.completed, false) AS completed, " +
                 "up.completion_timestamp " +
                 "FROM prizes AS p " +
@@ -49,6 +50,7 @@ public class JdbcPrizeDao implements PrizeDao {
         Prize prize = null;
 
         String sql = "SELECT p.prize_id, p.family_id, p.prize_name, p.description, p.milestone, p.for_parents, p.for_children, p.max_prizes, p.start_date, p.end_date, " +
+                "COALESCE(up.progress_minutes, 0) AS progress_minutes, " +
                 "COALESCE(up.completed, false) AS completed, " +
                 "up.completion_timestamp " +
                 "FROM prizes AS p " +
@@ -132,6 +134,7 @@ public class JdbcPrizeDao implements PrizeDao {
         prize.setPrizeName(rs.getString("prize_name"));
         prize.setDescription(rs.getString("description"));
         prize.setMilestone(rs.getInt("milestone"));
+        prize.setProgressMinutes(rs.getInt("progress_minutes"));
         prize.setForParents(rs.getBoolean("for_parents"));
         prize.setForChildren(rs.getBoolean("for_children"));
         prize.setMaxPrizes(rs.getInt("max_prizes"));
