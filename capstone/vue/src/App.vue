@@ -32,6 +32,7 @@
     height: 5em;
     width: 100vw;
     text-align: center;
+    
 }
 
 #app {
@@ -42,6 +43,7 @@ main {
   display: flex;
   flex-direction: column;
   align-items: center;
+  overflow: hidden;
 }
 
 </style>

@@ -269,14 +269,19 @@ export default {
 .form-input-group{
   display: flex;
   flex-direction: column;
-  align-items: center;
-  margin: 0.5em;
   margin-bottom: 1em;
   font-weight: bold;
 }
 
 label {
-  margin-top: 0.5em;
-  margin-bottom: 0.4em;
+  margin-bottom: 0.1em;
+  margin-top: .5em;
 }
+
+#session-form {
+  text-align: center; 
+  padding: 0.5em;
+  background-color: #9DDAE6;
+}
+
 </style>
