@@ -68,14 +68,21 @@ public class PrizesController {
         }
     }
 
-    @RequestMapping(path = "", method = RequestMethod.PUT)
-    public Prize updatePrize(@RequestBody Prize prize, Principal userPrincipal) {
+    @RequestMapping(path = {"", "/{prizeId}"}, method = RequestMethod.PUT)
+    public Prize updatePrize(@PathVariable(required = false) Integer prizeId, @RequestBody Prize prize, Principal userPrincipal) {
         User user = getUserFromPrincipal(userPrincipal);
         Prize prizeToUpdate;
+
+        if (prizeId != null) {
+            prize.setId(prizeId);
+        }
 
         try {
             prizeToUpdate = prizeDao.getPrizeById(prize.getId(), user.getId());
         } catch (DaoException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Could not find prize to update");
+        }
+        if (prizeToUpdate == null) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Could not find prize to update");
         }
         if (user.getFamilyId() != prizeToUpdate.getFamilyId()) {
