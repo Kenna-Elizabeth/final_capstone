@@ -1,12 +1,23 @@
 <template>
   <main class="prizes">
-     <h1>Prizes</h1>
+     <prizes-form/>
   </main>
 </template>
 
 <script>
+import PrizesForm from '../components/PrizesForm.vue';
+
 export default {
-  name: "prizes"
+  components: { 
+    PrizesForm,
+    },
+
+  name: "prizes",
+  data() {
+    return {
+      
+    };
+  },
 };
 </script>
 
@@ -18,4 +29,5 @@ main {
     width: 100vw;
     text-align: center;
 }
+
 </style>

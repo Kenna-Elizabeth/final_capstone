@@ -42,25 +42,6 @@ main {
   display: flex;
   flex-direction: column;
   align-items: center;
-  
 }
 
-/* @media only screen and (min-width: 1025px){
-    footer {
-      display:none;
-    }
-} */
-
-/* @media(max-width: 1024px){
-     {
-       
-    }
-}
-/* @media (max-width: 450px) {
-        {
-           grid-template-columns: 1fr;
-           grid-template-areas:  
-           /* GRID AREAS TO BE ESTABLISHED 
-       }
-} */
 </style>
