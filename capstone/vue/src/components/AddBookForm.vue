@@ -29,6 +29,7 @@
 
 <script>
 import booksService from "../services/BooksService";
+import lookupService from "../services/LookupService";
 
 export default {
   data() {
@@ -75,7 +76,17 @@ export default {
     isbnLookup() {
       this.formatIsbn();
       if (this.book.isbn.length == 10 || this.book.isbn.length == 13) {
-        //TOTO stuff
+        lookupService.getBookInfoByIsbn(this.book.isbn).then( response => {
+          if (response.status == 200) {
+            this.book.title = response.data.title;
+            this.book.author = response.data.author;
+          }
+        }).catch( error => {
+          if (error.response) {
+            this.addBookErrors = true;
+            this.addBookErrorMsg = "Error looking up ISBN.";
+          }
+        });
       } else {
         this.addBookErrors = true;
         this.addBookErrorMsg = "ISBNs are 10 or 13 digits long.";
