@@ -147,9 +147,7 @@ export default {
   },
   methods: {
     getSessionsForBook() {
-      sessionsService
-        .getSessionsByBookId(this.book.id)
-        .then((response) => {
+      sessionsService.getSessionsByBookId(this.book.id).then((response) => {
           if (response.status == 200) {
             this.bookSessions = response.data;
             if (this.bookSessions.length > 0) {

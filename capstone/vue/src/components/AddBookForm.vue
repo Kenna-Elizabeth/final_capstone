@@ -10,11 +10,11 @@
     </div>
     <div class="form-input-group">
       <label for="author">Author</label>
-      <input type="author" id="author" v-model="book.author" :disabled="disableForm"/>
+      <input type="text" id="author" v-model="book.author" :disabled="disableForm"/>
       </div>
     <div class="form-input-group">
       <label for="isbn">ISBN</label>
-      <input type="isbn" id="isbn" v-model="book.isbn" :disabled="disableForm"/>
+      <input type="text" id="isbn" v-model="book.isbn" :disabled="disableForm"/>
       </div>
     <button type="submit" :disabled="disableForm">Submit Book</button>
   </form>

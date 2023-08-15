@@ -1,40 +1,50 @@
 <template>
-  <main class="prizes-form">
+  <main class="prize-add-form">
+    <div class="box">
      <h1>Prizes</h1>
-     <div>
-        <button @click="showAddForm = !showAddForm">
-        {{ showAddForm ? 'Cancel' : 'Add Prize' }} 
-
+    </div>
+      <div>
+      <button @click="showAddForm = !showAddForm">
+        {{ showAddForm ? 'Cancel' : 'Add Prize' }}
       </button>
     </div>
+    <add-prize-form v-if="showAddForm" 
+    @create-prize="$store.dispatch('retrievePrizes')" 
+    />
     <section id="prize-display">
-      <div class="prize-panel">
-        <div class="prize-name">Prize Name</div>
-        <div class="prize-description">Description</div>
-        <div class="prize-milestone">Total Minutes Reading for Prize</div>
-        <div class="prize-user-group">Prize User Group</div>
-        <div class="prize-maximum">Maximum Number of Prize</div>
-        <div class="prize-start-date">Prize Available Start Date</div>
-        <div class="prize-end-date">Prize Available End Date</div>
-        <div class="prize-completed">Prize Completed</div>
+      <div v-for="prize in $store.state.prizes" v-bind:key="prize.id" class="prize-panel">
+        <div class="prize-name"> {{ prize.prizeName }} </div>
+        <div class="prize-description"> {{ prize.description }}</div>
+        <div class="prize-milestone">{{ prize.milestone}} </div>
+        <div v-if="prize.forParents" class="prize-user-group">Parent Prize</div>
+        <div v-if="prize.forChildren" class="prize-user-group">Child Prize</div>
+        <div class="prize-maximum">{{ prize.maxPrizes }}</div>
+        <div class="prize-start-date">{{ prize.startDate }}</div>
+        <div class="prize-end-date">{{ prize.endDate }}</div>
+        <div class="prize-completed">{{ prize.completed }}</div>
       </div>
     </section>
   </main>
 </template>
 
 <script>
+import AddPrizeForm from './AddPrizeForm.vue';
+
 export default {
      data() {
     return {
       showAddForm: false,
     };
   },
-    name: "prizes-form"
-    
+    name: "prizes-form",
 
+    components: {
+      AddPrizeForm
+    }
+  
 }
 </script>
 
-<style>
+<style scoped>
 
 </style>
