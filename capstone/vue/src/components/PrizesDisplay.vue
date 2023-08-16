@@ -111,7 +111,6 @@ button:hover {
   padding: .4em;
   width: 15em;
   height: auto; 
-  
 }
 
 .prize-panel:hover {

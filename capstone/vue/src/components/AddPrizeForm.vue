@@ -26,11 +26,11 @@
       </div>
        <div class="form-input-group">
       <label for="startDate">Start Date</label>
-      <input type="date" id="start-date" v-model="prize.startDate" :disabled="disableForm"/>
+      <input type="date" id="start-date" v-model="prize.startDate" required :disabled="disableForm"/>
       </div>
        <div class="form-input-group">
       <label for="endDate">End Date</label>
-      <input type="date" id="end-date" v-model="prize.endDate" :disabled="disableForm"/>
+      <input type="date" id="end-date" v-model="prize.endDate" required :disabled="disableForm"/>
       </div>
     <button type="submit" :disabled="disableForm">Submit Prize</button>
   </form>
