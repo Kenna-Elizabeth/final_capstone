@@ -88,17 +88,18 @@ export default {
 }
 button {
   margin-top: 1em;
+  margin-bottom: 1em;
   padding: 0.6em;
   padding-left: 1.5em;
   padding-right: 1.5em;
   border: 2px solid black;
   border-radius: 8px;
-  background-color: #8be1f5;
+  background-color:#31b4c9;
   font-weight: 800;
-  font-display: color white;
+  color: white;
 }
 button:hover {
-  background-color: #44b8ca;
+  background-color: #1590a3;
 }
 
 .book-panel {
