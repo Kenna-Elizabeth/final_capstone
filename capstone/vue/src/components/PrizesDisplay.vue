@@ -4,11 +4,12 @@
      <h1>Prizes</h1>
     </div>
       <div>
-      <button @click="showAddForm = !showAddForm">
+      <button @click="toggleForm()">
         {{ showAddForm ? 'Cancel' : 'Add Prize' }}
       </button>
     </div>
     <add-prize-form v-if="showAddForm" 
+    :editPrize="editPrize"
     @create-prize="$store.dispatch('retrievePrizes')" 
     />
     <section id="prize-display">
@@ -22,8 +23,7 @@
         <div class="prize-milestone">
           <section id="label">Minutes to read:</section> {{ prize.milestone}}
         </div>
-        <div v-if="prize.forParents" class="prize-user-group">Parent Prize</div>
-        <div v-if="prize.forChildren" class="prize-user-group">Child Prize</div>
+        <div class="prize-user-group">{{ prizeEligibility(prize) }} Prize</div>
         <div class="prize-maximum">
           <section id="label">Max Prizes:</section>{{ prize.maxPrizes }}
         </div>
@@ -46,7 +46,7 @@
           <div class="progress-color" :style="{width: progressPercent(prize.progressMinutes,prize.milestone)+'%'}">{{ progressPercent(prize.progressMinutes,prize.milestone) }}%</div> 
         </div>
         <div class="edit-button">  
-          <button>Edit Prize</button>
+          <button @click="openUpdateForm(prize)" :disabled="showAddForm">Edit Prize</button>
           <button v-on:click="deletePrize(prize.id)">Delete Prize</button> 
         </div>
       </div>
@@ -59,13 +59,33 @@ import PrizesService from '../services/PrizesService';
 import AddPrizeForm from './AddPrizeForm.vue';
 
 export default {
-     data() {
+  data() {
     return {
       showAddForm: false,
+      editPrize: {}
     };
   },
   name: "prizes-form",
   methods: {
+    toggleForm() {
+      this.showAddForm = !this.showAddForm
+      if (!this.showAddForm) {
+        this.editPrize = {};
+      }
+    },
+    prizeEligibility( prize ) {
+      let str = "";
+      if (prize.forChildren) {
+        str += "Child ";
+      }
+      if (prize.forChildren && prize.forParents) {
+        str += "and ";
+      }
+      if (prize.forParents) {
+        str += "Parent ";
+      }
+      return str;
+    },
     timeStampDate( timestamp ) {
       if(timestamp != undefined){
       const parts = timestamp.split(/[T .]/);
@@ -75,15 +95,23 @@ export default {
     progressPercent(minutes,total) {
       return Math.min(Math.floor((minutes/total)*(100)),100);
     },
-    
+    openUpdateForm(prize) {
+      if (!this.showAddForm) {
+        this.editPrize = prize;
+        this.editPrize.startDate = this.timeStampDate(this.editPrize.startDate);
+        this.editPrize.endDate = this.timeStampDate(this.editPrize.endDate);
+        this.showAddForm = true;
+      }
+    },
     deletePrize(id){
-      PrizesService.deletePrize(id)
-      .then(response => {
-        if(response.status === 200) {
-          alert("Prize Deleted!"); 
-          this.$store.commit("DELETE_PRIZE", id);
-        }
-      });
+      if (confirm('Are you sure you want to delete this prize?')) {
+        PrizesService.deletePrize(id)
+        .then(response => {
+          if(response.status === 200) {
+            this.$store.commit("DELETE_PRIZE", id);
+          }
+        });
+      }
     },
     
   },

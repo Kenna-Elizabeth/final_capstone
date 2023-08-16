@@ -6,7 +6,7 @@
     
     <div class="form-input-group">
       <label for="name">Prize Name</label>
-      <input type="text" id="name" v-model="prize.prizeName" :disabled="disableForm"/>
+      <input type="text" id="name" v-model="prize.prizeName" ref="prizeName" :disabled="disableForm"/>
     </div>
     <div class="form-input-group">
       <label for="description">Description</label>
@@ -15,24 +15,24 @@
     <div class="form-input-group center-input">
       <label for="forChildren">For Children</label>
       <input type="checkbox" id="for-children" v-model="prize.forChildren" :disabled="disableForm"/>
-      </div>
-      <div class="form-input-group center-input">
+    </div>
+    <div class="form-input-group center-input">
       <label for="forParents">For Parents</label>
       <input type="checkbox" id="for-parents" v-model="prize.forParents" :disabled="disableForm"/>
-      </div>
-       <div class="form-input-group">
+    </div>
+      <div class="form-input-group">
       <label for="milestone">Milestone</label>
-      <input type="number" id="milestone" v-model="prize.milestone" :disabled="disableForm"/>
-      </div>
-       <div class="form-input-group">
+      <input type="number" id="milestone" v-model="prize.milestone" required min="1" step="1" :disabled="disableForm"/>
+    </div>
+    <div class="form-input-group">
       <label for="startDate">Start Date</label>
       <input type="date" id="start-date" v-model="prize.startDate" required :disabled="disableForm"/>
-      </div>
-       <div class="form-input-group">
+    </div>
+    <div class="form-input-group">
       <label for="endDate">End Date</label>
       <input type="date" id="end-date" v-model="prize.endDate" required :disabled="disableForm"/>
-      </div>
-    <button type="submit" :disabled="disableForm">Submit Prize</button>
+    </div>
+    <button type="submit" :disabled="disableForm">{{ prize.id == undefined ? 'Submit Prize' : 'Update Prize' }}</button>
   </form>
 </template>
 
@@ -40,11 +40,10 @@
 import prizesService from "../services/PrizesService";
 
 export default {
+  props: ['editPrize'],
   data() {
     return {
-      prize: {
-        
-      },
+      prize: this.editPrize,
       disableForm: false,
       addPrizeErrors: false,
       addPrizeErrorMsg: "",
@@ -59,19 +58,40 @@ export default {
         this.addPrizeErrorMsg = "";
         this.addPrizeErrors = false;
         this.disableForm = true;
-        prizesService.submitPrize(this.prize).then((response) => {
-          if (response.status == 201) {
-            //Clear form for next entry
-            this.prize = {
-            
-            };
-            this.disableForm = false;
-            this.$emit('create-prize');
-          }
-        });
+        if ( this.prize.id == undefined ) {
+          prizesService.submitPrize(this.prize).then((response) => {
+            if (response.status == 201) {
+              //Clear form for next entry
+              this.prize = {};
+              this.disableForm = false;
+              this.$emit('create-prize');
+            }
+        }).catch(error => {
+            if (error.status) {
+              this.addPrizeErrors = true;
+              this.addPrizeErrorMsg = "Error adding prize.";
+            }
+          });
+        } else {
+          prizesService.updatePrize(this.prize).then((response) => {
+            if (response.status == 200) {
+              this.prize = {};
+              this.disableForm = false;
+              this.$emit('create-prize');
+            }
+          }).catch(error => {
+            if (error.status) {
+              this.addPrizeErrors = true;
+              this.addPrizeErrorMsg = "Error updating prize.";
+            }
+          });
+        }
       }
     },
   },
+  mounted() {
+    this.$refs.prizeName.focus();
+  }
 };
 </script>
 
