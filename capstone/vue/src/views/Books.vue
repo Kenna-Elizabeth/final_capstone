@@ -3,10 +3,7 @@
     <login-display />
     <div class="box">
       <h1>Books</h1>
-    </div>
-    <div class="loading" v-if="isLoading">
-      <img src="../assets/book-image.png" />
-    </div>
+    </div> 
     <div>
       <button @click="showAddForm = !showAddForm">
         {{ showAddForm ? 'Cancel' : 'Add Book' }}
@@ -22,9 +19,9 @@
             <div class="book-title">
               {{ book.title }}
             </div>
-            <div class="book-image">
-              <img :src="'http://covers.openlibrary.org/b/isbn/' + book.isbn + '-M.jpg'" />
-            </div>
+            <div>
+              <img class="book-image" :src="'http://covers.openlibrary.org/b/isbn/' + book.isbn + '-M.jpg'" />
+            </div> 
             <div class="author">
               {{ book.author }}
             </div>
@@ -147,5 +144,11 @@ img {
 a {
   text-decoration: none;
   color: black;
+}
+
+.book-image {
+  background-image: url("../assets/book-image.jpg");
+  background-size: cover;
+  max-width: 13em;
 }
 </style>
