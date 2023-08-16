@@ -38,8 +38,15 @@
         <div class="prize-completed">
          <section id="label">Completed?:</section> {{ prize.completed }}
         </div>
+        <div>  
+          <section id="label">Progress</section>
+        </div>
+
         <div class="progress-bar">
           <div class="progress-color" :style="{width: progressPercent(prize.progressMinutes,prize.milestone)+'%'}">{{ progressPercent(prize.progressMinutes,prize.milestone) }}%</div> 
+        </div>
+        <div class="edit-button">  
+          <button>Edit Prize</button>
         </div>
       </div>
     </section>
@@ -182,6 +189,13 @@ export default {
   background-color: rgb(67, 67, 231);
   color: white;
   border-radius: 8px;
+}
+
+.edit-button {
+  
+  margin: 1em;
+  display: flex;
+  justify-content: center;
 }
 
 </style>
