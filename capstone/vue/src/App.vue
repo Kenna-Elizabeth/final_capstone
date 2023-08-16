@@ -29,7 +29,6 @@
 .box { 
     color: white;
     background-image: linear-gradient(var(--dark-blue),var(--light-blue));
-    height: 5em;
     width: 100vw;
     text-align: center;
 
@@ -51,7 +50,6 @@ main {
 .box { 
     color: white;
     background-image: linear-gradient(var(--dark-blue),var(--light-blue));
-    height: 7em;
     width: 100vw;
     text-align: center;
 }

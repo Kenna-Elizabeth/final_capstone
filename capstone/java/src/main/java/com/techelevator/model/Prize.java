@@ -17,6 +17,7 @@ public class Prize {
     private Timestamp endDate;
     private boolean completed;
     private Timestamp completionDate;
+    private boolean isProgressEligible;
 
     public Prize() {
     }

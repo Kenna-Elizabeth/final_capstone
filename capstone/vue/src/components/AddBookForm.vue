@@ -47,6 +47,8 @@ export default {
   },
   methods: {
     submitBook() {
+      this.book.title = this.book.title.trim();
+      this.book.author = this.book.author.trim();
       this.formatIsbn();
       if (this.book.title === "") {
         this.addBookErrors = true;
@@ -75,7 +77,8 @@ export default {
           if (error.response.status == 500) {
             this.addBookErrors = true;
             this.addBookErrorMsg = "Error creating book.";
-          }
+            }
+            this.disableForm = false;
         });
       }
     },
