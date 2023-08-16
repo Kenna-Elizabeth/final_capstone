@@ -29,7 +29,8 @@ public class JdbcPrizeDao implements PrizeDao {
         String sql = "SELECT p.prize_id, p.family_id, p.prize_name, p.description, p.milestone, p.for_parents, p.for_children, p.max_prizes, p.start_date, p.end_date, " +
                 "COALESCE(up.progress_minutes, 0) AS progress_minutes, " +
                 "COALESCE(up.completed, false) AS completed, " +
-                "up.completion_timestamp " +
+                "up.completion_timestamp, " +
+                "(CURRENT_TIMESTAMP(0) BETWEEN p.start_date AND p.end_date) AS currently_active " +
                 "FROM prizes AS p " +
                 "LEFT JOIN users_prizes AS up " +
                 "ON p.prize_id = up.prize_id AND up.user_id = ? " +
@@ -54,7 +55,8 @@ public class JdbcPrizeDao implements PrizeDao {
         String sql = "SELECT p.prize_id, p.family_id, p.prize_name, p.description, p.milestone, p.for_parents, p.for_children, p.max_prizes, p.start_date, p.end_date, " +
                 "COALESCE(up.progress_minutes, 0) AS progress_minutes, " +
                 "COALESCE(up.completed, false) AS completed, " +
-                "up.completion_timestamp " +
+                "up.completion_timestamp, " +
+                "(CURRENT_TIMESTAMP(0) BETWEEN p.start_date AND p.end_date) AS currently_active " +
                 "FROM prizes AS p " +
                 "LEFT JOIN users_prizes AS up " +
                 "ON p.prize_id = up.prize_id AND up.user_id = ? " +
@@ -77,7 +79,8 @@ public class JdbcPrizeDao implements PrizeDao {
         String sql = "SELECT p.prize_id, p.family_id, p.prize_name, p.description, p.milestone, p.for_parents, p.for_children, p.max_prizes, p.start_date, p.end_date, " +
                 "COALESCE(up.progress_minutes, 0) AS progress_minutes, " +
                 "COALESCE(up.completed, false) AS completed, " +
-                "up.completion_timestamp " +
+                "up.completion_timestamp, " +
+                "true AS currently_active " +
                 "FROM prizes AS p " +
                 "LEFT JOIN users_prizes AS up " +
                 "ON p.prize_id = up.prize_id AND up.user_id = ? " +
@@ -209,6 +212,7 @@ public class JdbcPrizeDao implements PrizeDao {
         prize.setEndDate(rs.getTimestamp("end_date"));
         prize.setCompleted(rs.getBoolean("completed"));
         prize.setCompletionDate(rs.getTimestamp("completion_timestamp"));
+        prize.setCurrentlyActive(rs.getBoolean("currently_active"));
         return prize;
     }
 

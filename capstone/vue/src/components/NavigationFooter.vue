@@ -54,6 +54,8 @@ footer{
     margin-top: 0.5em;
     left: 0em;
     right: 0em;
+    justify-content: space-around;
+    padding-right: 2.5em;
   }
 
   ul {

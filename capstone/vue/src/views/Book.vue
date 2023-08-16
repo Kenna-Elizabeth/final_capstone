@@ -74,7 +74,7 @@
 
     <sessions-list :sessions="bookSessions" />
 
-    <router-link :to="{ name: 'books' }">
+    <router-link class="back-to-book" :to="{ name: 'books' }">
       <p>Back to Book Collection</p>
     </router-link>
   </main>
@@ -312,6 +312,19 @@ input {
   text-align: center; 
   padding: 0.5em;
   background-color: #cff7ff;
+}
+
+.back-to-book {
+  margin-top: 0.5em;
+  padding: 0.5em;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+  border-radius: 0.5em;
+  background-color: #8be1f5;
+  font-weight: 500;
+  background-image: linear-gradient(#05BCD9, #9dd7e2);
+  color: white;
+  font-weight: bold;
 }
 
 </style>
