@@ -4,17 +4,17 @@
     <div class="box">
      <h1>Prizes</h1>
     </div>
-      <div>
+    <div v-if="parentLoggedIn">
       <button @click="toggleForm()">
         {{ showAddForm ? 'Cancel' : 'Add Prize' }}
       </button>
     </div>
     <add-prize-form v-if="showAddForm" 
-    :editPrize="editPrize"
-    @create-prize="$store.dispatch('retrievePrizes')" 
+      :editPrize="editPrize"
+      @create-prize="$store.dispatch('retrievePrizes')" 
     />
     <section id="prize-display">
-      <div v-for="prize in $store.state.prizes" v-bind:key="prize.id" class="prize-panel">
+      <div v-for="prize in visiblePrizes" v-bind:key="prize.id" class="prize-panel">
         <div class="prize-name">
           {{ prize.prizeName }}
         </div>
@@ -24,32 +24,32 @@
         <div class="prize-requirements">
         <div class="prize-user-group">{{ prizeEligibility(prize) }} Prize</div>
         <div class="prize-milestone">
-          <section id="label">Minutes to read:</section> {{ prize.milestone}}
+          <section class="label">Minutes to read:</section> {{ prize.milestone}}
         </div>
         
         <div class="prize-maximum">
-          <section id="label">Max Prizes:</section>{{ prize.maxPrizes == 0? "Unlimited" : prize.maxPrizes }}
+          <section class="label">Max Prizes:</section>{{ prize.maxPrizes == 0? "Unlimited" : prize.maxPrizes }}
         </div>
-       
+      
         <div class="prize-start-date">
-          <section id="label">Start:</section> 
+          <section class="label">Start:</section> 
             {{ timeStampDate(prize.startDate) }}
         </div>
         <div class="prize-end-date">
-          <section id="label">End:</section>  
+          <section class="label">End:</section>  
           {{ timeStampDate(prize.endDate) }}
         </div>
         </div> 
         <div>  
-          <section id="label">Progress</section>
+          <section class="label">Progress</section>
         </div>
         <div class="progress-bar">
           <div class="progress-color" :style="{width: progressPercent(prize.progressMinutes,prize.milestone)+'%'}">{{ progressPercent(prize.progressMinutes,prize.milestone) }}%</div> 
         </div>
-        <div class="prize-completed">
-         <section id="label">Completed:</section> {{ prize.completed }}
+        <div class="prize-completed" v-if="prize.completed">
+        <section class="label">Completed on {{ timeStampDate(prize.completionDate) }}! 🎉</section>
         </div>
-        <div class="edit-button">  
+        <div class="edit-button" v-if="parentLoggedIn">  
           <button @click="openUpdateForm(prize)" :disabled="showAddForm">Edit</button>
           <button v-on:click="deletePrize(prize.id)">Delete</button> 
         </div>
@@ -69,6 +69,20 @@ export default {
       showAddForm: false,
       editPrize: {}
     };
+  },
+  computed: {
+    parentLoggedIn() {
+      return (
+        this.$store.state.user.authorities[0].name == "ROLE_PARENT"
+      );
+    },
+    visiblePrizes() {
+      return (
+        this.$store.state.prizes.filter( prize => {
+          return prize.forChildren || this.parentLoggedIn;
+        })
+      );
+    }
   },
   name: "prizes-form",
   methods: {
@@ -193,7 +207,7 @@ button:hover {
   border-radius: 8px;
 }
 
-#label {
+.label {
   font-size: 0.9em;
   font-weight: bold;
   text-align: center;
