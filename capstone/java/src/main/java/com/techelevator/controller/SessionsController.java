@@ -1,7 +1,9 @@
 package com.techelevator.controller;
 
+import com.techelevator.dao.PrizeDao;
 import com.techelevator.dao.UserDao;
 import com.techelevator.exception.DaoException;
+import com.techelevator.model.Prize;
 import com.techelevator.model.Session;
 import com.techelevator.dao.SessionDao;
 import com.techelevator.model.User;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -20,10 +23,12 @@ import java.util.List;
 public class SessionsController {
 
     private final SessionDao sessionDao;
+    private final PrizeDao prizeDao;
     private final UserDao userDao;
 
-    public SessionsController(SessionDao sessionDao, UserDao userDao) {
+    public SessionsController(SessionDao sessionDao, PrizeDao prizeDao, UserDao userDao) {
         this.sessionDao = sessionDao;
+        this.prizeDao = prizeDao;
         this.userDao = userDao;
     }
 
@@ -60,6 +65,7 @@ public class SessionsController {
                 if (user.getFamilyId() != targetUser.getFamilyId()) {
                     throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Session User Not In Current Family");
                 }
+                user = targetUser;
             } catch (DaoException e) {
                 throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Unable to Confirm User in Family");
             }
@@ -71,8 +77,15 @@ public class SessionsController {
         } catch (DaoException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error Adding Session");
         }
-        return newSession;
 
+        List<Prize> activePrizes = new ArrayList<>();
+        try {
+            activePrizes = prizeDao.getActivePrizes(session.getStartDateTime(), user);
+        } catch (DaoException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Unable to Get Current Prizes");
+        }
+        //TODO update prizes with minutes
+        return newSession;
     }
 
     //TODO instead of making a Dao call for user details, add info to Principal by extending User
