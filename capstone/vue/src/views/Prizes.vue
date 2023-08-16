@@ -1,21 +1,21 @@
 <template>
   <div class="prizes">
-     <prizes-form/>
+     <prizes-display/>
   </div>
 </template>
 
 <script>
-import PrizesForm from '../components/PrizesForm.vue';
+import PrizesDisplay from '../components/PrizesDisplay.vue';
 
 export default {
   components: { 
-    PrizesForm,
+    PrizesDisplay,
     },
 
   name: "prizes",
   data() {
     return {
-      
+  
     };
   },
    created() {
