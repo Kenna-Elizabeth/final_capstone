@@ -26,7 +26,7 @@
         </div>
         <div class="prize-user-group">{{ prizeEligibility(prize) }} Prize</div>
         <div class="prize-maximum">
-          <section id="label">Max Prizes:</section>{{ prize.maxPrizes }}
+          <section id="label">Max Prizes:</section>{{ prize.maxPrizes == 0? "Unlimited" : prize.maxPrizes }}
         </div>
         <div class="prize-start-date">
           <section id="label">Start:</section> 

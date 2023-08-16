@@ -70,6 +70,12 @@ export default {
             this.disableForm = false;
             this.$emit('create-book');
           }
+           }).catch( error => {
+             console.log(error.response);
+          if (error.response.status == 500) {
+            this.addBookErrors = true;
+            this.addBookErrorMsg = "Error creating book.";
+          }
         });
       }
     },
@@ -82,7 +88,7 @@ export default {
             this.book.author = response.data.author;
           }
         }).catch( error => {
-          if (error.response) {
+          if (error.response.status == 500) {
             this.addBookErrors = true;
             this.addBookErrorMsg = "Error looking up ISBN.";
           }

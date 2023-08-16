@@ -20,6 +20,10 @@
       <label for="forParents">For Parents</label>
       <input type="checkbox" id="for-parents" v-model="prize.forParents" :disabled="disableForm"/>
     </div>
+    <div class="form-input-group">
+      <label for="maxPrizes">Max # Prizes</label>
+      <input type="text" id="maxPrizes" v-model="prize.maxPrizes" :disabled="disableForm" placeholder="0 for Unlimited"/>
+      </div>
       <div class="form-input-group">
       <label for="milestone">Milestone</label>
       <input type="number" id="milestone" v-model="prize.milestone" required min="1" step="1" :disabled="disableForm"/>

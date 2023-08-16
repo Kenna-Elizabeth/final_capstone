@@ -32,7 +32,7 @@
     height: 5em;
     width: 100vw;
     text-align: center;
-    
+
 }
 
 #app {
@@ -47,5 +47,13 @@ main {
   margin-bottom: 3.5em;
 }
 
-
+@media only screen and (max-width: 768px) {
+.box { 
+    color: white;
+    background-image: linear-gradient(var(--dark-blue),var(--light-blue));
+    height: 7em;
+    width: 100vw;
+    text-align: center;
+}
+}
 </style>
