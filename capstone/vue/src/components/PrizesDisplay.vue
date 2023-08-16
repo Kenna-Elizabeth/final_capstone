@@ -13,8 +13,9 @@
       :editPrize="editPrize"
       @create-prize="$store.dispatch('retrievePrizes')" 
     />
-    <section id="prize-display">
-      <div v-for="prize in visiblePrizes" v-bind:key="prize.id" class="prize-panel">
+    <div class="prize-display" >
+      <div v-for="prize in visiblePrizes" v-bind:key="prize.id">
+        <div class="prize-panel-inActive" :class="{ completed: prize.completed, 'Active': prize.currentlyActive }">
         <div class="prize-name">
           {{ prize.prizeName }}
         </div>
@@ -53,8 +54,9 @@
           <button @click="openUpdateForm(prize)" :disabled="showAddForm">Edit</button>
           <button v-on:click="deletePrize(prize.id)">Delete</button> 
         </div>
+        </div><!-- -->
       </div>
-    </section>
+    </div>
   </main>
 </template>
 
@@ -161,7 +163,7 @@ button:hover {
   
 }
 
-#prize-display {
+.prize-display {
   margin-top: .5em;
   display: flex;
   justify-content: space-evenly;
@@ -169,19 +171,31 @@ button:hover {
   margin-bottom: 3em;
 }
 
-.prize-panel {
+
+.prize-panel-inActive {
   margin: 0.4em;
-  border: 8px outset #05BCD9;
+  border: 8px solid #676867;
   border-radius: 18px;
-  background-color: #e4f6fa;
-  background-image: linear-gradient(#05BCD9,#9DDAE6);
+  background-color: grey;
   padding: .4em;
   width: 15em;
   height: auto;
   text-align: center; 
 }
 
-.prize-panel:hover {
+
+.Active {
+  border: 8px outset #05BCD9;
+  background-image: linear-gradient(#05BCD9,#9DDAE6);
+}
+
+.completed {
+  border: 8px solid #16b14a;
+  background-image: linear-gradient(#16b14a,#9de6bb);
+}
+ 
+
+.prize-panel-inActive:hover {
   box-shadow: 4px 4px #cfcfcf;
   transform: scale(1.05);
 }
@@ -254,6 +268,8 @@ button:hover {
   justify-content: center;
 }
 
+
+
 .progress-bar {
   width: 100%;
   background-color: rgb(155, 154, 154);
@@ -284,4 +300,9 @@ button:hover {
   margin-bottom: .3em;
   border-radius: 8px;
 }
+
+
+
+
+
 </style>
