@@ -18,11 +18,12 @@ public class Prize {
     private boolean completed;
     private Timestamp completionDate;
     private boolean isCurrentlyActive;
+    private boolean isExpired;
 
     public Prize() {
     }
 
-    public Prize(int id, int familyId, String prizeName, String description, int milestone, int progressMinutes, boolean forParents, boolean forChildren, int maxPrizes, Timestamp startDate, Timestamp endDate, boolean completed, Timestamp completionDate, boolean isCurrentlyActive) {
+    public Prize(int id, int familyId, String prizeName, String description, int milestone, int progressMinutes, boolean forParents, boolean forChildren, int maxPrizes, Timestamp startDate, Timestamp endDate, boolean completed, Timestamp completionDate, boolean isCurrentlyActive, boolean isExpired) {
         this.id = id;
         this.familyId = familyId;
         this.prizeName = prizeName;
@@ -37,6 +38,7 @@ public class Prize {
         this.completed = completed;
         this.completionDate = completionDate;
         this.isCurrentlyActive = isCurrentlyActive;
+        this.isExpired = isExpired;
     }
 
     public int getId() {
@@ -151,6 +153,14 @@ public class Prize {
         isCurrentlyActive = currentlyActive;
     }
 
+    public boolean isExpired() {
+        return isExpired;
+    }
+
+    public void setExpired(boolean expired) {
+        isExpired = expired;
+    }
+
     @Override
     public String toString() {
         return "Prize{" +
@@ -168,6 +178,7 @@ public class Prize {
                 ", completed=" + completed +
                 ", completionDate=" + completionDate +
                 ", isCurrentlyActive=" + isCurrentlyActive +
+                ", isExpired=" + isExpired +
                 '}';
     }
 }

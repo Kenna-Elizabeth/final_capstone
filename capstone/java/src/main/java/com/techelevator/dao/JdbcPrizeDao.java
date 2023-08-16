@@ -30,7 +30,8 @@ public class JdbcPrizeDao implements PrizeDao {
                 "COALESCE(up.progress_minutes, 0) AS progress_minutes, " +
                 "COALESCE(up.completed, false) AS completed, " +
                 "up.completion_timestamp, " +
-                "(CURRENT_TIMESTAMP(0) BETWEEN p.start_date AND p.end_date) AS currently_active " +
+                "(CURRENT_TIMESTAMP(0) BETWEEN p.start_date AND p.end_date) AS currently_active, " +
+                "(CURRENT_TIMESTAMP(0) > p.end_date) AS expired " +
                 "FROM prizes AS p " +
                 "LEFT JOIN users_prizes AS up " +
                 "ON p.prize_id = up.prize_id AND up.user_id = ? " +
@@ -56,7 +57,8 @@ public class JdbcPrizeDao implements PrizeDao {
                 "COALESCE(up.progress_minutes, 0) AS progress_minutes, " +
                 "COALESCE(up.completed, false) AS completed, " +
                 "up.completion_timestamp, " +
-                "(CURRENT_TIMESTAMP(0) BETWEEN p.start_date AND p.end_date) AS currently_active " +
+                "(CURRENT_TIMESTAMP(0) BETWEEN p.start_date AND p.end_date) AS currently_active, " +
+                "(CURRENT_TIMESTAMP(0) > p.end_date) AS expired " +
                 "FROM prizes AS p " +
                 "LEFT JOIN users_prizes AS up " +
                 "ON p.prize_id = up.prize_id AND up.user_id = ? " +
@@ -80,7 +82,8 @@ public class JdbcPrizeDao implements PrizeDao {
                 "COALESCE(up.progress_minutes, 0) AS progress_minutes, " +
                 "COALESCE(up.completed, false) AS completed, " +
                 "up.completion_timestamp, " +
-                "true AS currently_active " +
+                "true AS currently_active, " +
+                "false AS expired " +
                 "FROM prizes AS p " +
                 "LEFT JOIN users_prizes AS up " +
                 "ON p.prize_id = up.prize_id AND up.user_id = ? " +
@@ -213,6 +216,7 @@ public class JdbcPrizeDao implements PrizeDao {
         prize.setCompleted(rs.getBoolean("completed"));
         prize.setCompletionDate(rs.getTimestamp("completion_timestamp"));
         prize.setCurrentlyActive(rs.getBoolean("currently_active"));
+        prize.setExpired(rs.getBoolean("expired"));
         return prize;
     }
 
