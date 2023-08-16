@@ -17,12 +17,12 @@ public class Prize {
     private Timestamp endDate;
     private boolean completed;
     private Timestamp completionDate;
-    private boolean isProgressEligible;
+    private boolean isCurrentlyActive;
 
     public Prize() {
     }
 
-    public Prize(int id, int familyId, String prizeName, String description, int milestone, int progressMinutes, boolean forParents, boolean forChildren, int maxPrizes, Timestamp startDate, Timestamp endDate, boolean completed, Timestamp completionDate) {
+    public Prize(int id, int familyId, String prizeName, String description, int milestone, int progressMinutes, boolean forParents, boolean forChildren, int maxPrizes, Timestamp startDate, Timestamp endDate, boolean completed, Timestamp completionDate, boolean isCurrentlyActive) {
         this.id = id;
         this.familyId = familyId;
         this.prizeName = prizeName;
@@ -36,6 +36,7 @@ public class Prize {
         this.endDate = endDate;
         this.completed = completed;
         this.completionDate = completionDate;
+        this.isCurrentlyActive = isCurrentlyActive;
     }
 
     public int getId() {
@@ -142,6 +143,14 @@ public class Prize {
         this.progressMinutes = progressMinutes;
     }
 
+    public boolean isCurrentlyActive() {
+        return isCurrentlyActive;
+    }
+
+    public void setCurrentlyActive(boolean currentlyActive) {
+        isCurrentlyActive = currentlyActive;
+    }
+
     @Override
     public String toString() {
         return "Prize{" +
@@ -158,6 +167,7 @@ public class Prize {
                 ", endDate=" + endDate +
                 ", completed=" + completed +
                 ", completionDate=" + completionDate +
+                ", isCurrentlyActive=" + isCurrentlyActive +
                 '}';
     }
 }
