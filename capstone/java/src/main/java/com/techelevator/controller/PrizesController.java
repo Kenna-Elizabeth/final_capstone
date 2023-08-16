@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.security.Principal;
+import java.sql.Timestamp;
 import java.util.List;
 
 @RestController
@@ -35,6 +36,17 @@ public class PrizesController {
             return prizeDao.getPrizes(user.getFamilyId(), user.getId());
         } catch (DaoException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Unable to Find Family Users");
+        }
+    }
+
+    @RequestMapping(path = "/active", method = RequestMethod.GET)
+    public List<Prize> getActivePrizes(Principal userPrincipal) {
+        User user = getUserFromPrincipal(userPrincipal);
+
+        try {
+            return prizeDao.getActivePrizes(new Timestamp(System.currentTimeMillis()), user);
+        } catch (DaoException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Unable to Get Active Prizes");
         }
     }
 
