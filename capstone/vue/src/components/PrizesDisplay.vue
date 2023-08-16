@@ -21,13 +21,16 @@
         <div class="prize-description">
           {{ prize.description }}
         </div>
+        <div class="prize-requirements">
+        <div class="prize-user-group">{{ prizeEligibility(prize) }} Prize</div>
         <div class="prize-milestone">
           <section id="label">Minutes to read:</section> {{ prize.milestone}}
         </div>
-        <div class="prize-user-group">{{ prizeEligibility(prize) }} Prize</div>
+        
         <div class="prize-maximum">
           <section id="label">Max Prizes:</section>{{ prize.maxPrizes }}
         </div>
+       
         <div class="prize-start-date">
           <section id="label">Start:</section> 
             {{ timeStampDate(prize.startDate) }}
@@ -36,19 +39,19 @@
           <section id="label">End:</section>  
           {{ timeStampDate(prize.endDate) }}
         </div>
-        <div class="prize-completed">
-         <section id="label">Completed?:</section> {{ prize.completed }}
-        </div>
+        </div> 
         <div>  
           <section id="label">Progress</section>
         </div>
-
         <div class="progress-bar">
           <div class="progress-color" :style="{width: progressPercent(prize.progressMinutes,prize.milestone)+'%'}">{{ progressPercent(prize.progressMinutes,prize.milestone) }}%</div> 
         </div>
+        <div class="prize-completed">
+         <section id="label">Completed:</section> {{ prize.completed }}
+        </div>
         <div class="edit-button">  
-          <button @click="openUpdateForm(prize)" :disabled="showAddForm">Edit Prize</button>
-          <button v-on:click="deletePrize(prize.id)">Delete Prize</button> 
+          <button @click="openUpdateForm(prize)" :disabled="showAddForm">Edit</button>
+          <button v-on:click="deletePrize(prize.id)">Delete</button> 
         </div>
       </div>
     </section>
@@ -128,17 +131,20 @@ export default {
 button {
   margin-top: 1em;
   margin-bottom: 1em;
-  padding: 0.6em;
+  margin: .2em;
+  padding: 0.3em;
   padding-left: 1.5em;
   padding-right: 1.5em;
-  border: 2px solid black;
+  border: 2px outset black;
   border-radius: 8px;
-  background-color:#31b4c9;
+  background-color:#05BCD9;
   font-weight: 800;
   color: white;
 }
 button:hover {
   background-color: #1590a3;
+  border: 2px inset black;
+  
 }
 
 #prize-display {
@@ -151,16 +157,19 @@ button:hover {
 
 .prize-panel {
   margin: 0.4em;
-  border: 2px solid black;
-  border-radius: 8px;
-  background-color: #eef2f3;
+  border: 8px outset #05BCD9;
+  border-radius: 18px;
+  background-color: #e4f6fa;
+  background-image: linear-gradient(#05BCD9,#9DDAE6);
   padding: .4em;
   width: 15em;
-  height: auto; 
+  height: auto;
+  text-align: center; 
 }
 
 .prize-panel:hover {
-  box-shadow: 3px 4px #9DDAE6;
+  box-shadow: 4px 4px #cfcfcf;
+  transform: scale(1.05);
 }
 
 .prize-name{
@@ -169,7 +178,7 @@ button:hover {
   text-align: center;
   border-bottom: 2px solid black;
   margin: .5em;
-  color: rgb(20, 20, 119);
+  color: white;
   padding-bottom: .3em;
 }
 
@@ -180,7 +189,7 @@ button:hover {
   margin-bottom: .8em;
   background-color: white;
   padding: .3em;
-  border: 2px solid rgb(11, 168, 241);
+  border: 2px solid #b6b6b6;
   border-radius: 8px;
 }
 
@@ -193,40 +202,31 @@ button:hover {
 .prize-user-group{
   display:flex;
   padding: .3em;
-  background-color: white;
-  border: 1px solid grey;
   margin-bottom: .3em;
+  font-weight: bold;
 }
 
 .prize-maximum{
   display:flex;
   padding: .3em;
-  background-color: white;
-  border: 1px solid grey;
   margin-bottom: .3em;
 }
 
 .prize-milestone {
   display:flex;
   padding: .3em;
-  background-color: white;
-  border: 1px solid grey;
   margin-bottom: .3em;
 }
 
 .prize-start-date {
   display: flex;
   padding: .3em;
-  background-color: white;
-  border: 1px solid grey;
   margin-bottom: .3em;
 }
 
 .prize-end-date {
-   display: flex;
-   padding: .3em;
-  background-color: white;
-  border: 1px solid grey;
+  display: flex;
+  padding: .3em;
   margin-bottom: .3em;
 }
 
@@ -236,18 +236,20 @@ button:hover {
   background-color: white;
   border: 1px solid grey;
   margin-bottom: .3em;
+  border-radius: 8px;
+  justify-content: center;
 }
 
 .progress-bar {
   width: 100%;
-  background-color: darkgray;
-  border: 1px solid grey;
+  background-color: rgb(155, 154, 154);
+  border: 2px inset rgb(153, 151, 151);
   border-radius: 8px;
 }
 
 .progress-color {
   width: 0%; 
-  background-color: rgb(67, 67, 231);
+  background-color: #2408be;
   color: white;
   border-radius: 8px;
 }
@@ -258,4 +260,14 @@ button:hover {
   justify-content: center;
 }
 
+.prize-requirements {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: .3em;
+  background-color: white;
+  border: 2px solid rgb(182, 180, 180);
+  margin-bottom: .3em;
+  border-radius: 8px;
+}
 </style>
