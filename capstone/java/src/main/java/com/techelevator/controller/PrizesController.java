@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.security.Principal;
+import java.sql.Timestamp;
 import java.util.List;
 
 @RestController
@@ -38,6 +39,17 @@ public class PrizesController {
         }
     }
 
+    @RequestMapping(path = "/active", method = RequestMethod.GET)
+    public List<Prize> getActivePrizes(Principal userPrincipal) {
+        User user = getUserFromPrincipal(userPrincipal);
+
+        try {
+            return prizeDao.getActivePrizes(new Timestamp(System.currentTimeMillis()), user);
+        } catch (DaoException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Unable to Get Active Prizes");
+        }
+    }
+
     @RequestMapping(path = "/{id}", method = RequestMethod.GET)
     public Prize getPrizeById(@PathVariable int id, Principal userPrincipal) {
         User user = getUserFromPrincipal(userPrincipal);
@@ -56,6 +68,7 @@ public class PrizesController {
         }
     }
 
+    @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping(path = "", method = RequestMethod.POST)
     public Prize addPrize(@RequestBody Prize prize, Principal userPrincipal) {
         User user = getUserFromPrincipal(userPrincipal);
@@ -67,14 +80,21 @@ public class PrizesController {
         }
     }
 
-    @RequestMapping(path = "", method = RequestMethod.PUT)
-    public Prize updatePrize(@RequestBody Prize prize, Principal userPrincipal) {
+    @RequestMapping(path = {"", "/{prizeId}"}, method = RequestMethod.PUT)
+    public Prize updatePrize(@PathVariable(required = false) Integer prizeId, @RequestBody Prize prize, Principal userPrincipal) {
         User user = getUserFromPrincipal(userPrincipal);
         Prize prizeToUpdate;
+
+        if (prizeId != null) {
+            prize.setId(prizeId);
+        }
 
         try {
             prizeToUpdate = prizeDao.getPrizeById(prize.getId(), user.getId());
         } catch (DaoException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Could not find prize to update");
+        }
+        if (prizeToUpdate == null) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Could not find prize to update");
         }
         if (user.getFamilyId() != prizeToUpdate.getFamilyId()) {

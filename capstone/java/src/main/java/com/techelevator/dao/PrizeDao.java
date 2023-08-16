@@ -1,7 +1,9 @@
 package com.techelevator.dao;
 
 import com.techelevator.model.Prize;
+import com.techelevator.model.User;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 public interface PrizeDao {
@@ -9,6 +11,8 @@ public interface PrizeDao {
     List<Prize> getPrizes(int familyId, int userId);
 
     Prize getPrizeById(int prizeId, int userId);
+
+    List<Prize> getActivePrizes(Timestamp timestamp, User user);
 
     Prize addPrize(Prize prize, int familyId, int userId);
 

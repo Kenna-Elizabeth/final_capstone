@@ -2,12 +2,14 @@ package com.techelevator.dao;
 
 import com.techelevator.exception.DaoException;
 import com.techelevator.model.Prize;
+import com.techelevator.model.User;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,11 +27,12 @@ public class JdbcPrizeDao implements PrizeDao {
         List<Prize> prizes = new ArrayList<>();
 
         String sql = "SELECT p.prize_id, p.family_id, p.prize_name, p.description, p.milestone, p.for_parents, p.for_children, p.max_prizes, p.start_date, p.end_date, " +
+                "COALESCE(up.progress_minutes, 0) AS progress_minutes, " +
                 "COALESCE(up.completed, false) AS completed, " +
                 "up.completion_timestamp " +
                 "FROM prizes AS p " +
                 "LEFT JOIN users_prizes AS up " +
-                "ON p.prize_id = up.prize_id AND up.user_id = ?" +
+                "ON p.prize_id = up.prize_id AND up.user_id = ? " +
                 "WHERE p.family_id = ? " +
                 "ORDER BY start_date DESC;";
         try {
@@ -49,11 +52,12 @@ public class JdbcPrizeDao implements PrizeDao {
         Prize prize = null;
 
         String sql = "SELECT p.prize_id, p.family_id, p.prize_name, p.description, p.milestone, p.for_parents, p.for_children, p.max_prizes, p.start_date, p.end_date, " +
+                "COALESCE(up.progress_minutes, 0) AS progress_minutes, " +
                 "COALESCE(up.completed, false) AS completed, " +
                 "up.completion_timestamp " +
                 "FROM prizes AS p " +
                 "LEFT JOIN users_prizes AS up " +
-                "ON p.prize_id = up.prize_id AND up.user_id = ?" +
+                "ON p.prize_id = up.prize_id AND up.user_id = ? " +
                 "WHERE p.prize_id = ?;";
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql, userId, prizeId);
@@ -64,6 +68,39 @@ public class JdbcPrizeDao implements PrizeDao {
             throw new DaoException("Unable to connect to server or database", e);
         }
         return prize;
+    }
+
+    @Override
+    public List<Prize> getActivePrizes(Timestamp timestamp, User user) {
+        List<Prize> prizes = new ArrayList<>();
+
+        String sql = "SELECT p.prize_id, p.family_id, p.prize_name, p.description, p.milestone, p.for_parents, p.for_children, p.max_prizes, p.start_date, p.end_date, " +
+                "COALESCE(up.progress_minutes, 0) AS progress_minutes, " +
+                "COALESCE(up.completed, false) AS completed, " +
+                "up.completion_timestamp " +
+                "FROM prizes AS p " +
+                "LEFT JOIN users_prizes AS up " +
+                "ON p.prize_id = up.prize_id AND up.user_id = ? " +
+                "WHERE p.family_id = ? ";
+        if (user.isParent()) {
+            sql += "AND p.for_parents = true ";
+        } else if (user.isChild()) {
+            sql += "AND p.for_children = true ";
+        }
+        sql +=  "AND p.start_date < ? AND p.end_date > ? " +
+                "ORDER BY start_date DESC;";
+
+        try {
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, user.getId(), user.getFamilyId(), timestamp, timestamp);
+            while (results.next()) {
+                Prize prize = mapRowToPrize(results);
+                prizes.add(prize);
+            }
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        }
+        return prizes;
+
     }
 
     @Override
@@ -132,6 +169,7 @@ public class JdbcPrizeDao implements PrizeDao {
         prize.setPrizeName(rs.getString("prize_name"));
         prize.setDescription(rs.getString("description"));
         prize.setMilestone(rs.getInt("milestone"));
+        prize.setProgressMinutes(rs.getInt("progress_minutes"));
         prize.setForParents(rs.getBoolean("for_parents"));
         prize.setForChildren(rs.getBoolean("for_children"));
         prize.setMaxPrizes(rs.getInt("max_prizes"));

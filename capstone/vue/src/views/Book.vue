@@ -266,6 +266,7 @@ export default {
   color: white;
 
 }
+
 .form-input-group{
   display: flex;
   flex-direction: column;

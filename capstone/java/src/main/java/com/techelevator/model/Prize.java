@@ -9,6 +9,7 @@ public class Prize {
     private String prizeName;
     private String description;
     private int milestone;
+    private int progressMinutes;
     private boolean forParents;
     private boolean forChildren;
     private int maxPrizes;
@@ -20,12 +21,13 @@ public class Prize {
     public Prize() {
     }
 
-    public Prize(int id, int familyId, String prizeName, String description, int milestone, boolean forParents, boolean forChildren, int maxPrizes, Timestamp startDate, Timestamp endDate, boolean completed, Timestamp completionDate) {
+    public Prize(int id, int familyId, String prizeName, String description, int milestone, int progressMinutes, boolean forParents, boolean forChildren, int maxPrizes, Timestamp startDate, Timestamp endDate, boolean completed, Timestamp completionDate) {
         this.id = id;
         this.familyId = familyId;
         this.prizeName = prizeName;
         this.description = description;
         this.milestone = milestone;
+        this.progressMinutes = progressMinutes;
         this.forParents = forParents;
         this.forChildren = forChildren;
         this.maxPrizes = maxPrizes;
@@ -131,14 +133,23 @@ public class Prize {
         this.completionDate = completionDate;
     }
 
+    public int getProgressMinutes() {
+        return progressMinutes;
+    }
+
+    public void setProgressMinutes(int progressMinutes) {
+        this.progressMinutes = progressMinutes;
+    }
+
     @Override
     public String toString() {
         return "Prize{" +
                 "id=" + id +
-                ", family_id=" + familyId +
+                ", familyId=" + familyId +
                 ", prizeName='" + prizeName + '\'' +
                 ", description='" + description + '\'' +
                 ", milestone=" + milestone +
+                ", progressMinutes=" + progressMinutes +
                 ", forParents=" + forParents +
                 ", forChildren=" + forChildren +
                 ", maxPrizes=" + maxPrizes +

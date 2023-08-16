@@ -3,6 +3,7 @@ package com.techelevator.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Objects;
 import java.util.Set;
 
@@ -82,6 +83,23 @@ public class User {
 
    public void setFamilyId(int familyId) {
       this.familyId = familyId;
+   }
+
+   public String getRole() {
+      String role = "";
+      Iterator<Authority> iterator = authorities.iterator();
+      if (iterator.hasNext()) {
+         role = iterator.next().getName();
+      }
+      return role;
+   }
+
+   public boolean isParent() {
+      return getRole().equals("ROLE_PARENT");
+   }
+
+   public boolean isChild() {
+      return getRole().equals("ROLE_CHILD");
    }
 
    @Override

@@ -32,6 +32,7 @@ CREATE TABLE books (
     author varchar(100),
     cover_url varchar(100),
     note text,
+    for_children boolean DEFAULT true,
     CONSTRAINT PK_books PRIMARY KEY (book_id),
     CONSTRAINT FK_books_families FOREIGN KEY (family_id) REFERENCES families (family_id)
 );
@@ -76,8 +77,9 @@ CREATE TABLE users_books (
 CREATE TABLE users_prizes (
     user_id int NOT NULL,
     prize_id int NOT NULL,
-    completed boolean DEFAULT true,
-    completion_timestamp timestamp DEFAULT CURRENT_TIMESTAMP(0),
+    progress_minutes int DEFAULT 0,
+    completed boolean DEFAULT false,
+    completion_timestamp timestamp,
     CONSTRAINT PK_user_prize PRIMARY KEY (user_id, prize_id),
     CONSTRAINT FK_users_prizes_users FOREIGN KEY (user_id) REFERENCES users (user_id),
     CONSTRAINT FK_users_prizes_prizes FOREIGN KEY (prize_id) REFERENCES prizes (prize_id) ON DELETE CASCADE
