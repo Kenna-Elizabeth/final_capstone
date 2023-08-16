@@ -1,5 +1,6 @@
 <template>
   <main class="prize-add-form">
+    <login-display/>
     <div class="box">
      <h1>Prizes</h1>
     </div>
@@ -57,6 +58,7 @@
 <script>
 import PrizesService from '../services/PrizesService';
 import AddPrizeForm from './AddPrizeForm.vue';
+import LoginDisplay from './LoginDisplay.vue';
 
 export default {
   data() {
@@ -116,7 +118,8 @@ export default {
     
   },
   components: {
-    AddPrizeForm
+    AddPrizeForm,
+    LoginDisplay
   }
 }
 </script>

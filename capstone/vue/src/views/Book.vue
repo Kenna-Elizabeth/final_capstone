@@ -1,6 +1,6 @@
 <template>
   <main class="book">
-    <login-display />
+    <login-display @switch-user-view="getSessionsForBook()" />
     <div class="box">
       <h1>{{ book.title }}</h1>
     </div>
@@ -97,7 +97,7 @@ export default {
       book: {},
       bookSessions: [],
       newSession: {
-        userId: this.$store.state.user.id,
+        userId: this.$store.state.viewTargetUser.id == undefined ? this.$store.state.user.id : this.$store.state.viewTargetUser.id,
         bookId: undefined,
         minutes: 30,
         format: "Paper",
@@ -111,7 +111,7 @@ export default {
   created() {
     if (this.$route.params.id == undefined) {
       booksService
-        .getRecommendedBook()
+        .getRecommendedBook(this.$store.state.viewTargetUser.id == undefined ? this.$store.state.user.id : this.$store.state.viewTargetUser.id)
         .then((response) => {
           if (response.status == 200) {
             this.book = response.data;
@@ -129,7 +129,7 @@ export default {
         });
     } else {
       booksService
-        .getBookById(this.$route.params.id)
+        .getUserBookById(this.$route.params.id, this.$store.state.viewTargetUser.id == undefined ? this.$store.state.user.id : this.$store.state.viewTargetUser.id)
         .then((response) => {
           if (response.status == 200) {
             this.book = response.data;
@@ -147,19 +147,35 @@ export default {
   },
   methods: {
     getSessionsForBook() {
-      sessionsService.getSessionsByBookId(this.book.id).then((response) => {
-          if (response.status == 200) {
-            this.bookSessions = response.data;
-            if (this.bookSessions.length > 0) {
-              this.newSession.format = this.bookSessions[0].format;
+      if (this.$store.state.viewTargetUser.id == undefined) {
+        sessionsService.getSessionsByBookId(this.book.id).then((response) => {
+            if (response.status == 200) {
+              this.bookSessions = response.data;
+              if (this.bookSessions.length > 0) {
+                this.newSession.format = this.bookSessions[0].format;
+              }
             }
-          }
-        })
-        .catch((error) => {
-          if (error.response) {
-            this.errorMsg = "Could not load book reading sessions.";
-          }
-        });
+          })
+          .catch((error) => {
+            if (error.response) {
+              this.errorMsg = "Could not load book reading sessions.";
+            }
+          });
+      } else {
+        sessionsService.getUserSessionsByBookId(this.book.id, this.$store.state.viewTargetUser.id).then((response) => {
+            if (response.status == 200) {
+              this.bookSessions = response.data;
+              if (this.bookSessions.length > 0) {
+                this.newSession.format = this.bookSessions[0].format;
+              }
+            }
+          })
+          .catch((error) => {
+            if (error.response) {
+              this.errorMsg = "Could not load book reading sessions.";
+            }
+          });
+      }
     },
     submitSession() {
       if (
@@ -190,11 +206,11 @@ export default {
     },
     setCompleted(completion) {
       booksService
-        .setBookCompletion(this.book.id, completion, this.$store.state.user.id)
+        .setBookCompletion(this.book.id, completion, this.$store.state.viewTargetUser.id == undefined ? this.$store.state.user.id : this.$store.state.viewTargetUser.id)
         .then((response) => {
           if (response.status == 200) {
             booksService
-              .getBookById(this.book.id)
+              .getUserBookById(this.book.id, this.$store.state.viewTargetUser.id == undefined ? this.$store.state.user.id : this.$store.state.viewTargetUser.id)
               .then((response) => {
                 if (response.status == 200) {
                   this.book = response.data;

@@ -31,9 +31,16 @@ public class SessionsController {
         this.userDao = userDao;
     }
 
-    @RequestMapping(path = "", method = RequestMethod.GET)
-    public List<Session> getSessions(Principal userPrincipal) {
+    @RequestMapping(path = {"", "/user/{targetId}"}, method = RequestMethod.GET)
+    public List<Session> getSessions(@PathVariable(required = false) Integer targetId, Principal userPrincipal) {
         User user = getUserFromPrincipal(userPrincipal);
+        if (targetId != null) {
+            User targetUser = getUserFromId(targetId);
+            if (user.getFamilyId() != targetUser.getFamilyId()) {
+                throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Target User Not In Family");
+            }
+            user = targetUser;
+        }
 
         try {
             return sessionDao.getSessions(user.getId());
@@ -42,9 +49,16 @@ public class SessionsController {
         }
     }
 
-    @RequestMapping(path = "/{id}", method = RequestMethod.GET)
-    public List<Session> getSessionsByBookId(@PathVariable int id, Principal userPrincipal) {
+    @RequestMapping(path = {"/{id}", "/{id}/user/{targetId}"}, method = RequestMethod.GET)
+    public List<Session> getSessionsByBookId(@PathVariable int id, @PathVariable(required = false) Integer targetId, Principal userPrincipal) {
         User user = getUserFromPrincipal(userPrincipal);
+        if (targetId != null) {
+            User targetUser = getUserFromId(targetId);
+            if (user.getFamilyId() != targetUser.getFamilyId()) {
+                throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Target User Not In Family");
+            }
+            user = targetUser;
+        }
 
         try {
             return sessionDao.getSessionsByBookId(id, user.getId());
@@ -105,6 +119,14 @@ public class SessionsController {
     private User getUserFromPrincipal(Principal userPrincipal) {
         try {
             return userDao.getUserByUsername(userPrincipal.getName());
+        } catch (DaoException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "User Not Found");
+        }
+    }
+
+    private User getUserFromId(int id) {
+        try {
+            return userDao.getUserById(id);
         } catch (DaoException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "User Not Found");
         }

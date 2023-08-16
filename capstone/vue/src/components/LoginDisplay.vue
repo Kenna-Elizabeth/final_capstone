@@ -5,7 +5,7 @@
     </span>
     <span class="switch-view-message" v-if="$store.state.user.authorities[0].name == 'ROLE_PARENT'">
       &nbsp;- View Information For: 
-      <select id="switch-view" v-model="targetUser" @change.prevent="">
+      <select id="switch-view" v-model="targetUser" @change="switchView()">
         <option disabled :value="undefined">Select Family Member</option>
         <option v-for="user in $store.state.familyUsers" :key="user.username" :value="user.username">
           {{ user.username }}
@@ -26,6 +26,14 @@ export default {
       set(username) {
         this.$store.commit('SET_VIEW_TARGET_USER', username);
       }
+    }
+  },
+  methods: {
+    switchView() {
+      this.$store.dispatch('retrieveBooks');
+      this.$store.dispatch('retrieveSessions');
+      this.$store.dispatch('retrievePrizes');
+      this.$emit('switch-user-view');
     }
   },
   created() {

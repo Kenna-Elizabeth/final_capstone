@@ -58,6 +58,8 @@ export default new Vuex.Store({
       state.familyUsers = [];
       state.books = [];
       state.sessions = [];
+      state.prizes = [];
+      state.viewTargetUser = {};
       axios.defaults.headers.common = {};
     },
     SET_FAMILY_USERS(state, users) {
@@ -98,37 +100,73 @@ export default new Vuex.Store({
       });
     },
     retrieveBooks(context){
-      booksService.getBooks().then( response => {
-        if (response.status == 200){
-          context.commit("SET_BOOKS", response.data);
-        }
-      }).catch(error => {
-        if (error.response){
-          this.errorMsg = "Could not load books.";
-        }
-      });
+      if (context.state.viewTargetUser.id == undefined) {
+        booksService.getBooks().then( response => {
+          if (response.status == 200){
+            context.commit("SET_BOOKS", response.data);
+          }
+        }).catch(error => {
+          if (error.response){
+            this.errorMsg = "Could not load books.";
+          }
+        });
+      } else {
+        booksService.getUserBooks(context.state.viewTargetUser.id).then( response => {
+          if (response.status == 200){
+            context.commit("SET_BOOKS", response.data);
+          }
+        }).catch(error => {
+          if (error.response){
+            this.errorMsg = "Could not load books.";
+          }
+        });
+      }
     },
     retrieveSessions(context){
-      sessionsService.getSessions().then( response => {
-        if(response.status == 200) {
-          context.commit("SET_SESSIONS", response.data); 
-        }
-      }).catch(error => {
-        if(error.response){
-          this.errorMsg = "Could not load sessions."; 
-        }
-      });
+      if (context.state.viewTargetUser.id == undefined) {
+        sessionsService.getSessions().then( response => {
+          if(response.status == 200) {
+            context.commit("SET_SESSIONS", response.data); 
+          }
+        }).catch(error => {
+          if(error.response){
+            this.errorMsg = "Could not load sessions."; 
+          }
+        });
+      } else {
+        sessionsService.getUserSessions(context.state.viewTargetUser.id).then( response => {
+          if(response.status == 200) {
+            context.commit("SET_SESSIONS", response.data); 
+          }
+        }).catch(error => {
+          if(error.response){
+            this.errorMsg = "Could not load sessions."; 
+          }
+        });
+      }
     },
     retrievePrizes(context){
-      prizesService.getPrizes().then( response => {
-        if (response.status == 200){
-          context.commit("SET_PRIZES", response.data);
-        }
-      }).catch(error => {
-        if (error.response){
-          this.errorMsg = "Could not load prizes.";
-        }
-      });
+      if (context.state.viewTargetUser.id == undefined) {
+        prizesService.getPrizes().then( response => {
+          if (response.status == 200){
+            context.commit("SET_PRIZES", response.data);
+          }
+        }).catch(error => {
+          if (error.response){
+            this.errorMsg = "Could not load prizes.";
+          }
+        });
+      } else {
+        prizesService.getUserPrizes(context.state.viewTargetUser.id).then( response => {
+          if (response.status == 200){
+            context.commit("SET_PRIZES", response.data);
+          }
+        }).catch(error => {
+          if (error.response){
+            this.errorMsg = "Could not load prizes.";
+          }
+        });
+      }
     }
   }
 })

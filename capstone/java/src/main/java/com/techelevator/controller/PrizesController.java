@@ -28,9 +28,16 @@ public class PrizesController {
         this.userDao = userDao;
     }
 
-    @RequestMapping(path = "", method = RequestMethod.GET)
-    public List<Prize> getPrizes(Principal userPrincipal) {
+    @RequestMapping(path = {"", "/user/{targetId}"}, method = RequestMethod.GET)
+    public List<Prize> getPrizes(@PathVariable(required = false) Integer targetId, Principal userPrincipal) {
         User user = getUserFromPrincipal(userPrincipal);
+        if (targetId != null) {
+            User targetUser = getUserFromId(targetId);
+            if (user.getFamilyId() != targetUser.getFamilyId()) {
+                throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Target User Not In Family");
+            }
+            user = targetUser;
+        }
 
         try {
             return prizeDao.getPrizes(user.getFamilyId(), user.getId());
@@ -57,14 +64,14 @@ public class PrizesController {
         try {
             Prize prize = prizeDao.getPrizeById(id, user.getId());
             if (prize == null) {
-                throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Book Not In Collection");
+                throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Prize Not In Family");
             }
             if (prize.getFamilyId() != user.getFamilyId()) {
-                throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Book Not In Collection");
+                throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Prize Not In Family");
             }
             return prize;
         } catch (DaoException e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Unable to Find Book");
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Unable to Find Prize");
         }
     }
 
@@ -140,5 +147,14 @@ public class PrizesController {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "User Not Found");
         }
     }
+
+    private User getUserFromId(int id) {
+        try {
+            return userDao.getUserById(id);
+        } catch (DaoException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "User Not Found");
+        }
+    }
+
 }
 

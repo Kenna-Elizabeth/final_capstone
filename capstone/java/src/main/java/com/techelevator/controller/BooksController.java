@@ -27,9 +27,16 @@ public class BooksController {
         this.userDao = userDao;
     }
 
-    @RequestMapping(path = "", method = RequestMethod.GET)
-    public List<Book> getBooks(Principal userPrincipal) {
+    @RequestMapping(path = {"", "/user/{targetId}"}, method = RequestMethod.GET)
+    public List<Book> getBooks(@PathVariable(required = false) Integer targetId, Principal userPrincipal) {
         User user = getUserFromPrincipal(userPrincipal);
+        if (targetId != null) {
+            User targetUser = getUserFromId(targetId);
+            if (user.getFamilyId() != targetUser.getFamilyId()) {
+                throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Target User Not In Family");
+            }
+            user = targetUser;
+        }
 
         try {
             return bookDao.getBooks(user.getFamilyId(), user.getId(), user.isChild());
@@ -38,9 +45,16 @@ public class BooksController {
         }
     }
 
-    @RequestMapping(path = "/{id}", method = RequestMethod.GET)
-    public Book getBookById(@PathVariable int id, Principal userPrincipal) {
+    @RequestMapping(path = {"/{id}", "/{id}/user/{targetId}"}, method = RequestMethod.GET)
+    public Book getBookById(@PathVariable int id, @PathVariable(required = false) Integer targetId, Principal userPrincipal) {
         User user = getUserFromPrincipal(userPrincipal);
+        if (targetId != null) {
+            User targetUser = getUserFromId(targetId);
+            if (user.getFamilyId() != targetUser.getFamilyId()) {
+                throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Target User Not In Family");
+            }
+            user = targetUser;
+        }
 
         try {
             Book book = bookDao.getBookById(id, user.getId());
@@ -56,9 +70,16 @@ public class BooksController {
         }
     }
 
-    @RequestMapping(path = "/recommended", method = RequestMethod.GET)
-    public Book getRecommendedBook(Principal userPrincipal) {
+    @RequestMapping(path = {"/recommended", "/recommended/user/{targetId}"}, method = RequestMethod.GET)
+    public Book getRecommendedBook(@PathVariable(required = false) Integer targetId, Principal userPrincipal) {
         User user = getUserFromPrincipal(userPrincipal);
+        if (targetId != null) {
+            User targetUser = getUserFromId(targetId);
+            if (user.getFamilyId() != targetUser.getFamilyId()) {
+                throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Target User Not In Family");
+            }
+            user = targetUser;
+        }
 
         try {
             Book book = bookDao.getRecommendedBook(user.getFamilyId(), user.getId(), user.isChild());
@@ -121,6 +142,14 @@ public class BooksController {
     private User getUserFromPrincipal(Principal userPrincipal) {
         try {
             return userDao.getUserByUsername(userPrincipal.getName());
+        } catch (DaoException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "User Not Found");
+        }
+    }
+
+    private User getUserFromId(int id) {
+        try {
+            return userDao.getUserById(id);
         } catch (DaoException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "User Not Found");
         }

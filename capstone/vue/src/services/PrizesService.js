@@ -5,6 +5,11 @@ export default {
   getPrizes() {
     return axios.get('/prizes')
   },
+
+  getUserPrizes(id) {
+    return axios.get(`/prizes/user/${id}`)
+  },
+  
   submitPrize(prize) {
     return axios.post('/prizes', prize)
   },

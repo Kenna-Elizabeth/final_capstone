@@ -5,6 +5,10 @@ export default {
   getBooks() {
     return axios.get('/books')
   },
+
+  getUserBooks(id) {
+    return axios.get(`/books/user/${id}`)
+  },
   
   submitBook(book) {
     return axios.post('/books', book)
@@ -14,8 +18,12 @@ export default {
     return axios.get(`/books/${id}`)
   },
 
-  getRecommendedBook() {
-    return axios.get('/books/recommended')
+  getUserBookById(id, userId) {
+    return axios.get(`/books/${id}/user/${userId}`)
+  },
+
+  getRecommendedBook(userId) {
+    return axios.get(`/books/recommended/user/${userId}`)
   },
 
   setBookCompletion(bookId, completed, userId) {
