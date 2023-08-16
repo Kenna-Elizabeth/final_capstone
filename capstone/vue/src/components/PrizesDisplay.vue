@@ -51,7 +51,7 @@
         </div>
         <div class="edit-buttons" v-if="parentLoggedIn">  
           <button @click="openUpdateForm(prize)" :disabled="showAddForm">Edit</button>
-          <button v-on:click="deletePrize(prize.id)" :disabled="showAddForm">Delete</button> 
+          <button v-if="prize.expired" v-on:click="deletePrize(prize.id)" :disabled="showAddForm">Delete</button> 
         </div>
       </div>
     </section>
