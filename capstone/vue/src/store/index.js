@@ -27,8 +27,8 @@ export default new Vuex.Store({
     familyUsers: [],
     books: [],
     sessions: [],
-    prizes: []
-
+    prizes: [],
+    viewTargetUser: {}
   },
   getters: {
     getBookById: (state) => (id) => {
@@ -74,12 +74,15 @@ export default new Vuex.Store({
     },
     SET_PRIZES(state, prizes){
       state.prizes = prizes; 
-    },
-    
+    },    
     DELETE_PRIZE(state,prizeIdToDelete) {
       state.prizes = state.prizes.filter((prize) => {
         return prize.id !== prizeIdToDelete;
       });
+    },
+    SET_VIEW_TARGET_USER(state, username) {
+      state.viewTargetUser.username = username;
+      state.viewTargetUser.id = state.familyUsers.find( user => user.username == username ).id;
     }
   },
   actions: {

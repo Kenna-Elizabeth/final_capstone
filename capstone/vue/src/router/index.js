@@ -89,7 +89,7 @@ const router = new Router({
       }
     },
     {
-      path: "/activities",
+      path: "/activity",
       name: "activity",
       component: Activity,
       meta: {

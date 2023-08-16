@@ -4,8 +4,9 @@
       Welcome, {{ $store.state.user.username }}
     </span>
     <span class="switch-view-message" v-if="$store.state.user.authorities[0].name == 'ROLE_PARENT'">
-      - View Information Of: 
-      <select id="switch-view" @change.prevent="">
+      &nbsp;- View Information For: 
+      <select id="switch-view" v-model="targetUser" @change.prevent="">
+        <option disabled :value="undefined">Select Family Member</option>
         <option v-for="user in $store.state.familyUsers" :key="user.username" :value="user.username">
           {{ user.username }}
         </option>
@@ -16,7 +17,22 @@
 
 <script>
 export default {
-  name: 'login-display'
+  name: 'login-display',
+  computed: {
+    targetUser: {
+      get() {
+        return this.$store.state.viewTargetUser.username;
+      },
+      set(username) {
+        this.$store.commit('SET_VIEW_TARGET_USER', username);
+      }
+    }
+  },
+  created() {
+    if (this.$store.state.user.authorities[0].name == 'ROLE_PARENT' && this.$store.state.familyUsers.length == 0) {
+      this.$store.dispatch('retrieveFamilyUsers');
+    }
+  }
 }
 </script>
 
