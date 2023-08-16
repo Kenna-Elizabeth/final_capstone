@@ -61,29 +61,6 @@ public class AuthenticationController {
         return new ResponseEntity<>(new LoginResponseDto(jwt, user), httpHeaders, HttpStatus.OK);
     }
 
-    @PreAuthorize("isAuthenticated()")
-    @RequestMapping(path = "/switch", method = RequestMethod.POST)
-    public ResponseEntity<LoginResponseDto> switchUser(@Valid @RequestBody SwitchUserDto switchUserDto, Principal userPrincipal) {
-        //TODO check that the target user is part of the same group as the current user, check PIN if one is set
-
-        Authentication authentication = new UsernamePasswordAuthenticationToken(
-                switchUserDto.getUsername(),
-                null);
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        String jwt = tokenProvider.createToken(authentication, false);
-
-        User user;
-        try {
-            user = userDao.getUserByUsername(switchUserDto.getUsername());
-        } catch (DaoException e) {
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Cannot switch users.");
-        }
-
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.add(JWTFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
-        return new ResponseEntity<>(new LoginResponseDto(jwt, user), httpHeaders, HttpStatus.OK);
-    }
-
     @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping(path = "/register", method = RequestMethod.POST)
     public void register(@Valid @RequestBody RegisterUserDto newUser) {
