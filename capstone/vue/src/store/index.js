@@ -69,12 +69,17 @@ export default new Vuex.Store({
     SET_SESSIONS(state, sessions){
       state.sessions = sessions; 
     },
-    /*--- completed button ---*/
     SET_COMPLETED_STATUS(state, payload) {
       payload.books.completed = payload.value;
     },
     SET_PRIZES(state, prizes){
       state.prizes = prizes; 
+    },
+    
+    DELETE_PRIZE(state,prizeIdToDelete) {
+      state.prizes = state.prizes.filter((prize) => {
+        return prize.id !== prizeIdToDelete;
+      });
     }
   },
   actions: {

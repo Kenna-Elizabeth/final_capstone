@@ -47,6 +47,7 @@
         </div>
         <div class="edit-button">  
           <button>Edit Prize</button>
+          <button v-on:click="deletePrize(prize.id)">Delete Prize</button> 
         </div>
       </div>
     </section>
@@ -54,6 +55,7 @@
 </template>
 
 <script>
+import PrizesService from '../services/PrizesService';
 import AddPrizeForm from './AddPrizeForm.vue';
 
 export default {
@@ -65,12 +67,25 @@ export default {
   name: "prizes-form",
   methods: {
     timeStampDate( timestamp ) {
+      if(timestamp != undefined){
       const parts = timestamp.split(/[T .]/);
       return parts[0];
+      }
     },
     progressPercent(minutes,total) {
       return Math.min(Math.floor((minutes/total)*(100)),100);
-    }
+    },
+    
+    deletePrize(id){
+      PrizesService.deletePrize(id)
+      .then(response => {
+        if(response.status === 200) {
+          alert("Prize Deleted!"); 
+          this.$store.commit("DELETE_PRIZE", id);
+        }
+      });
+    },
+    
   },
   components: {
     AddPrizeForm
@@ -207,7 +222,6 @@ button:hover {
 }
 
 .edit-button {
-  
   margin: 1em;
   display: flex;
   justify-content: center;

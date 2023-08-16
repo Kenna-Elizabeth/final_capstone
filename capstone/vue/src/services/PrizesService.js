@@ -7,6 +7,10 @@ export default {
   },
   submitPrize(prize) {
     return axios.post('/prizes', prize)
+  },
+
+  deletePrize(prizeId) {
+    return axios.delete(`/prizes/${prizeId}`)
   }
 
 }
