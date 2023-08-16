@@ -61,8 +61,8 @@
         <label for="note">Note</label>
         <input
           type="text"
+          size="30"
           id="note"
-          size="40"
           placeholder="Enter an optional note here"
           v-model="newSession.note"
         />
@@ -252,16 +252,18 @@ export default {
   background-color: rgb(212, 144, 144);
 }
 .record-a-reading-session{
+  display: flex;
   margin: 0.5em;
   margin-top: 1em;
   font-weight: bold;
   font-size: 1.2em;
   border: 2px solid #05BCD9;
   padding: 0.6em;
-  padding-left: 7em;
-  padding-right: 7em;
-  background-color: #7cd2e4;
+  padding-left: 5em;
+  padding-right: 5em;
+  background-color: #42acc2;
   border-radius: .2em;
+  color: white;
 
 }
 .form-input-group{
@@ -272,14 +274,27 @@ export default {
 }
 
 label {
+  display: flex;
+  justify-content: center;
   margin-bottom: 0.1em;
   margin-top: .5em;
+}
+
+input {
+  display: flex;
+  font-size: 1em;
+  font-weight: bold;
+}
+#format {
+  display: flex;
+  font-size: 1em;
+  font-weight: bold;
 }
 
 #session-form {
   text-align: center; 
   padding: 0.5em;
-  background-color: #9DDAE6;
+  background-color: #cff7ff;
 }
 
 </style>

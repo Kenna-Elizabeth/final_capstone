@@ -83,4 +83,20 @@ export default {
 label {
   margin-right: 0.5em;
 }
+
+button {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  padding: 0.3em;
+  padding-left: 0.6em;
+  padding-right: 0.6em;
+  border: 2px solid black;
+  border-radius: 8px;
+  background-color: #31b4c9;
+  font-weight: bold;
+  color: white;
+}
+button:hover {
+  background-color: #1590a3;
+}
 </style>

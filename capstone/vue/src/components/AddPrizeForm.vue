@@ -12,11 +12,11 @@
       <label for="description">Description</label>
       <input type="text" id="description" v-model="prize.description" :disabled="disableForm"/>
       </div>
-    <div class="form-input-group">
+    <div class="form-input-group center-input">
       <label for="forChildren">For Children</label>
       <input type="checkbox" id="for-children" v-model="prize.forChildren" :disabled="disableForm"/>
       </div>
-      <div class="form-input-group">
+      <div class="form-input-group center-input">
       <label for="forParents">For Parents</label>
       <input type="checkbox" id="for-parents" v-model="prize.forParents" :disabled="disableForm"/>
       </div>
@@ -77,22 +77,46 @@ export default {
 
 <style scoped>
 #add-prize-form {
-  margin-top: 0.5em;
+  margin-top: 0.3em;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  justify-items: flex-end;
   font-weight: bold;
 }
 .form-input-group {
   margin: 0.3em;
   display: flex;
   align-items: center;
-  margin-bottom: 1em;
+  margin-bottom: 0.7em;
   border: black 2px;
 
 }
 label {
   margin-right: 0.5em;
+  font-size: 0.9em;
 }
+
+input {
+  font-weight: bold;
+}
+.center-input {
+  align-self: center;
+}
+
+button {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  padding: 0.3em;
+  padding-left: 0.6em;
+  padding-right: 0.6em;
+  border: 2px solid black;
+  border-radius: 8px;
+  background-color: #31b4c9;
+  font-weight: bold;
+  color: white;
+}
+button:hover {
+  background-color: #1590a3;
+}
+
 </style>
