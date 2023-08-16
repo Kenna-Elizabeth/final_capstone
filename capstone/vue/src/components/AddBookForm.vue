@@ -75,7 +75,8 @@ export default {
           if (error.response.status == 500) {
             this.addBookErrors = true;
             this.addBookErrorMsg = "Error creating book.";
-          }
+            }
+            this.disableForm = false;
         });
       }
     },
