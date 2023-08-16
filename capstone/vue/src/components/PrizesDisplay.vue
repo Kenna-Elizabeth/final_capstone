@@ -50,9 +50,9 @@
         <div class="prize-completed" v-if="prize.completed">
         <section class="label">Completed on {{ timeStampDate(prize.completionDate) }}! 🎉</section>
         </div>
-        <div class="edit-button" v-if="parentLoggedIn">  
+        <div class="edit-buttons" v-if="parentLoggedIn">  
           <button @click="openUpdateForm(prize)" :disabled="showAddForm">Edit</button>
-          <button v-on:click="deletePrize(prize.id)">Delete</button> 
+          <button v-if="prize.expired" v-on:click="deletePrize(prize.id)" :disabled="showAddForm">Delete</button> 
         </div>
         </div><!-- -->
       </div>
@@ -161,6 +161,10 @@ button:hover {
   background-color: #1590a3;
   border: 2px inset black;
   
+}
+button:disabled {
+  background-color: gray;
+
 }
 
 .prize-display {
@@ -284,7 +288,7 @@ button:hover {
   border-radius: 8px;
 }
 
-.edit-button {
+.edit-buttons {
   margin: 1em;
   display: flex;
   justify-content: center;
