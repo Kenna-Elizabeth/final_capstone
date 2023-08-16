@@ -20,4 +20,8 @@ public interface PrizeDao {
 
     void deletePrize(int prizeId);
 
+    void increaseProgress(int prizeId, int userId, int minutes);
+
+    void updateCompletion();
+
 }

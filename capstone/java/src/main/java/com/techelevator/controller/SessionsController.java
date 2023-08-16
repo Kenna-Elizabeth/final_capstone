@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.security.Principal;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -78,13 +77,26 @@ public class SessionsController {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error Adding Session");
         }
 
-        List<Prize> activePrizes = new ArrayList<>();
+        List<Prize> activePrizes;
         try {
-            activePrizes = prizeDao.getActivePrizes(session.getStartDateTime(), user);
+            activePrizes = prizeDao.getActivePrizes(newSession.getStartDateTime(), user);
         } catch (DaoException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Unable to Get Current Prizes");
         }
-        //TODO update prizes with minutes
+        for (Prize prize : activePrizes) {
+            try {
+                prizeDao.increaseProgress(prize.getId(), user.getId(), newSession.getMinutes());
+            } catch (DaoException e) {
+                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Unable to Update Prize Progress");
+            }
+        }
+
+        try {
+            prizeDao.updateCompletion();
+        } catch (DaoException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Unable to Get Current Prizes");
+        }
+
         return newSession;
     }
 

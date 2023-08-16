@@ -162,6 +162,38 @@ public class JdbcPrizeDao implements PrizeDao {
         }
     }
 
+    @Override
+    public void increaseProgress(int prizeId, int userId, int minutes) {
+        String sql = "INSERT INTO users_prizes (user_id, prize_id, progress_minutes)" +
+                "VALUES (?, ?, ?) " +
+                "ON CONFLICT (user_id, prize_id) " +
+                "DO UPDATE SET progress_minutes = users_prizes.progress_minutes + ?;";
+        try {
+            jdbcTemplate.update(sql, userId, prizeId, minutes, minutes);
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        } catch (DataIntegrityViolationException e) {
+            throw new DaoException("Data Integrity Violation", e);
+        }
+    }
+
+    @Override
+    public void updateCompletion() {
+        String sql = "UPDATE users_prizes " +
+                "SET completed = true, " +
+                "completion_timestamp = COALESCE(users_prizes.completion_timestamp, CURRENT_TIMESTAMP(0)) " +
+                "WHERE progress_minutes >= " +
+                    "(SELECT milestone FROM prizes WHERE prize_id = users_prizes.prize_id);";
+
+        try {
+            jdbcTemplate.update(sql);
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        } catch (DataIntegrityViolationException e) {
+            throw new DaoException("Data Integrity Violation", e);
+        }
+    }
+
     private Prize mapRowToPrize(SqlRowSet rs) {
         Prize prize = new Prize();
         prize.setId(rs.getInt("prize_id"));
