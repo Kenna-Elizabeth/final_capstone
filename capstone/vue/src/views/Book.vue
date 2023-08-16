@@ -262,8 +262,8 @@ export default {
   padding-right: 7em;
   background-color: #7cd2e4;
   border-radius: .2em;
-
 }
+
 .form-input-group{
   display: flex;
   flex-direction: column;

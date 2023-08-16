@@ -28,16 +28,18 @@
           <section id="label">Max Prizes:</section>{{ prize.maxPrizes }}
         </div>
         <div class="prize-start-date">
-          <section id="label">Start:</section> {{ prize.startDate }}
+          <section id="label">Start:</section> 
+            {{ timeStampDate(prize.startDate) }}
         </div>
         <div class="prize-end-date">
-          <section id="label">End:</section> {{ prize.endDate }}
+          <section id="label">End:</section>  
+          {{ timeStampDate(prize.endDate) }}
         </div>
         <div class="prize-completed">
          <section id="label">Completed?:</section> {{ prize.completed }}
         </div>
         <div class="progress-bar">
-          <div class="progress-color">50%</div> 
+          <div class="progress-color" :style="{width: progressPercent(prize.progressMinutes,prize.milestone)+'%'}">{{ progressPercent(prize.progressMinutes,prize.milestone) }}%</div> 
         </div>
       </div>
     </section>
@@ -53,12 +55,19 @@ export default {
       showAddForm: false,
     };
   },
-    name: "prizes-form",
-
-    components: {
-      AddPrizeForm
+  name: "prizes-form",
+  methods: {
+    timeStampDate( timestamp ) {
+      const parts = timestamp.split(/[T .]/);
+      return parts[0];
+    },
+    progressPercent(minutes,total) {
+      return Math.min(Math.floor((minutes/total)*(100)),100);
     }
-  
+  },
+  components: {
+    AddPrizeForm
+  }
 }
 </script>
 
@@ -169,7 +178,7 @@ export default {
 }
 
 .progress-color {
-  width: 50%; 
+  width: 0%; 
   background-color: rgb(67, 67, 231);
   color: white;
   border-radius: 8px;
