@@ -22,7 +22,7 @@
     </div>
     <div class="form-input-group">
       <label for="maxPrizes">Max # Prizes</label>
-      <input type="text" id="maxPrizes" v-model="prize.maxPrizes" :disabled="disableForm" placeholder="0 for Unlimited"/>
+      <input type="number" id="maxPrizes" v-model="prize.maxPrizes" required min="0" step="0" :disabled="disableForm" placeholder="Enter 0 for Unlimited"/>
       </div>
       <div class="form-input-group">
       <label for="milestone">Milestone</label>
