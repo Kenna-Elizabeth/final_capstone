@@ -38,14 +38,6 @@ export default {
 </script>
 
 <style scoped>
-
-.login-display {
-  display: flex;
-  flex-wrap: wrap;
-  margin: 1em;
-  font-weight: bold;
-  color: #0799af;
-}
 h2 {
   margin-top: 1em;
   padding: 0.6em;

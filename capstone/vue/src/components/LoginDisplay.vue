@@ -6,7 +6,7 @@
     <span class="switch-view-message" v-if="$store.state.user.authorities[0].name == 'ROLE_PARENT'">
       &nbsp;- View Information For: 
       <select id="switch-view" v-model="targetUser" @change="switchView()">
-        <option disabled :value="undefined">Select Family Member</option>
+        <option disabled :value="undefined">Family Member</option>
         <option v-for="user in $store.state.familyUsers" :key="user.username" :value="user.username">
           {{ user.username }}
         </option>
@@ -45,5 +45,10 @@ export default {
 </script>
 
 <style scoped>
+.login-display {
+  margin: 1em;
+  font-weight: bold;
+  color: #0799af;
+}
 
 </style>

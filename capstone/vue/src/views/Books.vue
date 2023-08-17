@@ -95,13 +95,6 @@ export default {
   justify-content: space-evenly;
   flex-wrap: wrap;
 }
-.login-display {
-  display: flex;
-  flex-wrap: wrap;
-  margin: 1em;
-  font-weight: bold;
-  color: #0799af;
-}
 button {
   margin-top: 1em;
   margin-bottom: 1em;
