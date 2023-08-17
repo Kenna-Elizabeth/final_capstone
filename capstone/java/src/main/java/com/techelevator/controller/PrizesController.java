@@ -40,7 +40,7 @@ public class PrizesController {
         }
 
         try {
-            return prizeDao.getPrizes(user.getFamilyId(), user.getId());
+            return prizeDao.getPrizes(user.getFamilyId(), user.getId(), user.isChild());
         } catch (DaoException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Unable to Find Family Users");
         }

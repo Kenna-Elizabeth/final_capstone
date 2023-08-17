@@ -23,7 +23,7 @@ public class JdbcPrizeDao implements PrizeDao {
     }
 
     @Override
-    public List<Prize> getPrizes(int familyId, int userId) {
+    public List<Prize> getPrizes(int familyId, int userId, boolean isChild) {
         List<Prize> prizes = new ArrayList<>();
 
         String sql = "SELECT p.prize_id, p.family_id, p.prize_name, p.description, p.milestone, p.for_parents, p.for_children, p.max_prizes, p.start_date, p.end_date, " +
@@ -35,8 +35,11 @@ public class JdbcPrizeDao implements PrizeDao {
                 "FROM prizes AS p " +
                 "LEFT JOIN users_prizes AS up " +
                 "ON p.prize_id = up.prize_id AND up.user_id = ? " +
-                "WHERE p.family_id = ? " +
-                "ORDER BY start_date DESC;";
+                "WHERE p.family_id = ? ";
+        if (isChild) {
+            sql += "AND p.for_children = true ";
+        }
+        sql +=  "ORDER BY start_date DESC;";
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql, userId, familyId);
             while (results.next()) {

@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface PrizeDao {
 
-    List<Prize> getPrizes(int familyId, int userId);
+    List<Prize> getPrizes(int familyId, int userId, boolean isChild);
 
     Prize getPrizeById(int prizeId, int userId);
 

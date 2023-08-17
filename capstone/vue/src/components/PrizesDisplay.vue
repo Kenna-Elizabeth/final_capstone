@@ -14,7 +14,7 @@
       @create-prize="$store.dispatch('retrievePrizes')" 
     />
     <section id="prize-display">
-      <div v-for="prize in visiblePrizes" v-bind:key="prize.id" class="prize-panel">
+      <div v-for="prize in this.$store.state.prizes" v-bind:key="prize.id" class="prize-panel">
         <div class="prize-name">
           {{ prize.prizeName }}
         </div>
@@ -74,13 +74,6 @@ export default {
     parentLoggedIn() {
       return (
         this.$store.state.user.authorities[0].name == "ROLE_PARENT"
-      );
-    },
-    visiblePrizes() {
-      return (
-        this.$store.state.prizes.filter( prize => {
-          return prize.forChildren || this.parentLoggedIn;
-        })
       );
     }
   },
