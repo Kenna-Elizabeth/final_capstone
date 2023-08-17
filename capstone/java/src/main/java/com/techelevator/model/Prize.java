@@ -13,6 +13,7 @@ public class Prize {
     private boolean forParents;
     private boolean forChildren;
     private int maxPrizes;
+    private int claimedPrizes;
     private Timestamp startDate;
     private Timestamp endDate;
     private boolean completed;
@@ -23,7 +24,7 @@ public class Prize {
     public Prize() {
     }
 
-    public Prize(int id, int familyId, String prizeName, String description, int milestone, int progressMinutes, boolean forParents, boolean forChildren, int maxPrizes, Timestamp startDate, Timestamp endDate, boolean completed, Timestamp completionDate, boolean isCurrentlyActive, boolean isExpired) {
+    public Prize(int id, int familyId, String prizeName, String description, int milestone, int progressMinutes, boolean forParents, boolean forChildren, int maxPrizes, int claimedPrizes, Timestamp startDate, Timestamp endDate, boolean completed, Timestamp completionDate, boolean isCurrentlyActive, boolean isExpired) {
         this.id = id;
         this.familyId = familyId;
         this.prizeName = prizeName;
@@ -33,6 +34,7 @@ public class Prize {
         this.forParents = forParents;
         this.forChildren = forChildren;
         this.maxPrizes = maxPrizes;
+        this.claimedPrizes = claimedPrizes;
         this.startDate = startDate;
         this.endDate = endDate;
         this.completed = completed;
@@ -161,6 +163,14 @@ public class Prize {
         isExpired = expired;
     }
 
+    public int getClaimedPrizes() {
+        return claimedPrizes;
+    }
+
+    public void setClaimedPrizes(int claimedPrizes) {
+        this.claimedPrizes = claimedPrizes;
+    }
+
     @Override
     public String toString() {
         return "Prize{" +
@@ -173,6 +183,7 @@ public class Prize {
                 ", forParents=" + forParents +
                 ", forChildren=" + forChildren +
                 ", maxPrizes=" + maxPrizes +
+                ", claimedPrizes=" + claimedPrizes +
                 ", startDate=" + startDate +
                 ", endDate=" + endDate +
                 ", completed=" + completed +

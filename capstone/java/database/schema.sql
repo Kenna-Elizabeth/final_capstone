@@ -46,6 +46,7 @@ CREATE TABLE prizes (
     for_parents boolean DEFAULT true,
     for_children boolean DEFAULT true,
     max_prizes int DEFAULT 0,
+    claimed_prizes int DEFAULT 0,
     start_date timestamp DEFAULT CURRENT_TIMESTAMP(0),
     end_date timestamp DEFAULT ( CURRENT_TIMESTAMP(0) + '14 days'),
     CONSTRAINT PK_prizes PRIMARY KEY (prize_id),

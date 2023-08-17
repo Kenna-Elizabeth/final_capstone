@@ -26,7 +26,7 @@ public class JdbcPrizeDao implements PrizeDao {
     public List<Prize> getPrizes(int familyId, int userId, boolean isChild) {
         List<Prize> prizes = new ArrayList<>();
 
-        String sql = "SELECT p.prize_id, p.family_id, p.prize_name, p.description, p.milestone, p.for_parents, p.for_children, p.max_prizes, p.start_date, p.end_date, " +
+        String sql = "SELECT p.prize_id, p.family_id, p.prize_name, p.description, p.milestone, p.for_parents, p.for_children, p.max_prizes, p.claimed_prizes, p.start_date, p.end_date, " +
                 "COALESCE(up.progress_minutes, 0) AS progress_minutes, " +
                 "COALESCE(up.completed, false) AS completed, " +
                 "up.completion_timestamp, " +
@@ -56,7 +56,7 @@ public class JdbcPrizeDao implements PrizeDao {
     public Prize getPrizeById(int prizeId, int userId) {
         Prize prize = null;
 
-        String sql = "SELECT p.prize_id, p.family_id, p.prize_name, p.description, p.milestone, p.for_parents, p.for_children, p.max_prizes, p.start_date, p.end_date, " +
+        String sql = "SELECT p.prize_id, p.family_id, p.prize_name, p.description, p.milestone, p.for_parents, p.for_children, p.max_prizes, p.claimed_prizes, p.start_date, p.end_date, " +
                 "COALESCE(up.progress_minutes, 0) AS progress_minutes, " +
                 "COALESCE(up.completed, false) AS completed, " +
                 "up.completion_timestamp, " +
@@ -81,7 +81,7 @@ public class JdbcPrizeDao implements PrizeDao {
     public List<Prize> getActivePrizes(Timestamp timestamp, User user) {
         List<Prize> prizes = new ArrayList<>();
 
-        String sql = "SELECT p.prize_id, p.family_id, p.prize_name, p.description, p.milestone, p.for_parents, p.for_children, p.max_prizes, p.start_date, p.end_date, " +
+        String sql = "SELECT p.prize_id, p.family_id, p.prize_name, p.description, p.milestone, p.for_parents, p.for_children, p.max_prizes, p.claimed_prizes, p.start_date, p.end_date, " +
                 "COALESCE(up.progress_minutes, 0) AS progress_minutes, " +
                 "COALESCE(up.completed, false) AS completed, " +
                 "up.completion_timestamp, " +
@@ -187,20 +187,43 @@ public class JdbcPrizeDao implements PrizeDao {
     }
 
     @Override
-    public void updateCompletion() {
-        String sql = "UPDATE users_prizes " +
-                "SET completed = true, " +
-                "completion_timestamp = COALESCE(users_prizes.completion_timestamp, CURRENT_TIMESTAMP(0)) " +
-                "WHERE progress_minutes >= " +
-                    "(SELECT milestone FROM prizes WHERE prize_id = users_prizes.prize_id);";
+    public List<Integer> updateCompletion() {
+        List<Integer> completedPrizes = new ArrayList<>();
 
+        String sql = "UPDATE users_prizes AS up " +
+                "SET completed = true," +
+                "completion_timestamp = CURRENT_TIMESTAMP(0) " +
+                "FROM prizes AS p " +
+                "WHERE up.prize_id = p.prize_id " +
+                "AND (p.max_prizes = 0 OR p.max_prizes - p.claimed_prizes > 0) " +
+                "AND up.completed = false " +
+                "AND up.progress_minutes >= p.milestone " +
+                "RETURNING p.prize_id;";
         try {
-            jdbcTemplate.update(sql);
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
+            while (results.next()) {
+                completedPrizes.add(results.getInt("prize_id"));
+            }
         } catch (CannotGetJdbcConnectionException e) {
             throw new DaoException("Unable to connect to server or database", e);
         } catch (DataIntegrityViolationException e) {
             throw new DaoException("Data Integrity Violation", e);
         }
+
+        String sql2 = "UPDATE prizes " +
+                "SET claimed_prizes = claimed_prizes + 1 " +
+                "WHERE prize_id = ?;";
+        try {
+            for (Integer prizeId : completedPrizes) {
+                jdbcTemplate.update(sql2, prizeId);
+            }
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        } catch (DataIntegrityViolationException e) {
+            throw new DaoException("Data Integrity Violation", e);
+        }
+
+        return completedPrizes;
     }
 
     private Prize mapRowToPrize(SqlRowSet rs) {
@@ -210,6 +233,7 @@ public class JdbcPrizeDao implements PrizeDao {
         prize.setPrizeName(rs.getString("prize_name"));
         prize.setDescription(rs.getString("description"));
         prize.setMilestone(rs.getInt("milestone"));
+        prize.setClaimedPrizes(rs.getInt("claimed_prizes"));
         prize.setProgressMinutes(rs.getInt("progress_minutes"));
         prize.setForParents(rs.getBoolean("for_parents"));
         prize.setForChildren(rs.getBoolean("for_children"));
