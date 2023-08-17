@@ -100,7 +100,7 @@ export default {
   margin-top: 1em;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-end;
 }
 .alert-msg {
   color: firebrick;
@@ -112,9 +112,27 @@ export default {
   align-items: flex-end;
 }
 .form-input-group {
+  display: flex;
   margin-bottom: 1rem;
+  
 }
 label {
   margin-right: 0.5rem;
+}
+button {
+  display: flex;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  padding: 0.3em;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+  border: 2px solid black;
+  border-radius: 8px;
+  background-color: #31b4c9;
+  font-weight: bold;
+  color: white;
+}
+button:hover {
+  background-color: #1590a3;
 }
 </style>
