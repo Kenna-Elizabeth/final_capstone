@@ -39,7 +39,7 @@ public class JdbcPrizeDao implements PrizeDao {
         if (isChild) {
             sql += "AND p.for_children = true ";
         }
-        sql +=  "ORDER BY start_date DESC;";
+        sql +=  "ORDER BY currently_active DESC, start_date DESC;";
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql, userId, familyId);
             while (results.next()) {
