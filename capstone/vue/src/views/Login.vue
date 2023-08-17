@@ -34,11 +34,11 @@
       </div>
       <button type="submit">Sign in</button>
       <p>
-        <router-link :to="{ name: 'register' }"
-          >Need an account? Sign up.<br />(Kids, get your parents to set things
-          up!)</router-link
-        >
+        <router-link class="register-new-account" :to="{ name: 'register' }"
+          >Need an account? Click here!</router-link>
       </p>
+         <div class="kids-set-up">(Kids, get your parents to set things up!)</div>
+      
     </form>
   </main>
 </template>
@@ -88,10 +88,12 @@ export default {
 
 <style scoped>
 #login-form {
+margin-top: 0.5em;
   display: flex;
   flex-direction: column;
   align-items: center;
-  text-align: center;
+  justify-items: flex-end;
+  font-weight: bold;
 }
 .alert-error {
   color: firebrick;
@@ -101,8 +103,21 @@ export default {
   color: navy;
   margin-bottom: 1em;
 }
+h2 {
+  margin-top: 1em;
+  padding: 0.4em;
+  padding-left: 3em;
+  padding-right: 3em;
+  border-radius: 0.2em;
+  background-color: #8be1f5;
+  font-weight: 800;
+  background-image: linear-gradient(#05BCD9, #9dd7e2);
+  color: white;
+}
 .form-input-group {
+  display: flex;
   margin-bottom: 1rem;
+  align-items: center;
 }
 .text-input-block {
   display: flex;
@@ -111,5 +126,43 @@ export default {
 }
 label {
   margin-right: 0.5rem;
+}
+button {
+  display: flex;
+  text-align: flex-end;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  padding: 0.3em;
+  padding-left: 2em;
+  padding-right: 2em;
+  border: 2px solid black;
+  border-radius: 8px;
+  background-color: #31b4c9;
+  font-weight: bold;
+  color: white;
+}
+button:hover {
+  background-color: #1590a3;
+}
+.register-new-account {
+display: flex;
+  text-align: flex-end;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  padding: 0.3em;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+  border: 2px solid black;
+  border-radius: 8px;
+  background-color: #31b4c9;
+  font-weight: bold;
+  color: white;
+  text-decoration: none;
+}
+.register-new-account:hover {
+  background-color: #1590a3;
+}
+.kids-set-up {
+  color: #1590a3;
 }
 </style>
