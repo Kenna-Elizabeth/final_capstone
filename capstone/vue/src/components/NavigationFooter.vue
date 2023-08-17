@@ -2,24 +2,42 @@
   <footer>
     <nav v-if="$store.state.token != ''">
       <ul>
-        <li><router-link v-bind:to="{ name: 'bookRecommended' }">
-          📖</router-link></li>
+        <router-link v-bind:to="{ name: 'bookRecommended' }">
+          <li>
+          📖
+          </li>
+        </router-link>
         
-        <li><router-link v-bind:to="{ name: 'books' }">
-          📚</router-link></li>
+        <router-link v-bind:to="{ name: 'books' }">
+          <li>
+            📚
+          </li>
+        </router-link>
 
-        <li><router-link v-bind:to="{ name: 'activity' }">
-          📋</router-link></li>
+        <router-link v-bind:to="{ name: 'activity' }">
+          <li>
+            📋
+          </li>
+        </router-link>
+
+        <router-link v-bind:to="{ name: 'prizes' }">
+          <li>
+            🏆
+          </li>
+        </router-link>
           
-        <li v-if="parentLoggedIn"><router-link v-bind:to="{ name: 'family' }">
-          👨‍👩‍👧‍👦</router-link></li>
+        <router-link v-if="parentLoggedIn" v-bind:to="{ name: 'family' }">
+          <li>
+            👨‍👩‍👧‍👦
+          </li>
+        </router-link>
 
-        <li><router-link v-bind:to="{ name: 'prizes' }">
-          🏆</router-link></li>
-
-        <li><router-link v-bind:to="{ name: 'logout' }">
-          🔚</router-link>
-        </li>
+        <router-link v-bind:to="{ name: 'logout' }">
+          <li>
+            🔚
+          </li>
+        </router-link>
+        
       </ul>
     </nav>
   </footer>
