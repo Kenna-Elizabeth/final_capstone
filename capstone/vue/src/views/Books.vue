@@ -20,7 +20,7 @@
               {{ book.title }}
             </div>
             <div>
-              <img class="book-image" :src="'http://covers.openlibrary.org/b/isbn/' + book.isbn + '-M.jpg'" />
+              <img class="book-image" :src="bookImgSource(book)" />
             </div> 
             <div class="author">
               {{ book.author }}
@@ -57,6 +57,9 @@ export default {
     timestampDate( timestamp ) {
       const parts = timestamp.split(/[T .]/);
       return parts[0];
+    },
+    bookImgSource(book) {
+      return book.isbn == "" ? require('@/assets/book-image.jpg') : 'http://covers.openlibrary.org/b/isbn/' + book.isbn + '-M.jpg';
     }
   },
  

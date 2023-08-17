@@ -4,8 +4,9 @@
     <div class="box">
       <h1>{{ book.title }}</h1>
     </div>
-    <p>By {{ book.author }}</p>
-    <img :src="'http://covers.openlibrary.org/b/isbn/' + book.isbn + '-M.jpg'" alt="Book Cover Art" />
+    <p v-if="book.author != ''">By {{ book.author }}</p>
+    <p v-else>&nbsp;</p>
+    <img :src="bookImgSource(book)" alt="Book Cover Art" />
 
     <div v-if="book.completed" class="completed-text">✔️ Completed!</div>
 
@@ -229,6 +230,9 @@ export default {
           }
         });
     },
+    bookImgSource(book) {
+      return book.isbn == "" ? require('@/assets/book-image.jpg') : 'http://covers.openlibrary.org/b/isbn/' + book.isbn + '-M.jpg';
+    }
   },
 };
 </script>
