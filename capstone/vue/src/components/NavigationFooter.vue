@@ -90,8 +90,10 @@ footer{
   li {
     background-color: rgb(184, 237, 250);
     border-radius: 1em;
-    padding-left: 0.8em;
-    padding-right: 0.8em;
+    padding-left: 0.6em;
+    padding-right: 0.6em;
+    padding-top: 0.1em;
+    padding-bottom: 0.1em;
   }
   a:link {
     font-size: 1.5em;

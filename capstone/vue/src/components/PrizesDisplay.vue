@@ -11,7 +11,7 @@
     </div>
     <add-prize-form v-if="showAddForm" 
       :editPrize="editPrize"
-      @create-prize="$store.dispatch('retrievePrizes')" 
+      @create-prize="prizeSubmitted()" 
     />
     <div class="prize-display" >
       <div v-for="prize in this.$store.state.prizes" v-bind:key="prize.id" class="prize-panel">
@@ -110,6 +110,11 @@ export default {
     },
     progressPercent(minutes,total) {
       return Math.min(Math.floor((minutes/total)*(100)),100);
+    },
+    prizeSubmitted() {
+      this.$store.dispatch('retrievePrizes');
+      this.showAddForm = false;
+      this.editPrize = {};
     },
     openUpdateForm(prize) {
       if (!this.showAddForm) {
