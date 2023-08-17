@@ -47,8 +47,9 @@ export default {
 img {
   height: 5em;
   display: block;
-  padding: 2em;
-  margin: .2em;
+  padding: 1em;
+  margin: 1.2em;
+  margin-bottom: .5em;
 }
 
 img:hover {

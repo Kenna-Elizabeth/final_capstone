@@ -46,7 +46,7 @@ export default {
 
 <style scoped>
 .login-display {
-  margin: 1em;
+  margin-bottom: 1em;
   font-weight: bold;
   color: #0799af;
 }
