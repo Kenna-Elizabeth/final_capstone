@@ -23,7 +23,9 @@
       <label for="parent-only">Acceptable For Children</label>
       <input type="checkbox" id="parent-only" v-model="book.forChildren" :disabled="disableForm"/>
     </div>
-    <button type="submit" :disabled="disableForm">Submit Book</button>
+    <div class="form-input-group">
+      <button type="submit" :disabled="disableForm">Submit Book</button>
+    </div>
   </form>
 </template>
 
