@@ -12,8 +12,11 @@
     <add-book-form v-if="showAddForm" 
     @create-book="$store.dispatch('retrieveBooks')" 
     />
+    <div class="book-search">
+      <input type="search" v-model="searchText" placeholder="Search your library">
+    </div>
     <section id="book-display">
-      <div v-for="book in $store.state.books" :key="book.id">
+      <div v-for="book in displayedBooks" :key="book.id">
         <router-link :to="{ name: 'book', params: { id: book.id } }">
           <div class="book-panel" :class="{ completed: book.completed, 'in-progress': book.lastRead != null }">
             <div class="book-title">
@@ -50,8 +53,20 @@ export default {
   data() {
     return {
       showAddForm: false,
-      isLoading: false
+      isLoading: false,
+      searchText: ""
     };
+  },
+  computed: {
+    displayedBooks() {
+      if (this.searchText != '') {
+        return this.$store.state.books.filter( book => {
+          return book.title.toLowerCase().includes(this.searchText.toLowerCase()) 
+            || book.author.toLowerCase().includes(this.searchText.toLowerCase());
+        });
+      }
+      return this.$store.state.books;
+    }
   },
   methods: {
     timestampDate( timestamp ) {
@@ -153,5 +168,9 @@ a {
   background-image: url("../assets/book-image.jpg");
   background-size: cover;
   max-width: 13em;
+}
+
+.book-search input {
+  font-size: 1.5rem;
 }
 </style>
