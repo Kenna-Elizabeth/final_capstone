@@ -29,7 +29,7 @@
         </div>
         
         <div class="prize-maximum">
-          <section class="label">Prizes Remaining:</section>{{ prize.maxPrizes == 0? "Unlimited" : Math.max(prize.maxPrizes - prize.claimedPrizes, 0) }}
+          <section class="label">Prizes Remaining:</section>{{ prize.maxPrizes == 0? "Unlimited" : Math.max(prize.maxPrizes - prize.claimedPrizes, 0) + ' out of ' + prize.maxPrizes }}
         </div>
       
         <div class="prize-start-date">
