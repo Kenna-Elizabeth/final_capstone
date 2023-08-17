@@ -29,7 +29,7 @@
         </div>
         
         <div class="prize-maximum">
-          <section class="label">Prizes Remaining:</section>{{ prize.maxPrizes == 0? "Unlimited" : Math.max(prize.maxPrizes - prize.claimedPrizes, 0) + ' out of ' + prize.maxPrizes }}
+          <section class="label">Prizes Remaining:</section>{{ prize.maxPrizes == 0? "Unlimited" : Math.max(prize.maxPrizes - prize.claimedPrizes, 0) + ' of ' + prize.maxPrizes }}
         </div>
       
         <div class="prize-start-date">
@@ -45,7 +45,9 @@
           <section class="label">Progress</section>
         </div>
         <div class="progress-bar">
-          <div class="progress-color" :style="{width: progressPercent(prize.progressMinutes,prize.milestone)+'%'}">{{ progressPercent(prize.progressMinutes,prize.milestone) }}%</div> 
+          <div class="progress-color" :style="{width: progressPercent(prize.progressMinutes,prize.milestone)+'%'}">
+            {{ progressPercent(prize.progressMinutes,prize.milestone) }}%
+          </div> 
         </div>
         <div class="prize-completed" v-if="prize.completed">
         <section class="label">Completed on {{ timeStampDate(prize.completionDate) }}! 🎉</section>
@@ -54,7 +56,7 @@
           <button @click="openUpdateForm(prize)" :disabled="showAddForm">Edit</button>
           <button v-if="prize.expired" v-on:click="deletePrize(prize.id)" :disabled="showAddForm">Delete</button> 
         </div>
-        </div><!-- -->
+        </div>
       </div>
     </div>
   </main>
@@ -266,7 +268,6 @@ button:disabled {
 }
 
 
-
 .progress-bar {
   width: 100%;
   background-color: rgb(155, 154, 154);
@@ -297,9 +298,5 @@ button:disabled {
   margin-bottom: .3em;
   border-radius: 8px;
 }
-
-
-
-
 
 </style>
