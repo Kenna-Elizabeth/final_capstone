@@ -294,7 +294,6 @@ label {
 }
 
 input {
-  display: flex;
   font-size: 1em;
   font-weight: bold;
 }
